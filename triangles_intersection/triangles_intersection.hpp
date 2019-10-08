@@ -6,6 +6,8 @@
 #include <iostream>
 
 namespace triangles {
+    const float TOLERANCE = 1e-4;
+    bool nearly_equal(float a, float b);
 // for ease of coding we will treat a 2D point and a 2D vector
 // as the same
     struct Point2D {
