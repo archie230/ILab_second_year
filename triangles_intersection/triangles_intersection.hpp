@@ -146,7 +146,7 @@ namespace triangles {
 /**
  * @param T1 triangle should have counter clock order
  * @param T2 triangle should have counter clock order
- * @param poly reference to polygon which would contain intersection polygon
+ * @param poly reference to polygon which will contain intersection polygon
  * @return number of intersection polygon points
  */
     int CalcIntersectionPolygon(const Triangle& T1, const Triangle& T2, Polygon& suspect1);
