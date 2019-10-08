@@ -1,5 +1,4 @@
 #include "triangles_intersection.hpp"
-#include <iostream>
 
 using namespace triangles;
 
