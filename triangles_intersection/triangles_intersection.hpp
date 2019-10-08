@@ -130,8 +130,8 @@ namespace triangles {
  * @param p1 first segment point
  * @param p2 second segment point
  * @param tr triangle window should have counter clock order
- * @param rp first clipped segment point
- * @param q second segment point
+ * @param start first clipped segment point
+ * @param finish second segment point
  * @return bool var which true if segment is visible at window else false
  */
     bool CBClip (const Point2D& p1, const Point2D& p2, const Triangle& tr, Point2D& start, Point2D& finish);
