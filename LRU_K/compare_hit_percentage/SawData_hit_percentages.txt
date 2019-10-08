@@ -1,0 +1,32 @@
+=================== 3  TESTS ===================
+K = 10, Cache size = 100, Requests number = 300, Data type: saw
+================================================
+LRU-K hit percentage: 76.667% LRU hit percentage: 76.667%
+LRU-K hit percentage: 74.667% LRU hit percentage: 74.667%
+LRU-K hit percentage: 77.000% LRU hit percentage: 77.000%
+================================================
+
+=================== 3  TESTS ===================
+K = 3, Cache size = 10, Requests number = 30, Data type: saw
+================================================
+LRU-K hit percentage: 80.000% LRU hit percentage: 80.000%
+LRU-K hit percentage: 73.333% LRU hit percentage: 73.333%
+LRU-K hit percentage: 76.667% LRU hit percentage: 76.667%
+================================================
+
+=================== 3  TESTS ===================
+K = 100, Cache size = 1000, Requests number = 3000, Data type: saw
+================================================
+LRU-K hit percentage: 78.667% LRU hit percentage: 78.667%
+LRU-K hit percentage: 76.767% LRU hit percentage: 76.767%
+LRU-K hit percentage: 75.067% LRU hit percentage: 75.067%
+================================================
+
+=================== 3  TESTS ===================
+K = 10, Cache size = 100, Requests number = 300, Data type: saw
+================================================
+LRU-K hit percentage: 83.000% LRU hit percentage: 83.000%
+LRU-K hit percentage: 78.000% LRU hit percentage: 78.000%
+LRU-K hit percentage: 77.333% LRU hit percentage: 77.333%
+================================================
+

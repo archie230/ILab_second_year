@@ -1,0 +1,32 @@
+=================== 3  TESTS ===================
+K = 17, Cache size = 20, Requests number = 311, Data type: rand
+================================================
+LRU-K hit percentage: 19.614% LRU hit percentage: 19.936%
+LRU-K hit percentage: 17.685% LRU hit percentage: 17.685%
+LRU-K hit percentage: 16.077% LRU hit percentage: 15.434%
+================================================
+
+=================== 3  TESTS ===================
+K = 23, Cache size = 200, Requests number = 3133, Data type: rand
+================================================
+LRU-K hit percentage: 18.800% LRU hit percentage: 19.598%
+LRU-K hit percentage: 17.523% LRU hit percentage: 17.778%
+LRU-K hit percentage: 18.704% LRU hit percentage: 18.864%
+================================================
+
+=================== 3  TESTS ===================
+K = 2, Cache size = 3, Requests number = 25, Data type: rand
+================================================
+LRU-K hit percentage: 36.000% LRU hit percentage: 40.000%
+LRU-K hit percentage: 52.000% LRU hit percentage: 48.000%
+LRU-K hit percentage: 32.000% LRU hit percentage: 32.000%
+================================================
+
+=================== 3  TESTS ===================
+K = 6, Cache size = 9, Requests number = 75, Data type: rand
+================================================
+LRU-K hit percentage: 28.000% LRU hit percentage: 29.333%
+LRU-K hit percentage: 38.667% LRU hit percentage: 36.000%
+LRU-K hit percentage: 38.667% LRU hit percentage: 30.667%
+================================================
+
