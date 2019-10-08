@@ -3,6 +3,7 @@
 namespace triangles {
 
     const float TOLERANCE = 1e-4;
+    
     bool nearly_equal(float a, float b){
         float abs_a = fabs(a);
         float abs_b = fabs(b);
