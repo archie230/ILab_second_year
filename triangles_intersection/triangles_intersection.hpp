@@ -94,41 +94,43 @@ namespace triangles {
     };
 
 #ifdef _DEBUG
-    std::ostream& operator << (std::ostream& os,const Point2D& p) {
-        os << "{" << p.x << ',' << p.y << "}";
-        return os;
-    }
+    namespace {
+        std::ostream& operator << (std::ostream& os,const Point2D& p) {
+            os << "{" << p.x << ',' << p.y << "}";
+            return os;
+        }
 
-    std::ostream& operator << (std::ostream& os,const Polygon& p) {
-        os << p.pts_.size() << " points polygon: \n";
-        for(auto& elem :p.pts_)
-            os << elem << ",";
-        os << std::endl;
-        return os;
-    }
+        std::ostream& operator << (std::ostream& os,const Polygon& p) {
+            os << p.pts_.size() << " points polygon: \n";
+            for(auto& elem :p.pts_)
+                os << elem << ",";
+            os << std::endl;
+            return os;
+        }
 
-    std::ostream& operator << (std::ostream& os,const Triangle& p) {
-        os << "triangles: \n";
-        for(auto& elem :p.pts_)
-            os << elem << ",";
-        os << std::endl;
-        return os;
-    }
+        std::ostream& operator << (std::ostream& os,const Triangle& p) {
+            os << "triangles: \n";
+            for(auto& elem :p.pts_)
+                os << elem << ",";
+            os << std::endl;
+            return os;
+        }
 
-    bool operator==(const Polygon& left, const Polygon& right) {
-        if(left.pts_.size() != right.pts_.size())
-            return false;
-        for(int i = 0; i < left.pts_.size(); ++i)
-            if(left.pts_[i] != right.pts_[i])
+        bool operator==(const Polygon& left, const Polygon& right) {
+            if(left.pts_.size() != right.pts_.size())
                 return false;
-        return true;
-    }
+            for(int i = 0; i < left.pts_.size(); ++i)
+                if(left.pts_[i] != right.pts_[i])
+                    return false;
+            return true;
+        }
 
-    bool operator==(const Triangle& left, const Triangle& right) {
-        for(int i = 0; i < 3; ++i)
-            if(left.pts_[i] != right.pts_[i])
-                return false;
-        return true;
+        bool operator==(const Triangle& left, const Triangle& right) {
+            for(int i = 0; i < 3; ++i)
+                if(left.pts_[i] != right.pts_[i])
+                    return false;
+            return true;
+        }
     }
 #endif
 
