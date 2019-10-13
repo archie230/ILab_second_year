@@ -90,7 +90,6 @@ namespace triangles {
 
         Polygon() = default;
 
-
         float area();
     };
 
