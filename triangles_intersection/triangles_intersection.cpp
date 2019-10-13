@@ -2,19 +2,17 @@
 
 namespace triangles {
 
-    const float TOLERANCE = 1e-4;
-    
     bool nearly_equal(float a, float b){
         float abs_a = fabs(a);
         float abs_b = fabs(b);
-        float diff = fabs(a - b);
+        float diff  = fabs(a - b);
 
         if(a == b){
             return true;
         }
             // a or b is zero or both are extremely close to zero
             // other implementations use float min normal instead of float min
-        else if(a == 0 || b == 0 || diff < std::numeric_limits<float>::min()){
+        else if(a == 0 || b == 0 || diff < std::numeric_limits<float>::min()) {
             return diff < (TOLERANCE * std::numeric_limits<float>::min());
         }
             // use relative error
@@ -25,11 +23,16 @@ namespace triangles {
     /////////////////
     //Point2D section
     /////////////////
-    Point2D::Point2D(float x, float y)
-            :
-            x(x),
-            y(y) {}
-
+// Slope of line segment (p1, p2): σ = (y2 - y1)/(x2 - x1)
+// Slope of line segment (p2, p3): τ = (y3 - y2)/(x3 - x2)
+//
+// If  σ > τ, the orientation is clockwise (right turn)
+//
+// Using above values of σ and τ, we can conclude that,
+// the orientation depends on sign of  below expression:
+//
+// (y2 - y1)*(x3 - x2) - (y3 - y2)*(x2 - x1)
+// Above expression is negative when σ < τ, i.e.,  counterclockwise
     int orientation(const Point2D &p1, const Point2D &p2, const Point2D &p3) {
         int val = (p2.y - p1.y) * (p3.x - p2.x) -
                   (p2.x - p1.x) * (p3.y - p2.y);
@@ -39,29 +42,6 @@ namespace triangles {
         return (val > 0)? clock_o: counterclock_o;
     }
 
-    bool operator==(const Point2D &left, const Point2D &right) {
-        return nearly_equal(left.x, right.x) && nearly_equal(left.y, right.y);
-    }
-
-    bool operator!=(const Point2D &left, const Point2D &right) {
-        return !(left == right);
-    }
-
-    Point2D operator-(const Point2D &left, const Point2D &right) {
-        return {left.x - right.x, left.y - right.y};
-    }
-
-    Point2D operator*(float scalar, const Point2D &vec) {
-        return {scalar * vec.x, scalar * vec.y};
-    }
-
-    Point2D operator+(const Point2D &left, const Point2D &right) {
-        return {left.x + right.x, left.y + right.y};
-    }
-
-    float operator*(const Point2D &left, const Point2D &right) {
-        return left.x * right.x + left.y * right.y;
-    }
     //////////////////
     //Triangle section
     //////////////////
@@ -104,19 +84,14 @@ namespace triangles {
         }
     }
 
-    bool Triangle::IsTrivial() const {
-        return orientation(pts_[0], pts_[1], pts_[2]) == 0;
-    }
-
     std::istream &operator>>(std::istream &is, Triangle &tr) {
         for(int i = 0; i < 3; ++i)
             is >> tr.pts_[i].x >> tr.pts_[i].y;
+        return is;
     }
     //////////////////
     //Clipping section
     //////////////////
-#define MIN(a,b) a<b ? a:b
-#define MAX(a,b) a>b ? a:b
     bool CBClip(const Point2D &p1, const Point2D &p2, const Triangle &tr, Point2D &start, Point2D &finish) {
         float t,num,den;
         Point2D dirV,F;          // vectors
@@ -143,22 +118,21 @@ namespace triangles {
                 if (den < 0.0) {
                     if(t < 0.0)
                         return false;
-                    t2 = MIN(t, t2);
+                    t2 = std::min(t, t2);
                 } else {
                     if(t > 1)
                         return false;
-                    t1 = MAX(t, t1);
+                    t1 = std::max(t, t1);
                 }
             }
         }
 
-        return ({ bool visible;
-            if (t1 <= t2) {
-                start   = p1 + t1 * dirV;
-                finish  = p1 + t2 * dirV;
-                visible = true;
-            } else visible = false;
-            visible;});
+        if (t1 <= t2) {
+            start   = p1 + t1 * dirV;
+            finish  = p1 + t2 * dirV;
+            return true;
+        } else
+            return false;
     }
 
     void CalcIntersection(const Triangle &T1, const Triangle &T2, std::vector<Point2D> &pts) {
@@ -167,8 +141,9 @@ namespace triangles {
             int j = (i+1) % 3;
             if (CBClip(T1.pts_[i], T1.pts_[j], T2, start, finish)) {
                 if (start != finish)
-                    if (pts[pts.size() - 1] != start)
-                        pts.push_back(start);
+                    if (i != 0)                             // этой проверки не было
+                        if (pts[pts.size() - 1] != start)   // на первой итерации размер pts 0 -> invalid read
+                            pts.push_back(start);
                 pts.push_back(finish);
             }
         }
@@ -202,16 +177,6 @@ namespace triangles {
     /////////////////
     //Polygon section
     /////////////////
-    Polygon::Polygon(const std::vector<Point2D> &pts)
-            :
-            pts_(pts)
-    {}
-
-    Polygon::Polygon(uint32_t num)
-            :
-            pts_(std::move(std::vector<Point2D>(num)))
-    {}
-
     float Polygon::area() {
         if(pts_.size() < 3)
             return 0;
