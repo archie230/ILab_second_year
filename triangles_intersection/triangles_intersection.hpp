@@ -60,7 +60,11 @@ namespace triangles {
 
         Triangle(const Point2D& p1, const Point2D& p2, const Point2D& p3);
 
-        Triangle();
+        Triangle()
+                :
+                pts_{{0,0}, {0,0}, {0,0}},
+                normals_{{0,0}, {0,0}, {0,0}}
+        {}
 
         // set counter clockwise order
         int SetCounterClock();
@@ -90,49 +94,19 @@ namespace triangles {
 
         Polygon() = default;
 
+
         float area();
     };
 
-#ifdef _DEBUG
-    namespace {
-        std::ostream& operator << (std::ostream& os,const Point2D& p) {
-            os << "{" << p.x << ',' << p.y << "}";
-            return os;
-        }
+    std::ostream& operator << (std::ostream&, const Point2D&);
 
-        std::ostream& operator << (std::ostream& os,const Polygon& p) {
-            os << p.pts_.size() << " points polygon: \n";
-            for(auto& elem :p.pts_)
-                os << elem << ",";
-            os << std::endl;
-            return os;
-        }
+    std::ostream& operator << (std::ostream&, const Polygon&);
 
-        std::ostream& operator << (std::ostream& os,const Triangle& p) {
-            os << "triangles: \n";
-            for(auto& elem :p.pts_)
-                os << elem << ",";
-            os << std::endl;
-            return os;
-        }
+    std::ostream& operator << (std::ostream&, const Triangle&);
 
-        bool operator==(const Polygon& left, const Polygon& right) {
-            if(left.pts_.size() != right.pts_.size())
-                return false;
-            for(int i = 0; i < left.pts_.size(); ++i)
-                if(left.pts_[i] != right.pts_[i])
-                    return false;
-            return true;
-        }
+    bool operator == (const Polygon&, const Polygon&);
 
-        bool operator==(const Triangle& left, const Triangle& right) {
-            for(int i = 0; i < 3; ++i)
-                if(left.pts_[i] != right.pts_[i])
-                    return false;
-            return true;
-        }
-    }
-#endif
+    bool operator == (const Triangle&, const Triangle&);
 
 //CYRUS-BECK CLIPPING ALGORITHM for segment + triangled window
 /**
