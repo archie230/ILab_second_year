@@ -7,7 +7,7 @@
 #include <iostream>
 
 /*
- * Template type T in all template objects and functions
+ * Template type T in all template objects in functions
  * should be able to:
  * 1) explicit cast to float
  * 2) float point arithmetic
@@ -91,9 +91,9 @@ namespace triangles {
     inline Point2D<T> operator-(const Point2D<T> &left, const Point2D<T> &right) {
         return {left.x - right.x, left.y - right.y};
     }
-// multiplying scalar ang vector
-    template<typename T>
-    inline Point2D<T> operator*(float scalar, const Point2D<T> &vec) {
+// multiplying scalar ang vector scalar should be float point number
+    template<typename T, typename V>
+    inline Point2D<T> operator*(V scalar, const Point2D<T> &vec) {
         return {scalar * vec.x, scalar * vec.y};
     }
 
