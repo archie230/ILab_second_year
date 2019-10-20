@@ -3,16 +3,14 @@
 using namespace triangles;
 
 int main() {
-    Triangle t1, t2;
+    Triangle<float> t1, t2;
 
-    std::cout << "first triangle: \n";
     std::cin >> t1;
     if(!std::cin) {
         std::cerr << "bad input";
         exit(EXIT_FAILURE);
     }
 
-    std::cout << "second triangle: \n";
     std::cin >> t2;
     if(!std::cin) {
         std::cerr << "bad input";
@@ -24,10 +22,9 @@ int main() {
     t1.CalculateNormals();
     t2.CalculateNormals();
 
-    Polygon poly(6);
+    Polygon<float> poly(6);
     CalcIntersectionPolygon(t1, t2, poly);
-
-    std::cout << "\nintersection area: " << poly.area() << std::endl;
+    std::cout << poly.area();
 
     return 0;
 }
