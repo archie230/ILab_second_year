@@ -7,7 +7,7 @@
 #include <iostream>
 
 /*
- * Template type T in all template objects in functions
+ * Template type T in all template objects and functions
  * should be able to:
  * 1) explicit cast to float
  * 2) float point arithmetic
