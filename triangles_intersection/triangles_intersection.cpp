@@ -34,12 +34,12 @@ namespace triangles {
 // (y2 - y1)*(x3 - x2) - (y3 - y2)*(x2 - x1)
 // Above expression is negative when σ < τ, i.e.,  counterclockwise
     int orientation(const Point2D &p1, const Point2D &p2, const Point2D &p3) {
-        int val = (p2.y - p1.y) * (p3.x - p2.x) -
-                  (p2.x - p1.x) * (p3.y - p2.y);
+        float kross = (p2.y - p1.y) * (p3.x - p2.x) - (p2.x - p1.x) * (p3.y - p2.y);
 
-        if (val == 0) return colinear_o;
+        if (nearly_equal(kross, 0))
+            return colinear_o;
 
-        return (val > 0)? clock_o: counterclock_o;
+        return (kross > 0)? clock_o: counterclock_o;
     }
 
     //////////////////
@@ -54,15 +54,9 @@ namespace triangles {
         CalculateNormals();
     }
 
-    Triangle::Triangle()
-            :
-            pts_{{0,0}, {0,0}, {0,0}},
-            normals_{{0,0}, {0,0}, {0,0}}
-    {}
-
     int Triangle::SetCounterClock() {
         int orient;
-        if((orient = orientation(pts_[0], pts_[1], pts_[2])) == 2 || (orient == 0))
+        if((orient = orientation(pts_[0], pts_[1], pts_[2])) == counterclock_o || (orient == colinear_o))
             return orient;
 
         std::swap(pts_[0], pts_[2]);
@@ -140,16 +134,16 @@ namespace triangles {
         for (int i = 0; i < 3; ++i) {
             int j = (i+1) % 3;
             if (CBClip(T1.pts_[i], T1.pts_[j], T2, start, finish)) {
-                if (start != finish)
-                    if (i != 0)                             // этой проверки не было
-                        if (pts[pts.size() - 1] != start)   // на первой итерации размер pts 0 -> invalid read
-                            pts.push_back(start);
-                pts.push_back(finish);
+                if (start != finish && ((i != 0 && pts[pts.size() - 1] != start) || i == 0))
+                    pts.push_back(start);
+                if ((i != 0 && pts[pts.size() - 1] != finish) || i == 0)
+                    pts.push_back(finish);
             }
         }
 
         if ((pts.size() > 1) && (pts[pts.size()-1] == pts[0]))
             pts.resize(pts.size() - 1);
+
     }
 
     int CalcIntersectionPolygon(const Triangle &T1, const Triangle &T2, Polygon &suspect1) {
@@ -172,6 +166,43 @@ namespace triangles {
             std::swap(suspect1, suspect2);
 
         return suspect1.pts_.size();
+    }
+
+    std::ostream &operator<<(std::ostream &os, const Point2D &p) {
+        os << "{" << p.x << ',' << p.y << "}";
+        return os;
+    }
+
+    std::ostream &operator<<(std::ostream &os, const Polygon &p) {
+        os << p.pts_.size() << " points polygon: \n";
+        for(auto& elem :p.pts_)
+            os << elem << ",";
+        os << std::endl;
+        return os;
+    }
+
+    std::ostream &operator<<(std::ostream &os, const Triangle &p) {
+        os << "triangles: \n";
+        for(auto& elem :p.pts_)
+            os << elem << ",";
+        os << std::endl;
+        return os;
+    }
+
+    bool operator==(const Polygon &left, const Polygon &right) {
+        if(left.pts_.size() != right.pts_.size())
+            return false;
+        for(int i = 0; i < left.pts_.size(); ++i)
+            if(left.pts_[i] != right.pts_[i])
+                return false;
+        return true;
+    }
+
+    bool operator==(const Triangle& left, const Triangle& right) {
+        for(int i = 0; i < 3; ++i)
+            if(left.pts_[i] != right.pts_[i])
+                return false;
+        return true;
     }
 
     /////////////////
