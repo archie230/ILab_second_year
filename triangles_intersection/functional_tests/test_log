@@ -10,3 +10,5 @@ TEST 008 OK : answ = 3.30556  expected = 3.30556
 TEST 009 OK : answ = 3  expected = 3
 TEST 010 OK : answ = 0  expected = 0
 TEST 011 OK : answ = 0.5  expected = 0.5
+TEST 012 OK : answ = 0  expected = 0
+TEST 013 OK : answ = 17.1942  expected = 17.1942
