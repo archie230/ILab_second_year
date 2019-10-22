@@ -16,7 +16,7 @@
 namespace triangles {
     const float TOLERANCE = 1e-4;
 
-    bool nearly_equal(float a, float b){
+    static bool nearly_equal(float a, float b){
         float abs_a = fabs(a);
         float abs_b = fabs(b);
         float diff  = fabs(a - b);
@@ -181,7 +181,7 @@ namespace triangles {
 
         Polygon() = default;
         
-        T area() {
+        T area() const{
             if(pts_.size() < 3)
                 return 0;
             T area = 0;
