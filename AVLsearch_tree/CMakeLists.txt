@@ -3,7 +3,7 @@ project(search_tree)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(time_test AVL_tree.hpp search_tree.hpp timetests/time_tests.cpp)
+#add_executable(time_test AVL_tree.hpp search_tree.hpp timetests/time_tests.cpp)
 
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
