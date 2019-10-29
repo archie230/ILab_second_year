@@ -21,14 +21,6 @@ namespace cxx_containers {
             :
             tree_(comp) {}
 
-        SearchTree(const SearchTree& other)
-            :
-            tree_(other.tree_) {}
-
-        SearchTree& operator=(const SearchTree& other) {
-            tree_ = other.tree_;
-        }
-
         void push(const Key& elem) {
             tree_.root_ = tree_.insert(tree_.root_, elem);
         }
