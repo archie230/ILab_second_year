@@ -21,7 +21,7 @@ namespace cxx_containers {
             :
             tree_(comp) {}
 
-        explicit SearchTree(const SearchTree& other)
+        SearchTree(const SearchTree& other)
             :
             tree_(other.tree_) {}
 
