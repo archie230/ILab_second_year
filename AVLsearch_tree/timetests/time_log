@@ -1,0 +1,77 @@
+my tree inserting 10000 elements time: 15941
+set inserting 10000 elements time: 10408
+my tree find 10000 elements time: 2649
+set find 10000 elements time: 5275
+my tree delete 10000 elements time: 5248
+set delete 10000 elements time: 5905
+
+my tree inserting 100000 elements time: 56607
+set inserting 100000 elements time: 65251
+my tree find 100000 elements time: 29960
+set find 100000 elements time: 52433
+my tree delete 100000 elements time: 60244
+set delete 100000 elements time: 72830
+
+my tree inserting 200000 elements time: 154499
+set inserting 200000 elements time: 162840
+my tree find 200000 elements time: 91167
+set find 200000 elements time: 158397
+my tree delete 200000 elements time: 197363
+set delete 200000 elements time: 201961
+
+my tree inserting 300000 elements time: 284862
+set inserting 300000 elements time: 274255
+my tree find 300000 elements time: 187538
+set find 300000 elements time: 264653
+my tree delete 300000 elements time: 324270
+set delete 300000 elements time: 355497
+
+my tree inserting 400000 elements time: 389544
+set inserting 400000 elements time: 375208
+my tree find 400000 elements time: 251969
+set find 400000 elements time: 428448
+my tree delete 400000 elements time: 514518
+set delete 400000 elements time: 510497
+
+my tree inserting 500000 elements time: 553307
+set inserting 500000 elements time: 529513
+my tree find 500000 elements time: 415970
+set find 500000 elements time: 623300
+my tree delete 500000 elements time: 918221
+set delete 500000 elements time: 930037
+
+my tree inserting 600000 elements time: 1189989
+set inserting 600000 elements time: 966067
+my tree find 600000 elements time: 603808
+set find 600000 elements time: 944803
+my tree delete 600000 elements time: 1292867
+set delete 600000 elements time: 1135237
+
+my tree inserting 700000 elements time: 1352249
+set inserting 700000 elements time: 1038318
+my tree find 700000 elements time: 919495
+set find 700000 elements time: 1149134
+my tree delete 700000 elements time: 1320202
+set delete 700000 elements time: 1170597
+
+my tree inserting 800000 elements time: 1095863
+set inserting 800000 elements time: 926186
+my tree find 800000 elements time: 991852
+set find 800000 elements time: 1262682
+my tree delete 800000 elements time: 1333468
+set delete 800000 elements time: 1385874
+
+my tree inserting 900000 elements time: 1370905
+set inserting 900000 elements time: 1137555
+my tree find 900000 elements time: 888040
+set find 900000 elements time: 1246758
+my tree delete 900000 elements time: 1597549
+set delete 900000 elements time: 1383788
+
+my tree inserting 1000000 elements time: 1411147
+set inserting 1000000 elements time: 1186331
+my tree find 1000000 elements time: 899012
+set find 1000000 elements time: 1278128
+my tree delete 1000000 elements time: 1930786
+set delete 1000000 elements time: 1818275
+
