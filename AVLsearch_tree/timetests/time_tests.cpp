@@ -103,7 +103,6 @@ int main(int argc, char* argv[]) {
         std::cout << "set find " << elem_number << " elements time: " << duration.count() << std::endl;
     }
 
-
     //deleting elements
     {
         auto start = high_resolution_clock::now();
