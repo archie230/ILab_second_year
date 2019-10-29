@@ -17,11 +17,11 @@ namespace cxx_containers {
     public:
         SearchTree() = default;
 
-        SearchTree(const Compare& comp)
+        explicit SearchTree(const Compare& comp)
             :
             tree_(comp) {}
 
-        SearchTree(const SearchTree& other)
+        explicit SearchTree(const SearchTree& other)
             :
             tree_(other.tree_) {}
 
