@@ -16,7 +16,7 @@ std::ostream& operator<<(std::ostream& os, const AVL_node_t& node) {
 
 void tree_dump(AVL_node_t* cur, int depth, int state, std::ostream& os) {
     if (!cur) {
-        std::cout << "{[nil]}" << std::endl;
+        os << "{[nil]}" << std::endl;
         return;
     }
 
@@ -31,7 +31,7 @@ void tree_dump(AVL_node_t* cur, int depth, int state, std::ostream& os) {
     else if (state == 2)  // right
         printf("└───");
 
-    std::cout << *cur;
+    os << *cur;
 
     if (cur->right_)
         tree_dump(cur->right_, depth + 1, 2, os);
