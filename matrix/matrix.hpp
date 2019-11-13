@@ -17,46 +17,50 @@ namespace cxx_containers {
 
     template<typename T>
     class Matrix final {
-        T** elems_ = nullptr;
-        int rows_ = 0, cols_ = 0;
+        T*  buf_      = nullptr;    // ptr to buf
+        T** row_ptrs_ = nullptr;    // row pointers
+        int rows_ = 0;
+        int cols_ = 0;
 
     public:
         Matrix() = default;
 
         Matrix(int rows, int cols)
             :
-                rows_(rows),
-                cols_(cols)
+                rows_       (rows),
+                cols_       (cols),
+                buf_        (nullptr),
+                row_ptrs_   (nullptr)
         {
             if((rows_ == 0) || (cols_ == 0)) {
                 rows_ = cols_ = 0;
-                elems_ = nullptr;
                 return;
             }
 
-            elems_ = new T* [rows_];
-            for(int i = 0; i < rows_; i++)
-                elems_[i] = new T [cols_]{};
+            buf_        = new T [rows_ * cols_]{};
+            row_ptrs_   = new T* [rows_];
+
+            for(int i = 0; i < rows; i++)
+                row_ptrs_[i] = buf_ + i * cols_;
         }
 
         ~Matrix() {
-            if(!elems_)
+            if(!buf_ && !rows_)
                 return;
-            for(int i = 0; i < rows_; i++)
-                delete [] elems_[i];
-            delete [] elems_;
+            delete [] buf_;
+            delete [] row_ptrs_;
         }
 
         Matrix(const Matrix& other)
             :
                 Matrix(other.rows_, other.cols_)
         {
-            if(!elems_)
+            if(!buf_)
                 return;
 
             for(int i = 0; i < rows_; i++)
                 for(int j = 0; j < cols_; j++)
-                    elems_[i][j] = other.elems_[i][j];
+                    row_ptrs_[i][j] = other.row_ptrs_[i][j];
         }
 
         Matrix& operator= (const Matrix& other) {
@@ -66,8 +70,8 @@ namespace cxx_containers {
             resize(other.rows_, other.cols_);
 
             for(int i = 0; i < rows_; i++)
-                for(int j = 0; j < rows_; j++)
-                    elems_[i][j] = other.elems_[i][j];
+                for(int j = 0; j < cols_; j++)
+                    row_ptrs_[i][j] = other.row_ptrs_[i][j];
                 
             return *this;
         }
@@ -83,18 +87,18 @@ namespace cxx_containers {
 
             resize(rows_, other.cols_);
 
-            if(!elems_)
+            if(!row_ptrs_)
                 return *this;
 
             for(int i = 0; i < rows_; i++) {
-                T* result_row = elems_[i];
-                T* lhs_row    = tmp.elems_[i];
+                T* result_row = row_ptrs_[i];
+                T* lhs_row    = tmp.row_ptrs_[i];
 
                 for(int j = 0; j < cols_; j++)
                     result_row[j] = 0;
 
                 for(int k = 0; k < other.rows_; k++) {
-                    T* rhs_row = other.elems_[k];
+                    T* rhs_row = other.row_ptrs_[k];
                     for(int j = 0; j < cols_; j++) {
                         result_row[j] += lhs_row[k] * rhs_row[j];
                     }
@@ -112,7 +116,7 @@ namespace cxx_containers {
 
             for(int i = 0; i < rows_; i++)
                 for(int j = 0; j < cols_; j++)
-                    elems_[i][j] -= other.elems_[i][j];
+                    row_ptrs_[i][j] -= other.row_ptrs_[i][j];
 
             return *this;
         }
@@ -125,7 +129,7 @@ namespace cxx_containers {
 
             for(int i = 0; i < rows_; i++)
                 for(int j = 0; j < cols_; j++)
-                    elems_[i][j] += other.elems_[i][j];
+                    row_ptrs_[i][j] += other.row_ptrs_[i][j];
 
             return *this;
         }
@@ -136,7 +140,7 @@ namespace cxx_containers {
 
             for(int i = 0; i < rows_; i++)
                 for(int j = 0; j < cols_; j++) {
-                    if(!nearly_equal(elems_[i][j],  other.elems_[i][j]))
+                    if(!nearly_equal(row_ptrs_[i][j],  other.row_ptrs_[i][j]))
                         return false;
                 }
 
@@ -147,37 +151,31 @@ namespace cxx_containers {
             if((m >= rows_) || (n >= cols_))
                 return;
 
-            elems_[m][n] = elem;
+            row_ptrs_[m][n] = elem;
         }
 
         void set_zero() {
-            if(!elems_)
+            if(!row_ptrs_)
                 return;
 
             for(int i = 0; i < rows_; i++)
                 for(int j = 0; j < cols_; j++)
-                    elems_[i][j] = 0;
-        }
-
-        T get(const T& elem, int m, int n) {
-            if ((m >= rows_) || (n >= cols_))
-                return {};
-            return elems_[m][n];
+                    row_ptrs_[i][j] = 0;
         }
 
         const T& get(const T& elem, int m, int n) const {
             if ((m >= rows_) || (n >= cols_))
                 return {};
-            return elems_[m][n];
+            return row_ptrs_[m][n];
         }
 
         void switch_rows(int row1, int row2) {
             if((row1 < 0) || (row2 < 0) || (row1 >= rows_) || (row2 >= rows_))
                 return;
 
-            T* tmp = elems_[row1];
-            elems_[row1] = elems_[row2];
-            elems_[row2] = tmp;
+            T* tmp = row_ptrs_[row1];
+            row_ptrs_[row1] = row_ptrs_[row2];
+            row_ptrs_[row2] = tmp;
         }
 
         // if our matrix is NxN there is a matrix pair
@@ -195,30 +193,30 @@ namespace cxx_containers {
             for (i = 0; i < rows_; i++) {
                 for (j = 0; j < rows_; j++) {
                     if (j < i)
-                        L.elems_[j][i] = 0;
+                        L.row_ptrs_[j][i] = 0;
                     else {
-                        L.elems_[j][i] = elems_[j][i];
+                        L.row_ptrs_[j][i] = row_ptrs_[j][i];
                         for (k = 0; k < i; k++) {
-                            L.elems_[j][i] = L.elems_[j][i] - L.elems_[j][k] * U.elems_[k][i];
+                            L.row_ptrs_[j][i] = L.row_ptrs_[j][i] - L.row_ptrs_[j][k] * U.row_ptrs_[k][i];
                         }
                     }
                 }
                 for (j = 0; j < rows_; j++) {
                     if (j < i)
-                        U.elems_[i][j] = 0;
+                        U.row_ptrs_[i][j] = 0;
                     else if (j == i)
-                        U.elems_[i][j] = 1;
+                        U.row_ptrs_[i][j] = 1;
                     else {
-                        if(nearly_equal(L.elems_[i][i], 0)) {
+                        if(nearly_equal(L.row_ptrs_[i][i], 0)) {
                             L.set_zero();
                             U.set_zero();
                             return {L, U};
                         }
 
-                        U.elems_[i][j] = elems_[i][j] / L.elems_[i][i];
+                        U.row_ptrs_[i][j] = row_ptrs_[i][j] / L.row_ptrs_[i][i];
                         for (k = 0; k < i; k++) {
-                            U.elems_[i][j] = U.elems_[i][j]
-                                    - ((L.elems_[i][k] * U.elems_[k][j]) / L.elems_[i][i]);
+                            U.row_ptrs_[i][j] = U.row_ptrs_[i][j]
+                                    - ((L.row_ptrs_[i][k] * U.row_ptrs_[k][j]) / L.row_ptrs_[i][i]);
                         }
                     }
                 }
@@ -240,9 +238,9 @@ namespace cxx_containers {
             float multiplier = 1;
 
             for(int i = 0; i < rows_; i++) {
-                if(nearly_equal(elems_[i][i], 0)) {
+                if(nearly_equal(row_ptrs_[i][i], 0)) {
                     for(int j = i + 1; j < rows_; j++)
-                        if(!nearly_equal(elems_[j][i], 0)) {
+                        if(!nearly_equal(row_ptrs_[j][i], 0)) {
                             switch_row = j;
                             break;
                         }
@@ -256,9 +254,9 @@ namespace cxx_containers {
                         continue;
                 }
                 for(int j = i + 1; j < rows_; j++) {
-                    multiplier = elems_[j][i] / elems_ [i][i];
+                    multiplier = row_ptrs_[j][i] / row_ptrs_ [i][i];
                     for(int k = i; k < rows_; k++)
-                        elems_[j][k] -= multiplier * elems_[i][k];
+                        row_ptrs_[j][k] -= multiplier * row_ptrs_[i][k];
                 }
             }
             return sign;
@@ -274,17 +272,17 @@ namespace cxx_containers {
                 return 0;
 
             if(cols_ == 1)
-                return elems_[0][0];
+                return row_ptrs_[0][0];
 
             if(rows_ == 2)
-                return elems_[0][0] * elems_[1][1] - elems_[1][0] * elems_[0][1];
+                return row_ptrs_[0][0] * row_ptrs_[1][1] - row_ptrs_[1][0] * row_ptrs_[0][1];
 
             Matrix tmp(*this);
             int sign = tmp.gaussian_elimination();
             float determinant = 1;
 
             for(int i = 0; i < rows_; i++)
-                determinant *= tmp.elems_[i][i];
+                determinant *= tmp.row_ptrs_[i][i];
 
             return sign * determinant;
         }
@@ -292,7 +290,7 @@ namespace cxx_containers {
         std::ostream& dump(std::ostream& os) const {
             for(int i = 0; i < rows_; i++) {
                 for(int j = 0; j < cols_; j++)
-                    os << elems_[i][j] << " ";
+                    os << row_ptrs_[i][j] << " ";
                 os << std::endl;
             }
             return os;
@@ -311,7 +309,7 @@ namespace cxx_containers {
 
             for(int i = 0; i < rows_; i++) {
                 for(int j = 0; j < cols_; j++)
-                    is >> elems_[i][j];
+                    is >> row_ptrs_[i][j];
             }
             return is;
         }
@@ -322,10 +320,10 @@ namespace cxx_containers {
                 return;
 
             if((rows == 0) && (cols == 0)) {
-                for(int i = 0; i < rows_; i++)
-                    delete [] elems_[i];
-                delete [] elems_;
-                elems_ = nullptr;
+                delete [] buf_;
+                delete [] row_ptrs_;
+                row_ptrs_   = nullptr;
+                buf_        = nullptr;
                 rows_ = cols_ = 0;
                 return;
             }
@@ -333,43 +331,28 @@ namespace cxx_containers {
             if((rows == 0) || (cols == 0))
                 return;
 
-            if((rows_ != rows) || (cols_ != cols)) {
-                if(rows_ == rows) {
-                    for(int i = 0; i < rows_; i++) {
-                        delete [] elems_[i];
-                        elems_[i] = new T [cols]{};
-                    }
+            if((rows * cols) != (rows_ * cols_)) {
+                delete[] buf_;
+                delete[] row_ptrs_;
 
-                    cols_ = cols;
-                } else if(cols_ == cols) {
-                    T** new_buf = new T* [rows];
-
-                    int range = (rows_ >= rows) ? rows : rows_;
-
-                    for(int i = 0; i < range; i++)
-                        new_buf[i] = elems_[i];
-
-                    for(int j = range; j < rows; j++)
-                        new_buf[j] = new T [cols]{};
-
-                    delete [] elems_;
-
-                    elems_ = new_buf;
-                    rows_ = rows;
-                } else {
-                    for(int i = 0; i < rows_; i++)
-                        delete [] elems_[i];
-
-                    delete [] elems_;
-
+                buf_        = new T     [rows * cols]{};
+                row_ptrs_   = new T*    [rows];
+                for(int i = 0; i < rows; i++)
+                    row_ptrs_[i] = buf_ + i * cols;
+                rows_ = rows;
+                cols_ = cols;
+            } else {
+                if(rows == rows_)
+                    return;
+                else {
+                    delete [] row_ptrs_;
+                    for(int i = 0; i < rows; i++)
+                        row_ptrs_[i] = buf_ + i * cols;
                     rows_ = rows;
                     cols_ = cols;
-
-                    elems_ = new T* [rows_];
-                    for(int i = 0; i < rows_; i++)
-                        elems_[i] = new T[cols_]{};
                 }
             }
+
         }
     };
 
