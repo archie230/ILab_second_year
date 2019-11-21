@@ -1,8 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include <errno.h>
+#include <cerrno>
 #include <cmath>
+#include <cassert>
 
 namespace cxx_containers {
     /**
@@ -11,16 +12,18 @@ namespace cxx_containers {
      */
 
     const float TOLERANCE = 5e-3;
-    static bool nearly_equal(float a, float b){
+
+    template<typename T>
+    static bool nearly_equal(const T& a, const T& b){
         return fabs(a - b) <= TOLERANCE;
     }
 
     template<typename T>
     class Matrix final {
-        T*  buf_      = nullptr;    // ptr to buf
-        T** row_ptrs_ = nullptr;    // row pointers
-        int rows_ = 0;
-        int cols_ = 0;
+        T*  buf_        = nullptr;    // ptr to buf
+        T** row_ptrs_   = nullptr;    // row pointers
+        int rows_       = 0;
+        int cols_       = 0;
 
     public:
         Matrix() = default;
@@ -32,7 +35,7 @@ namespace cxx_containers {
                 buf_        (nullptr),
                 row_ptrs_   (nullptr)
         {
-            if((rows_ == 0) || (cols_ == 0)) {
+            if((rows_ == 0) || (cols_ == 0) || (rows_ < 0) || (cols_ < 0)) {
                 rows_ = cols_ = 0;
                 return;
             }
@@ -40,15 +43,20 @@ namespace cxx_containers {
             buf_        = new T [rows_ * cols_]{};
             row_ptrs_   = new T* [rows_];
 
+            assert(buf_ && row_ptrs_);
+
             for(int i = 0; i < rows; i++)
                 row_ptrs_[i] = buf_ + i * cols_;
         }
 
-        ~Matrix() {
-            if(!buf_ && !rows_)
+        Matrix(const T* buf, int rows, int cols)
+            :
+                Matrix(rows, cols)
+        {
+            if(!buf)
                 return;
-            delete [] buf_;
-            delete [] row_ptrs_;
+            for(int i = 0; i < rows_*cols_; i++)
+                buf_[i] = buf[i];
         }
 
         Matrix(const Matrix& other)
@@ -61,6 +69,22 @@ namespace cxx_containers {
             for(int i = 0; i < rows_; i++)
                 for(int j = 0; j < cols_; j++)
                     row_ptrs_[i][j] = other.row_ptrs_[i][j];
+        }
+
+        Matrix(Matrix&& other) noexcept
+            :
+                buf_(other.buf_),
+                row_ptrs_(other.row_ptrs_),
+                rows_(other.rows_),
+                cols_(other.cols_)
+        {
+            other.buf_ = nullptr, other.row_ptrs_ = nullptr;
+            other.rows_ = other.cols_ = 0;
+        }
+
+        ~Matrix() {
+            delete [] buf_;
+            delete [] row_ptrs_;
         }
 
         Matrix& operator= (const Matrix& other) {
@@ -76,10 +100,28 @@ namespace cxx_containers {
             return *this;
         }
 
-        // cache friendly multiplication
+        Matrix& operator= (Matrix&& other) noexcept {
+            if(this == &other)
+                return *this;
+
+            delete [] buf_;
+            delete [] row_ptrs_;
+
+            buf_        = other.buf_;
+            row_ptrs_   = other.row_ptrs_;
+            rows_       = other.rows_;
+            cols_       = other.cols_;
+
+            other.buf_ = nullptr, other.row_ptrs_ = nullptr;
+            other.rows_ = other.cols_ = 0;
+
+            return *this;
+        }
+
         Matrix& operator*= (const Matrix& other) {
             if(other.rows_ != cols_) {
                 std::cerr << "size doesn't match" << std::endl;
+                errno = EINVAL;
                 return *this;
             }
 
@@ -90,26 +132,14 @@ namespace cxx_containers {
             if(!row_ptrs_)
                 return *this;
 
-            for(int i = 0; i < rows_; i++) {
-                T* result_row = row_ptrs_[i];
-                T* lhs_row    = tmp.row_ptrs_[i];
-
-                for(int j = 0; j < cols_; j++)
-                    result_row[j] = 0;
-
-                for(int k = 0; k < other.rows_; k++) {
-                    T* rhs_row = other.row_ptrs_[k];
-                    for(int j = 0; j < cols_; j++) {
-                        result_row[j] += lhs_row[k] * rhs_row[j];
-                    }
-                }
-            }
+            transpose_multiplication(tmp.buf_, other.buf_, buf_, rows_, tmp.cols_, cols_);
 
             return *this;
         }
 
         Matrix& operator-= (const Matrix& other) {
             if((rows_ != other.rows_) || (cols_ != other.cols_)) {
+                errno = EINVAL;
                 std::cerr << "size doesn't match" << std::endl;
                 return *this;
             }
@@ -123,6 +153,7 @@ namespace cxx_containers {
 
         Matrix& operator+= (const Matrix& other) {
             if((rows_ != other.rows_) || (cols_ != other.cols_)) {
+                errno = EINVAL;
                 std::cerr << "size doesn't match" << std::endl;
                 return *this;
             }
@@ -140,19 +171,16 @@ namespace cxx_containers {
 
             for(int i = 0; i < rows_; i++)
                 for(int j = 0; j < cols_; j++) {
-                    if(!nearly_equal(row_ptrs_[i][j],  other.row_ptrs_[i][j]))
+                    if(!nearly_equal<T>(row_ptrs_[i][j],  other.row_ptrs_[i][j]))
                         return false;
                 }
 
             return true;
         }
 
-        void set(const T& elem, int m, int n) {
-            if((m >= rows_) || (n >= cols_))
-                return;
-
-            row_ptrs_[m][n] = elem;
-        }
+        const T* operator[] (int i) const {
+            return row_ptrs_[i];
+        };
 
         void set_zero() {
             if(!row_ptrs_)
@@ -163,10 +191,10 @@ namespace cxx_containers {
                     row_ptrs_[i][j] = 0;
         }
 
-        const T& get(const T& elem, int m, int n) const {
-            if ((m >= rows_) || (n >= cols_))
-                return {};
-            return row_ptrs_[m][n];
+        void set(const T& elem, int m, int n) {
+            if ((m >= rows_) || (n >= cols_) || (m < 0) || (n < 0))
+                return;
+            row_ptrs_[m][n] = elem;
         }
 
         void switch_rows(int row1, int row2) {
@@ -183,8 +211,10 @@ namespace cxx_containers {
         // if *this matrix determinant equals zero then L and U are both NxN zero matrix
         // if all main minors aren't invertable : return L = 0 and U = 0
         std::pair<Matrix<float>, Matrix<float>> LU_decomposition() const {
-            if(rows_ != cols_) 
+            if(rows_ != cols_) {
+                errno = EINVAL;
                 return {};
+            }
 
             Matrix<float> L(rows_, rows_);
             Matrix<float> U(rows_, rows_);
@@ -207,7 +237,7 @@ namespace cxx_containers {
                     else if (j == i)
                         U.row_ptrs_[i][j] = 1;
                     else {
-                        if(nearly_equal(L.row_ptrs_[i][i], 0)) {
+                        if(nearly_equal<T>(L.row_ptrs_[i][i], 0)) {
                             L.set_zero();
                             U.set_zero();
                             return {L, U};
@@ -238,9 +268,9 @@ namespace cxx_containers {
             float multiplier = 1;
 
             for(int i = 0; i < rows_; i++) {
-                if(nearly_equal(row_ptrs_[i][i], 0)) {
+                if(nearly_equal<T>(row_ptrs_[i][i], 0)) {
                     for(int j = i + 1; j < rows_; j++)
-                        if(!nearly_equal(row_ptrs_[j][i], 0)) {
+                        if(!nearly_equal<T>(row_ptrs_[j][i], 0)) {
                             switch_row = j;
                             break;
                         }
@@ -314,45 +344,73 @@ namespace cxx_containers {
             return is;
         }
 
+        std::pair<int, int> size() const {
+            return {rows_, cols_};
+        }
+
     private:
         void resize(int rows, int cols) {
-            if((rows < 0) || (cols < 0))
+            if ((rows < 0) || (cols < 0))
                 return;
 
-            if((rows == 0) && (cols == 0)) {
-                delete [] buf_;
-                delete [] row_ptrs_;
-                row_ptrs_   = nullptr;
-                buf_        = nullptr;
+            if ((rows == 0) && (cols == 0)) {
+                delete[] buf_;
+                delete[] row_ptrs_;
+                row_ptrs_ = nullptr;
+                buf_ = nullptr;
                 rows_ = cols_ = 0;
                 return;
             }
 
-            if((rows == 0) || (cols == 0))
+            if ((rows == 0) || (cols == 0))
                 return;
 
-            if((rows * cols) != (rows_ * cols_)) {
+            if ((rows * cols) != (rows_ * cols_)) {
                 delete[] buf_;
                 delete[] row_ptrs_;
 
-                buf_        = new T     [rows * cols]{};
-                row_ptrs_   = new T*    [rows];
-                for(int i = 0; i < rows; i++)
+                buf_ = new T[rows * cols]{};
+                row_ptrs_ = new T *[rows];
+
+                assert(buf_ && row_ptrs_);
+
+                for (int i = 0; i < rows; i++)
                     row_ptrs_[i] = buf_ + i * cols;
                 rows_ = rows;
                 cols_ = cols;
             } else {
-                if(rows == rows_)
+                if (rows == rows_)
                     return;
                 else {
-                    delete [] row_ptrs_;
-                    for(int i = 0; i < rows; i++)
+                    delete[] row_ptrs_;
+                    for (int i = 0; i < rows; i++)
                         row_ptrs_[i] = buf_ + i * cols;
                     rows_ = rows;
                     cols_ = cols;
                 }
             }
+        }
 
+        // cache friendly multiplication
+        void transpose_multiplication(const T* A, const T* B, T* C, int AX, int AY, int BY) {
+            if(!(A && B && C) || AX < 0 || AY < 0 || BY < 0)
+                return;
+
+            T* tmp = new T [AY * BY];
+            assert(tmp);
+
+            for(int i = 0; i < AY; i++)
+                for(int j = 0; j < BY; j++)
+                    tmp[j * AY + i]  = B[i * BY + j];
+
+            for(int i = 0; i < AX; i++)
+                for(int j = 0; j < BY; j++) {
+                    C[i * BY + j] = 0;
+                    for(int k = 0; k < AY; k++)
+                        C[i * BY + j] += A[i * AY + k] * tmp[j * AY + k];
+                }
+
+            delete [] tmp;
         }
     };
 
