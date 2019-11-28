@@ -1,7 +1,7 @@
 #pragma once 
 
 #include <queue>
-#include <list>
+#include <errno.h>
 
 namespace cxx_containers {
     template <typename Key, typename Compare>
@@ -43,8 +43,9 @@ namespace cxx_containers {
             }
         };
 
-        comp_t comparator_;
-        node_t *root_ = nullptr;
+        comp_t  comparator_;
+        node_t  *root_ = nullptr;
+        int     size_  = 0;
 
         AVL_tree() = default;
 
@@ -54,22 +55,23 @@ namespace cxx_containers {
                 root_(nullptr)
         {}
 
-        //deep copy tree with cur root to our tree
-        void Copy(node_t* cur) {
-            std::list<node_t*> remaining;
+        //deep copy tree with other root to our tree
+        void Copy(node_t* other) {
+            std::queue<node_t*> remaining;
+            node_t* node = nullptr;
 
-            while(cur) {
-                root_ = insert(root_, cur->key_);
-                if(cur->right_)
-                    remaining.push_back(cur->right_);
-                if(cur->left_)
-                    cur = cur->left_;
-                else
-                if (remaining.empty()) break;
-                else {
-                    cur = remaining.back();
-                    remaining.pop_back();
-                }
+            remaining.push(other);
+
+            while(!remaining.empty()) {
+                node = remaining.front();
+                remaining.pop();
+
+                root_ = insert(root_, node->key_);
+
+                if(node->left_ != nullptr)
+                    remaining.push(node->left_);
+                if(node->right_ != nullptr)
+                    remaining.push(node->right_);
             }
         }
 
@@ -94,13 +96,15 @@ namespace cxx_containers {
         //clearing tree
         void Clear() {
             std::queue<node_t*> remaining;
+            node_t* node = nullptr;
 
             if(!root_)
                 return;
 
             remaining.push(root_);
+
             while(!remaining.empty()) {
-                node_t *node = remaining.front();
+                node = remaining.front();
                 remaining.pop();
 
                 if(node->left_ != nullptr)
@@ -117,8 +121,8 @@ namespace cxx_containers {
         ~AVL_tree() {
             Clear();
         }
-        
-        void add_left(node_t* parent, node_t* left_child) {
+
+        static void add_left(node_t* parent, node_t* left_child) {
             if(!parent || parent->left_ == left_child)
                 return;
 
@@ -127,8 +131,8 @@ namespace cxx_containers {
             if(left_child)
                 left_child->parent_ = parent;
         }
-        
-        void add_right(node_t* parent, node_t* right_child) {
+
+        static void add_right(node_t* parent, node_t* right_child) {
             if(!parent || parent->right_ == right_child)
                 return;
 
@@ -137,6 +141,7 @@ namespace cxx_containers {
             if(right_child)
                 right_child->parent_ = parent;
         }
+
         /**
          * simple left rotation about node as root
          * @param node
@@ -221,8 +226,10 @@ namespace cxx_containers {
          * @return new tree root, after inserting tree is rebalanced
          */
         node_t* insert(node_t* node, const Key& key) {
-            if(!node)
+            if(!node) {
+                size_++;
                 return new node_t(key);
+            }
             if(key == node->key_)
                 return node;  // already exists
             else {
@@ -250,12 +257,12 @@ namespace cxx_containers {
 
         //finding a max ket node
         node_t* findmax(node_t* node) const{
-            return node->right_ ? findmax(node->right_):node;
+            return node->right_ ? findmax(node->right_) : node;
         }
 
         //finding a minimal key node
         node_t* findmin(node_t* node) const{
-            return node->left_ ? findmin(node->left_):node;
+            return node->left_ ? findmin(node->left_) : node;
         }
 
         //unlinking(not deleting) minimal node
@@ -281,6 +288,7 @@ namespace cxx_containers {
                 node_t* right_subtree = node->right_;
 
                 delete node;
+                size_--;
 
                 if(!right_subtree)
                     return left_subtree;
