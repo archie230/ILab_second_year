@@ -1,10 +1,11 @@
 #include <gtest/gtest.h>
 #include "../super_tree.hpp"
+#include "../super_search.hpp"
 #include <iostream>
 #include <cmath>
 
 using namespace cxx_containers;
-using Super_tree = super_tree<int, std::less<>>;
+using Super_tree = super_tree<int, std::less<int>>;
 using AVL_node_t = typename Super_tree::node_t;
 
 std::ostream& operator<<(std::ostream& os, const AVL_node_t& node) {
@@ -204,9 +205,9 @@ TEST(Super_tree, k_min) {
     std::cout << std::endl;
 
     for(int i = 0; i < test_iterations; i++) {
-        int k_min = tree.k_min(i+1, tree.root_);
+        AVL_node_t* k_min = tree.k_min(i+1, tree.root_);
         ASSERT_TRUE(errno != EINVAL);
-        ASSERT_EQ(k_min, test_vec[i]);
+        ASSERT_EQ(k_min->key_, test_vec[i]);
     }
 }
 

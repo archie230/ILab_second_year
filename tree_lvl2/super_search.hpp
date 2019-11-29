@@ -1,4 +1,5 @@
 #include "super_tree.hpp"
+#include <cassert>
 
 namespace cxx_containers {
     template<typename Key, typename Compare = std::less<Key>>
@@ -35,14 +36,22 @@ namespace cxx_containers {
             return max ? max->key_ : Key();
         }
 
+        int size() const noexcept {
+            if(tree_)
+                return tree_.size_;
+            return 0;
+        }
+
         const Key& k_min(int k) const {
-            Key answ;
-            try {
-                answ = tree_.k_min(k, tree_.root_);
-            } catch(...) {
-                throw;
-            }
-            return answ;
+            if(k <= 0)
+                throw std::runtime_error("k less than or equal zero");
+            if(k > tree_.size_)
+                throw std::out_of_range("k greater than tree size");
+
+            typename super_tree<Key, Compare>::node_t* answ = nullptr;
+            answ = tree_.k_min(k, tree_.root_);
+            assert(answ);
+            return answ -> key_;
         }
 
         int less_than(const Key& elem) const noexcept {

@@ -44,14 +44,17 @@ namespace cxx_containers {
         };
 
         comp_t comparator_;
-        node_t *root_ = nullptr;
+        node_t *root_   = nullptr;
+        int size_       = 0;
 
         super_tree() = default;
 
         explicit super_tree(const comp_t &cmp)
                 :
                 comparator_(cmp),
-                root_(nullptr) {}
+                root_(nullptr),
+                size_(0)
+                {}
 
         //deep copy tree with other root to our tree
         void Copy(node_t *other) noexcept {
@@ -76,7 +79,8 @@ namespace cxx_containers {
         super_tree(const super_tree &other)
                 :
                 comparator_(other.comparator_),
-                root_(nullptr)
+                root_(nullptr),
+                size_(0)
         {
             Copy(other.root_);
         }
@@ -84,8 +88,12 @@ namespace cxx_containers {
         super_tree(super_tree&& other)
                 :
                 comparator_(other.comparator_),
-                root_(other.root_)
-        {other.root_ = nullptr;}
+                root_(other.root_),
+                size_(other.size_)
+        {
+            other.root_ = nullptr;
+            other.size_ = 0;
+        }
 
         super_tree& operator=(const super_tree &other) noexcept {
             if (this == &other)
@@ -105,6 +113,8 @@ namespace cxx_containers {
             Clear();
             root_       = other.root_;
             other.root_ = nullptr;
+            size_       = other.size_;
+            other.size_ = 0;
             comparator_ = other.comparator_;
         }
 
@@ -131,6 +141,7 @@ namespace cxx_containers {
             }
 
             root_ = nullptr;
+            size_ = 0;
         }
 
         ~super_tree() noexcept {
@@ -263,20 +274,23 @@ namespace cxx_containers {
             }
         }
 
-        const Key& k_min(int k, node_t* node) const{
-            if(k < 0)
-                throw std::runtime_error("k less than zero");
+        node_t* k_min(int k, node_t* node) const noexcept {
+            if (k <= 0)
+                return nullptr;
 
-            if(!node)
-                throw std::out_of_range("k greater than tree size");
+            if (k > size_)
+                return nullptr;
 
             int lsub = node->lsubnum_;
+            node_t *return_node = nullptr;
 
-            if(k == lsub)
-                return node->key_;
-            if(k > lsub)
+            if (k == lsub)
+                return node;
+
+            if (k > lsub)
                 return k_min(k - lsub, node->right_);
-            if(k < lsub)
+
+            if (k < lsub)
                 return k_min(k, node->left_);
         }
 
@@ -303,6 +317,7 @@ namespace cxx_containers {
          */
         node_t *insert(node_t *node, const Key &key) noexcept {
             if (!node) {
+                size_++;
                 return new node_t(key);
             }
             if (key == node->key_)
@@ -363,6 +378,7 @@ namespace cxx_containers {
                 node_t *right_subtree = node->right_;
 
                 delete node;
+                size_--;
 
                 if (!right_subtree)
                     return left_subtree;
