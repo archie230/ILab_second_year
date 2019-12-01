@@ -1,0 +1,2344 @@
+
+super search less_than | 1000 elements time[us]: 37
+stl search less_than | 1000 elements time[us]: 3033
+super search k_min | 1000 elements time[us]: 29
+stl search k_min | 1000 elements time[us]: 2848
+
+super search less_than | 1001 elements time[us]: 34
+stl search less_than | 1001 elements time[us]: 2530
+super search k_min | 1001 elements time[us]: 27
+stl search k_min | 1001 elements time[us]: 2573
+
+super search less_than | 1002 elements time[us]: 33
+stl search less_than | 1002 elements time[us]: 2442
+super search k_min | 1002 elements time[us]: 27
+stl search k_min | 1002 elements time[us]: 2490
+
+super search less_than | 1003 elements time[us]: 34
+stl search less_than | 1003 elements time[us]: 2443
+super search k_min | 1003 elements time[us]: 27
+stl search k_min | 1003 elements time[us]: 2475
+
+super search less_than | 1004 elements time[us]: 34
+stl search less_than | 1004 elements time[us]: 2457
+super search k_min | 1004 elements time[us]: 27
+stl search k_min | 1004 elements time[us]: 2495
+
+super search less_than | 1005 elements time[us]: 34
+stl search less_than | 1005 elements time[us]: 2517
+super search k_min | 1005 elements time[us]: 28
+stl search k_min | 1005 elements time[us]: 2494
+
+super search less_than | 1006 elements time[us]: 35
+stl search less_than | 1006 elements time[us]: 2665
+super search k_min | 1006 elements time[us]: 46
+stl search k_min | 1006 elements time[us]: 3177
+
+super search less_than | 1007 elements time[us]: 34
+stl search less_than | 1007 elements time[us]: 2571
+super search k_min | 1007 elements time[us]: 28
+stl search k_min | 1007 elements time[us]: 2524
+
+super search less_than | 1008 elements time[us]: 37
+stl search less_than | 1008 elements time[us]: 2755
+super search k_min | 1008 elements time[us]: 35
+stl search k_min | 1008 elements time[us]: 2776
+
+super search less_than | 1009 elements time[us]: 40
+stl search less_than | 1009 elements time[us]: 3071
+super search k_min | 1009 elements time[us]: 31
+stl search k_min | 1009 elements time[us]: 2971
+
+super search less_than | 1010 elements time[us]: 39
+stl search less_than | 1010 elements time[us]: 3030
+super search k_min | 1010 elements time[us]: 33
+stl search k_min | 1010 elements time[us]: 3019
+
+super search less_than | 1011 elements time[us]: 43
+stl search less_than | 1011 elements time[us]: 3248
+super search k_min | 1011 elements time[us]: 33
+stl search k_min | 1011 elements time[us]: 3234
+
+super search less_than | 1012 elements time[us]: 43
+stl search less_than | 1012 elements time[us]: 3283
+super search k_min | 1012 elements time[us]: 34
+stl search k_min | 1012 elements time[us]: 3167
+
+super search less_than | 1013 elements time[us]: 45
+stl search less_than | 1013 elements time[us]: 3525
+super search k_min | 1013 elements time[us]: 41
+stl search k_min | 1013 elements time[us]: 3572
+
+super search less_than | 1014 elements time[us]: 44
+stl search less_than | 1014 elements time[us]: 3559
+super search k_min | 1014 elements time[us]: 34
+stl search k_min | 1014 elements time[us]: 3528
+
+super search less_than | 1015 elements time[us]: 43
+stl search less_than | 1015 elements time[us]: 3248
+super search k_min | 1015 elements time[us]: 34
+stl search k_min | 1015 elements time[us]: 3161
+
+super search less_than | 1016 elements time[us]: 45
+stl search less_than | 1016 elements time[us]: 3290
+super search k_min | 1016 elements time[us]: 34
+stl search k_min | 1016 elements time[us]: 3154
+
+super search less_than | 1017 elements time[us]: 36
+stl search less_than | 1017 elements time[us]: 2660
+super search k_min | 1017 elements time[us]: 28
+stl search k_min | 1017 elements time[us]: 2548
+
+super search less_than | 1018 elements time[us]: 34
+stl search less_than | 1018 elements time[us]: 2821
+super search k_min | 1018 elements time[us]: 30
+stl search k_min | 1018 elements time[us]: 2824
+
+super search less_than | 1019 elements time[us]: 44
+stl search less_than | 1019 elements time[us]: 3063
+super search k_min | 1019 elements time[us]: 32
+stl search k_min | 1019 elements time[us]: 3023
+
+super search less_than | 1020 elements time[us]: 41
+stl search less_than | 1020 elements time[us]: 3217
+super search k_min | 1020 elements time[us]: 34
+stl search k_min | 1020 elements time[us]: 3062
+
+super search less_than | 1021 elements time[us]: 43
+stl search less_than | 1021 elements time[us]: 3330
+super search k_min | 1021 elements time[us]: 35
+stl search k_min | 1021 elements time[us]: 3301
+
+super search less_than | 1022 elements time[us]: 46
+stl search less_than | 1022 elements time[us]: 3288
+super search k_min | 1022 elements time[us]: 35
+stl search k_min | 1022 elements time[us]: 3228
+
+super search less_than | 1023 elements time[us]: 47
+stl search less_than | 1023 elements time[us]: 3421
+super search k_min | 1023 elements time[us]: 37
+stl search k_min | 1023 elements time[us]: 3297
+
+super search less_than | 1024 elements time[us]: 39
+stl search less_than | 1024 elements time[us]: 2725
+super search k_min | 1024 elements time[us]: 27
+stl search k_min | 1024 elements time[us]: 2633
+
+super search less_than | 1025 elements time[us]: 36
+stl search less_than | 1025 elements time[us]: 2877
+super search k_min | 1025 elements time[us]: 31
+stl search k_min | 1025 elements time[us]: 2896
+
+super search less_than | 1026 elements time[us]: 35
+stl search less_than | 1026 elements time[us]: 2555
+super search k_min | 1026 elements time[us]: 27
+stl search k_min | 1026 elements time[us]: 2586
+
+super search less_than | 1027 elements time[us]: 36
+stl search less_than | 1027 elements time[us]: 2729
+super search k_min | 1027 elements time[us]: 29
+stl search k_min | 1027 elements time[us]: 2898
+
+super search less_than | 1028 elements time[us]: 42
+stl search less_than | 1028 elements time[us]: 3137
+super search k_min | 1028 elements time[us]: 34
+stl search k_min | 1028 elements time[us]: 3067
+
+super search less_than | 1029 elements time[us]: 38
+stl search less_than | 1029 elements time[us]: 2610
+super search k_min | 1029 elements time[us]: 28
+stl search k_min | 1029 elements time[us]: 2606
+
+super search less_than | 1030 elements time[us]: 35
+stl search less_than | 1030 elements time[us]: 2888
+super search k_min | 1030 elements time[us]: 31
+stl search k_min | 1030 elements time[us]: 2952
+
+super search less_than | 1031 elements time[us]: 34
+stl search less_than | 1031 elements time[us]: 2670
+super search k_min | 1031 elements time[us]: 27
+stl search k_min | 1031 elements time[us]: 2712
+
+super search less_than | 1032 elements time[us]: 36
+stl search less_than | 1032 elements time[us]: 2800
+super search k_min | 1032 elements time[us]: 30
+stl search k_min | 1032 elements time[us]: 2915
+
+super search less_than | 1033 elements time[us]: 38
+stl search less_than | 1033 elements time[us]: 2981
+super search k_min | 1033 elements time[us]: 31
+stl search k_min | 1033 elements time[us]: 2933
+
+super search less_than | 1034 elements time[us]: 38
+stl search less_than | 1034 elements time[us]: 2919
+super search k_min | 1034 elements time[us]: 31
+stl search k_min | 1034 elements time[us]: 2963
+
+super search less_than | 1035 elements time[us]: 35
+stl search less_than | 1035 elements time[us]: 2693
+super search k_min | 1035 elements time[us]: 28
+stl search k_min | 1035 elements time[us]: 2779
+
+super search less_than | 1036 elements time[us]: 34
+stl search less_than | 1036 elements time[us]: 3040
+super search k_min | 1036 elements time[us]: 29
+stl search k_min | 1036 elements time[us]: 3005
+
+super search less_than | 1037 elements time[us]: 35
+stl search less_than | 1037 elements time[us]: 2717
+super search k_min | 1037 elements time[us]: 28
+stl search k_min | 1037 elements time[us]: 2721
+
+super search less_than | 1038 elements time[us]: 36
+stl search less_than | 1038 elements time[us]: 3021
+super search k_min | 1038 elements time[us]: 29
+stl search k_min | 1038 elements time[us]: 2986
+
+super search less_than | 1039 elements time[us]: 38
+stl search less_than | 1039 elements time[us]: 2741
+super search k_min | 1039 elements time[us]: 29
+stl search k_min | 1039 elements time[us]: 2750
+
+super search less_than | 1040 elements time[us]: 39
+stl search less_than | 1040 elements time[us]: 2948
+super search k_min | 1040 elements time[us]: 30
+stl search k_min | 1040 elements time[us]: 2960
+
+super search less_than | 1041 elements time[us]: 45
+stl search less_than | 1041 elements time[us]: 3273
+super search k_min | 1041 elements time[us]: 34
+stl search k_min | 1041 elements time[us]: 3149
+
+super search less_than | 1042 elements time[us]: 46
+stl search less_than | 1042 elements time[us]: 3384
+super search k_min | 1042 elements time[us]: 35
+stl search k_min | 1042 elements time[us]: 3384
+
+super search less_than | 1043 elements time[us]: 47
+stl search less_than | 1043 elements time[us]: 3692
+super search k_min | 1043 elements time[us]: 37
+stl search k_min | 1043 elements time[us]: 3650
+
+super search less_than | 1044 elements time[us]: 46
+stl search less_than | 1044 elements time[us]: 3682
+super search k_min | 1044 elements time[us]: 38
+stl search k_min | 1044 elements time[us]: 3577
+
+super search less_than | 1045 elements time[us]: 48
+stl search less_than | 1045 elements time[us]: 3840
+super search k_min | 1045 elements time[us]: 37
+stl search k_min | 1045 elements time[us]: 3704
+
+super search less_than | 1046 elements time[us]: 45
+stl search less_than | 1046 elements time[us]: 3742
+super search k_min | 1046 elements time[us]: 37
+stl search k_min | 1046 elements time[us]: 3641
+
+super search less_than | 1047 elements time[us]: 48
+stl search less_than | 1047 elements time[us]: 3633
+super search k_min | 1047 elements time[us]: 37
+stl search k_min | 1047 elements time[us]: 3528
+
+super search less_than | 1048 elements time[us]: 44
+stl search less_than | 1048 elements time[us]: 3703
+super search k_min | 1048 elements time[us]: 37
+stl search k_min | 1048 elements time[us]: 3666
+
+super search less_than | 1049 elements time[us]: 48
+stl search less_than | 1049 elements time[us]: 3675
+super search k_min | 1049 elements time[us]: 37
+stl search k_min | 1049 elements time[us]: 3698
+
+super search less_than | 1050 elements time[us]: 47
+stl search less_than | 1050 elements time[us]: 3644
+super search k_min | 1050 elements time[us]: 37
+stl search k_min | 1050 elements time[us]: 3633
+
+super search less_than | 1051 elements time[us]: 48
+stl search less_than | 1051 elements time[us]: 3886
+super search k_min | 1051 elements time[us]: 38
+stl search k_min | 1051 elements time[us]: 3651
+
+super search less_than | 1052 elements time[us]: 45
+stl search less_than | 1052 elements time[us]: 3698
+super search k_min | 1052 elements time[us]: 37
+stl search k_min | 1052 elements time[us]: 3608
+
+super search less_than | 1053 elements time[us]: 45
+stl search less_than | 1053 elements time[us]: 3667
+super search k_min | 1053 elements time[us]: 38
+stl search k_min | 1053 elements time[us]: 3610
+
+super search less_than | 1054 elements time[us]: 45
+stl search less_than | 1054 elements time[us]: 3737
+super search k_min | 1054 elements time[us]: 38
+stl search k_min | 1054 elements time[us]: 3642
+
+super search less_than | 1055 elements time[us]: 51
+stl search less_than | 1055 elements time[us]: 3707
+super search k_min | 1055 elements time[us]: 38
+stl search k_min | 1055 elements time[us]: 3560
+
+super search less_than | 1056 elements time[us]: 46
+stl search less_than | 1056 elements time[us]: 3626
+super search k_min | 1056 elements time[us]: 38
+stl search k_min | 1056 elements time[us]: 3677
+
+super search less_than | 1057 elements time[us]: 48
+stl search less_than | 1057 elements time[us]: 3698
+super search k_min | 1057 elements time[us]: 37
+stl search k_min | 1057 elements time[us]: 3635
+
+super search less_than | 1058 elements time[us]: 44
+stl search less_than | 1058 elements time[us]: 3695
+super search k_min | 1058 elements time[us]: 38
+stl search k_min | 1058 elements time[us]: 3581
+
+super search less_than | 1059 elements time[us]: 45
+stl search less_than | 1059 elements time[us]: 3713
+super search k_min | 1059 elements time[us]: 37
+stl search k_min | 1059 elements time[us]: 3528
+
+super search less_than | 1060 elements time[us]: 48
+stl search less_than | 1060 elements time[us]: 3721
+super search k_min | 1060 elements time[us]: 37
+stl search k_min | 1060 elements time[us]: 3605
+
+super search less_than | 1061 elements time[us]: 47
+stl search less_than | 1061 elements time[us]: 3759
+super search k_min | 1061 elements time[us]: 37
+stl search k_min | 1061 elements time[us]: 3631
+
+super search less_than | 1062 elements time[us]: 46
+stl search less_than | 1062 elements time[us]: 3984
+super search k_min | 1062 elements time[us]: 38
+stl search k_min | 1062 elements time[us]: 3825
+
+super search less_than | 1063 elements time[us]: 53
+stl search less_than | 1063 elements time[us]: 3744
+super search k_min | 1063 elements time[us]: 37
+stl search k_min | 1063 elements time[us]: 3664
+
+super search less_than | 1064 elements time[us]: 44
+stl search less_than | 1064 elements time[us]: 4045
+super search k_min | 1064 elements time[us]: 38
+stl search k_min | 1064 elements time[us]: 3892
+
+super search less_than | 1065 elements time[us]: 44
+stl search less_than | 1065 elements time[us]: 3823
+super search k_min | 1065 elements time[us]: 38
+stl search k_min | 1065 elements time[us]: 3693
+
+super search less_than | 1066 elements time[us]: 46
+stl search less_than | 1066 elements time[us]: 3823
+super search k_min | 1066 elements time[us]: 38
+stl search k_min | 1066 elements time[us]: 3696
+
+super search less_than | 1067 elements time[us]: 45
+stl search less_than | 1067 elements time[us]: 3798
+super search k_min | 1067 elements time[us]: 39
+stl search k_min | 1067 elements time[us]: 3642
+
+super search less_than | 1068 elements time[us]: 47
+stl search less_than | 1068 elements time[us]: 3912
+super search k_min | 1068 elements time[us]: 38
+stl search k_min | 1068 elements time[us]: 3920
+
+super search less_than | 1069 elements time[us]: 45
+stl search less_than | 1069 elements time[us]: 3811
+super search k_min | 1069 elements time[us]: 40
+stl search k_min | 1069 elements time[us]: 3730
+
+super search less_than | 1070 elements time[us]: 46
+stl search less_than | 1070 elements time[us]: 3925
+super search k_min | 1070 elements time[us]: 38
+stl search k_min | 1070 elements time[us]: 3707
+
+super search less_than | 1071 elements time[us]: 51
+stl search less_than | 1071 elements time[us]: 3824
+super search k_min | 1071 elements time[us]: 38
+stl search k_min | 1071 elements time[us]: 3700
+
+super search less_than | 1072 elements time[us]: 46
+stl search less_than | 1072 elements time[us]: 3845
+super search k_min | 1072 elements time[us]: 38
+stl search k_min | 1072 elements time[us]: 3739
+
+super search less_than | 1073 elements time[us]: 46
+stl search less_than | 1073 elements time[us]: 3939
+super search k_min | 1073 elements time[us]: 38
+stl search k_min | 1073 elements time[us]: 3883
+
+super search less_than | 1074 elements time[us]: 49
+stl search less_than | 1074 elements time[us]: 3905
+super search k_min | 1074 elements time[us]: 38
+stl search k_min | 1074 elements time[us]: 3877
+
+super search less_than | 1075 elements time[us]: 45
+stl search less_than | 1075 elements time[us]: 3857
+super search k_min | 1075 elements time[us]: 39
+stl search k_min | 1075 elements time[us]: 3820
+
+super search less_than | 1076 elements time[us]: 46
+stl search less_than | 1076 elements time[us]: 3813
+super search k_min | 1076 elements time[us]: 38
+stl search k_min | 1076 elements time[us]: 3764
+
+super search less_than | 1077 elements time[us]: 46
+stl search less_than | 1077 elements time[us]: 3787
+super search k_min | 1077 elements time[us]: 39
+stl search k_min | 1077 elements time[us]: 3859
+
+super search less_than | 1078 elements time[us]: 51
+stl search less_than | 1078 elements time[us]: 3908
+super search k_min | 1078 elements time[us]: 38
+stl search k_min | 1078 elements time[us]: 3806
+
+super search less_than | 1079 elements time[us]: 49
+stl search less_than | 1079 elements time[us]: 3952
+super search k_min | 1079 elements time[us]: 38
+stl search k_min | 1079 elements time[us]: 3853
+
+super search less_than | 1080 elements time[us]: 50
+stl search less_than | 1080 elements time[us]: 3860
+super search k_min | 1080 elements time[us]: 38
+stl search k_min | 1080 elements time[us]: 3757
+
+super search less_than | 1081 elements time[us]: 46
+stl search less_than | 1081 elements time[us]: 3834
+super search k_min | 1081 elements time[us]: 39
+stl search k_min | 1081 elements time[us]: 3792
+
+super search less_than | 1082 elements time[us]: 45
+stl search less_than | 1082 elements time[us]: 3825
+super search k_min | 1082 elements time[us]: 39
+stl search k_min | 1082 elements time[us]: 3746
+
+super search less_than | 1083 elements time[us]: 50
+stl search less_than | 1083 elements time[us]: 4043
+super search k_min | 1083 elements time[us]: 39
+stl search k_min | 1083 elements time[us]: 3827
+
+super search less_than | 1084 elements time[us]: 49
+stl search less_than | 1084 elements time[us]: 3986
+super search k_min | 1084 elements time[us]: 39
+stl search k_min | 1084 elements time[us]: 3896
+
+super search less_than | 1085 elements time[us]: 47
+stl search less_than | 1085 elements time[us]: 3881
+super search k_min | 1085 elements time[us]: 39
+stl search k_min | 1085 elements time[us]: 3705
+
+super search less_than | 1086 elements time[us]: 48
+stl search less_than | 1086 elements time[us]: 4092
+super search k_min | 1086 elements time[us]: 39
+stl search k_min | 1086 elements time[us]: 4074
+
+super search less_than | 1087 elements time[us]: 48
+stl search less_than | 1087 elements time[us]: 4043
+super search k_min | 1087 elements time[us]: 38
+stl search k_min | 1087 elements time[us]: 3885
+
+super search less_than | 1088 elements time[us]: 48
+stl search less_than | 1088 elements time[us]: 3999
+super search k_min | 1088 elements time[us]: 39
+stl search k_min | 1088 elements time[us]: 3892
+
+super search less_than | 1089 elements time[us]: 48
+stl search less_than | 1089 elements time[us]: 4021
+super search k_min | 1089 elements time[us]: 38
+stl search k_min | 1089 elements time[us]: 3912
+
+super search less_than | 1090 elements time[us]: 47
+stl search less_than | 1090 elements time[us]: 3971
+super search k_min | 1090 elements time[us]: 39
+stl search k_min | 1090 elements time[us]: 3901
+
+super search less_than | 1091 elements time[us]: 49
+stl search less_than | 1091 elements time[us]: 4242
+super search k_min | 1091 elements time[us]: 39
+stl search k_min | 1091 elements time[us]: 4026
+
+super search less_than | 1092 elements time[us]: 48
+stl search less_than | 1092 elements time[us]: 3971
+super search k_min | 1092 elements time[us]: 39
+stl search k_min | 1092 elements time[us]: 3883
+
+super search less_than | 1093 elements time[us]: 47
+stl search less_than | 1093 elements time[us]: 4008
+super search k_min | 1093 elements time[us]: 39
+stl search k_min | 1093 elements time[us]: 3946
+
+super search less_than | 1094 elements time[us]: 46
+stl search less_than | 1094 elements time[us]: 4101
+super search k_min | 1094 elements time[us]: 39
+stl search k_min | 1094 elements time[us]: 3993
+
+super search less_than | 1095 elements time[us]: 48
+stl search less_than | 1095 elements time[us]: 4093
+super search k_min | 1095 elements time[us]: 38
+stl search k_min | 1095 elements time[us]: 3941
+
+super search less_than | 1096 elements time[us]: 49
+stl search less_than | 1096 elements time[us]: 4189
+super search k_min | 1096 elements time[us]: 39
+stl search k_min | 1096 elements time[us]: 4056
+
+super search less_than | 1097 elements time[us]: 52
+stl search less_than | 1097 elements time[us]: 4120
+super search k_min | 1097 elements time[us]: 48
+stl search k_min | 1097 elements time[us]: 3931
+
+super search less_than | 1098 elements time[us]: 51
+stl search less_than | 1098 elements time[us]: 4060
+super search k_min | 1098 elements time[us]: 39
+stl search k_min | 1098 elements time[us]: 3896
+
+super search less_than | 1099 elements time[us]: 50
+stl search less_than | 1099 elements time[us]: 4011
+super search k_min | 1099 elements time[us]: 39
+stl search k_min | 1099 elements time[us]: 3815
+
+super search less_than | 1100 elements time[us]: 50
+stl search less_than | 1100 elements time[us]: 4433
+super search k_min | 1100 elements time[us]: 40
+stl search k_min | 1100 elements time[us]: 4299
+
+super search less_than | 1101 elements time[us]: 47
+stl search less_than | 1101 elements time[us]: 4164
+super search k_min | 1101 elements time[us]: 40
+stl search k_min | 1101 elements time[us]: 4155
+
+super search less_than | 1102 elements time[us]: 51
+stl search less_than | 1102 elements time[us]: 4048
+super search k_min | 1102 elements time[us]: 40
+stl search k_min | 1102 elements time[us]: 4039
+
+super search less_than | 1103 elements time[us]: 49
+stl search less_than | 1103 elements time[us]: 4126
+super search k_min | 1103 elements time[us]: 39
+stl search k_min | 1103 elements time[us]: 3989
+
+super search less_than | 1104 elements time[us]: 48
+stl search less_than | 1104 elements time[us]: 4116
+super search k_min | 1104 elements time[us]: 39
+stl search k_min | 1104 elements time[us]: 3928
+
+super search less_than | 1105 elements time[us]: 47
+stl search less_than | 1105 elements time[us]: 4086
+super search k_min | 1105 elements time[us]: 39
+stl search k_min | 1105 elements time[us]: 3920
+
+super search less_than | 1106 elements time[us]: 49
+stl search less_than | 1106 elements time[us]: 4118
+super search k_min | 1106 elements time[us]: 39
+stl search k_min | 1106 elements time[us]: 4042
+
+super search less_than | 1107 elements time[us]: 49
+stl search less_than | 1107 elements time[us]: 4078
+super search k_min | 1107 elements time[us]: 40
+stl search k_min | 1107 elements time[us]: 3914
+
+super search less_than | 1108 elements time[us]: 48
+stl search less_than | 1108 elements time[us]: 4169
+super search k_min | 1108 elements time[us]: 39
+stl search k_min | 1108 elements time[us]: 4034
+
+super search less_than | 1109 elements time[us]: 50
+stl search less_than | 1109 elements time[us]: 4498
+super search k_min | 1109 elements time[us]: 41
+stl search k_min | 1109 elements time[us]: 4471
+
+super search less_than | 1110 elements time[us]: 50
+stl search less_than | 1110 elements time[us]: 4141
+super search k_min | 1110 elements time[us]: 40
+stl search k_min | 1110 elements time[us]: 4100
+
+super search less_than | 1111 elements time[us]: 51
+stl search less_than | 1111 elements time[us]: 4512
+super search k_min | 1111 elements time[us]: 40
+stl search k_min | 1111 elements time[us]: 4376
+
+super search less_than | 1112 elements time[us]: 52
+stl search less_than | 1112 elements time[us]: 3992
+super search k_min | 1112 elements time[us]: 39
+stl search k_min | 1112 elements time[us]: 3960
+
+super search less_than | 1113 elements time[us]: 49
+stl search less_than | 1113 elements time[us]: 4501
+super search k_min | 1113 elements time[us]: 41
+stl search k_min | 1113 elements time[us]: 4372
+
+super search less_than | 1114 elements time[us]: 66
+stl search less_than | 1114 elements time[us]: 4184
+super search k_min | 1114 elements time[us]: 40
+stl search k_min | 1114 elements time[us]: 4118
+
+super search less_than | 1115 elements time[us]: 51
+stl search less_than | 1115 elements time[us]: 4472
+super search k_min | 1115 elements time[us]: 40
+stl search k_min | 1115 elements time[us]: 4215
+
+super search less_than | 1116 elements time[us]: 51
+stl search less_than | 1116 elements time[us]: 4204
+super search k_min | 1116 elements time[us]: 40
+stl search k_min | 1116 elements time[us]: 4178
+
+super search less_than | 1117 elements time[us]: 50
+stl search less_than | 1117 elements time[us]: 4266
+super search k_min | 1117 elements time[us]: 41
+stl search k_min | 1117 elements time[us]: 4082
+
+super search less_than | 1118 elements time[us]: 50
+stl search less_than | 1118 elements time[us]: 4214
+super search k_min | 1118 elements time[us]: 41
+stl search k_min | 1118 elements time[us]: 4069
+
+super search less_than | 1119 elements time[us]: 49
+stl search less_than | 1119 elements time[us]: 4212
+super search k_min | 1119 elements time[us]: 41
+stl search k_min | 1119 elements time[us]: 4144
+
+super search less_than | 1120 elements time[us]: 49
+stl search less_than | 1120 elements time[us]: 4340
+super search k_min | 1120 elements time[us]: 40
+stl search k_min | 1120 elements time[us]: 4059
+
+super search less_than | 1121 elements time[us]: 51
+stl search less_than | 1121 elements time[us]: 4355
+super search k_min | 1121 elements time[us]: 41
+stl search k_min | 1121 elements time[us]: 4139
+
+super search less_than | 1122 elements time[us]: 51
+stl search less_than | 1122 elements time[us]: 4513
+super search k_min | 1122 elements time[us]: 38
+stl search k_min | 1122 elements time[us]: 4339
+
+super search less_than | 1123 elements time[us]: 50
+stl search less_than | 1123 elements time[us]: 4307
+super search k_min | 1123 elements time[us]: 39
+stl search k_min | 1123 elements time[us]: 4220
+
+super search less_than | 1124 elements time[us]: 51
+stl search less_than | 1124 elements time[us]: 4606
+super search k_min | 1124 elements time[us]: 40
+stl search k_min | 1124 elements time[us]: 4463
+
+super search less_than | 1125 elements time[us]: 50
+stl search less_than | 1125 elements time[us]: 4164
+super search k_min | 1125 elements time[us]: 40
+stl search k_min | 1125 elements time[us]: 4135
+
+super search less_than | 1126 elements time[us]: 50
+stl search less_than | 1126 elements time[us]: 4241
+super search k_min | 1126 elements time[us]: 40
+stl search k_min | 1126 elements time[us]: 4148
+
+super search less_than | 1127 elements time[us]: 50
+stl search less_than | 1127 elements time[us]: 4307
+super search k_min | 1127 elements time[us]: 41
+stl search k_min | 1127 elements time[us]: 4146
+
+super search less_than | 1128 elements time[us]: 51
+stl search less_than | 1128 elements time[us]: 4246
+super search k_min | 1128 elements time[us]: 41
+stl search k_min | 1128 elements time[us]: 4233
+
+super search less_than | 1129 elements time[us]: 54
+stl search less_than | 1129 elements time[us]: 4296
+super search k_min | 1129 elements time[us]: 41
+stl search k_min | 1129 elements time[us]: 4129
+
+super search less_than | 1130 elements time[us]: 50
+stl search less_than | 1130 elements time[us]: 4483
+super search k_min | 1130 elements time[us]: 42
+stl search k_min | 1130 elements time[us]: 4367
+
+super search less_than | 1131 elements time[us]: 49
+stl search less_than | 1131 elements time[us]: 4225
+super search k_min | 1131 elements time[us]: 41
+stl search k_min | 1131 elements time[us]: 4073
+
+super search less_than | 1132 elements time[us]: 52
+stl search less_than | 1132 elements time[us]: 4133
+super search k_min | 1132 elements time[us]: 40
+stl search k_min | 1132 elements time[us]: 4086
+
+super search less_than | 1133 elements time[us]: 51
+stl search less_than | 1133 elements time[us]: 4214
+super search k_min | 1133 elements time[us]: 42
+stl search k_min | 1133 elements time[us]: 4209
+
+super search less_than | 1134 elements time[us]: 52
+stl search less_than | 1134 elements time[us]: 4657
+super search k_min | 1134 elements time[us]: 40
+stl search k_min | 1134 elements time[us]: 4302
+
+super search less_than | 1135 elements time[us]: 52
+stl search less_than | 1135 elements time[us]: 4280
+super search k_min | 1135 elements time[us]: 42
+stl search k_min | 1135 elements time[us]: 4357
+
+super search less_than | 1136 elements time[us]: 51
+stl search less_than | 1136 elements time[us]: 4549
+super search k_min | 1136 elements time[us]: 41
+stl search k_min | 1136 elements time[us]: 4403
+
+super search less_than | 1137 elements time[us]: 51
+stl search less_than | 1137 elements time[us]: 4467
+super search k_min | 1137 elements time[us]: 42
+stl search k_min | 1137 elements time[us]: 4372
+
+super search less_than | 1138 elements time[us]: 50
+stl search less_than | 1138 elements time[us]: 4355
+super search k_min | 1138 elements time[us]: 41
+stl search k_min | 1138 elements time[us]: 4234
+
+super search less_than | 1139 elements time[us]: 51
+stl search less_than | 1139 elements time[us]: 4372
+super search k_min | 1139 elements time[us]: 41
+stl search k_min | 1139 elements time[us]: 4348
+
+super search less_than | 1140 elements time[us]: 53
+stl search less_than | 1140 elements time[us]: 4394
+super search k_min | 1140 elements time[us]: 42
+stl search k_min | 1140 elements time[us]: 4263
+
+super search less_than | 1141 elements time[us]: 54
+stl search less_than | 1141 elements time[us]: 4448
+super search k_min | 1141 elements time[us]: 42
+stl search k_min | 1141 elements time[us]: 4235
+
+super search less_than | 1142 elements time[us]: 52
+stl search less_than | 1142 elements time[us]: 4361
+super search k_min | 1142 elements time[us]: 42
+stl search k_min | 1142 elements time[us]: 4244
+
+super search less_than | 1143 elements time[us]: 53
+stl search less_than | 1143 elements time[us]: 4323
+super search k_min | 1143 elements time[us]: 42
+stl search k_min | 1143 elements time[us]: 4127
+
+super search less_than | 1144 elements time[us]: 52
+stl search less_than | 1144 elements time[us]: 4471
+super search k_min | 1144 elements time[us]: 42
+stl search k_min | 1144 elements time[us]: 4207
+
+super search less_than | 1145 elements time[us]: 51
+stl search less_than | 1145 elements time[us]: 4426
+super search k_min | 1145 elements time[us]: 42
+stl search k_min | 1145 elements time[us]: 4351
+
+super search less_than | 1146 elements time[us]: 51
+stl search less_than | 1146 elements time[us]: 4483
+super search k_min | 1146 elements time[us]: 41
+stl search k_min | 1146 elements time[us]: 4325
+
+super search less_than | 1147 elements time[us]: 51
+stl search less_than | 1147 elements time[us]: 4527
+super search k_min | 1147 elements time[us]: 42
+stl search k_min | 1147 elements time[us]: 4365
+
+super search less_than | 1148 elements time[us]: 53
+stl search less_than | 1148 elements time[us]: 4480
+super search k_min | 1148 elements time[us]: 42
+stl search k_min | 1148 elements time[us]: 4323
+
+super search less_than | 1149 elements time[us]: 53
+stl search less_than | 1149 elements time[us]: 4515
+super search k_min | 1149 elements time[us]: 47
+stl search k_min | 1149 elements time[us]: 4300
+
+super search less_than | 1150 elements time[us]: 57
+stl search less_than | 1150 elements time[us]: 4605
+super search k_min | 1150 elements time[us]: 43
+stl search k_min | 1150 elements time[us]: 4506
+
+super search less_than | 1151 elements time[us]: 54
+stl search less_than | 1151 elements time[us]: 4504
+super search k_min | 1151 elements time[us]: 42
+stl search k_min | 1151 elements time[us]: 4448
+
+super search less_than | 1152 elements time[us]: 54
+stl search less_than | 1152 elements time[us]: 4756
+super search k_min | 1152 elements time[us]: 42
+stl search k_min | 1152 elements time[us]: 4505
+
+super search less_than | 1153 elements time[us]: 53
+stl search less_than | 1153 elements time[us]: 4473
+super search k_min | 1153 elements time[us]: 42
+stl search k_min | 1153 elements time[us]: 4278
+
+super search less_than | 1154 elements time[us]: 52
+stl search less_than | 1154 elements time[us]: 4956
+super search k_min | 1154 elements time[us]: 43
+stl search k_min | 1154 elements time[us]: 4770
+
+super search less_than | 1155 elements time[us]: 56
+stl search less_than | 1155 elements time[us]: 4574
+super search k_min | 1155 elements time[us]: 43
+stl search k_min | 1155 elements time[us]: 4475
+
+super search less_than | 1156 elements time[us]: 57
+stl search less_than | 1156 elements time[us]: 5001
+super search k_min | 1156 elements time[us]: 42
+stl search k_min | 1156 elements time[us]: 4716
+
+super search less_than | 1157 elements time[us]: 53
+stl search less_than | 1157 elements time[us]: 4510
+super search k_min | 1157 elements time[us]: 43
+stl search k_min | 1157 elements time[us]: 4434
+
+super search less_than | 1158 elements time[us]: 52
+stl search less_than | 1158 elements time[us]: 4551
+super search k_min | 1158 elements time[us]: 42
+stl search k_min | 1158 elements time[us]: 4312
+
+super search less_than | 1159 elements time[us]: 52
+stl search less_than | 1159 elements time[us]: 4591
+super search k_min | 1159 elements time[us]: 42
+stl search k_min | 1159 elements time[us]: 4429
+
+super search less_than | 1160 elements time[us]: 55
+stl search less_than | 1160 elements time[us]: 4824
+super search k_min | 1160 elements time[us]: 42
+stl search k_min | 1160 elements time[us]: 4600
+
+super search less_than | 1161 elements time[us]: 51
+stl search less_than | 1161 elements time[us]: 4567
+super search k_min | 1161 elements time[us]: 42
+stl search k_min | 1161 elements time[us]: 4546
+
+super search less_than | 1162 elements time[us]: 54
+stl search less_than | 1162 elements time[us]: 4814
+super search k_min | 1162 elements time[us]: 41
+stl search k_min | 1162 elements time[us]: 4595
+
+super search less_than | 1163 elements time[us]: 52
+stl search less_than | 1163 elements time[us]: 4485
+super search k_min | 1163 elements time[us]: 40
+stl search k_min | 1163 elements time[us]: 4349
+
+super search less_than | 1164 elements time[us]: 54
+stl search less_than | 1164 elements time[us]: 4536
+super search k_min | 1164 elements time[us]: 40
+stl search k_min | 1164 elements time[us]: 4399
+
+super search less_than | 1165 elements time[us]: 54
+stl search less_than | 1165 elements time[us]: 4637
+super search k_min | 1165 elements time[us]: 42
+stl search k_min | 1165 elements time[us]: 4473
+
+super search less_than | 1166 elements time[us]: 56
+stl search less_than | 1166 elements time[us]: 4851
+super search k_min | 1166 elements time[us]: 43
+stl search k_min | 1166 elements time[us]: 4660
+
+super search less_than | 1167 elements time[us]: 52
+stl search less_than | 1167 elements time[us]: 4675
+super search k_min | 1167 elements time[us]: 42
+stl search k_min | 1167 elements time[us]: 4537
+
+super search less_than | 1168 elements time[us]: 55
+stl search less_than | 1168 elements time[us]: 4668
+super search k_min | 1168 elements time[us]: 41
+stl search k_min | 1168 elements time[us]: 4507
+
+super search less_than | 1169 elements time[us]: 52
+stl search less_than | 1169 elements time[us]: 4780
+super search k_min | 1169 elements time[us]: 43
+stl search k_min | 1169 elements time[us]: 4629
+
+super search less_than | 1170 elements time[us]: 54
+stl search less_than | 1170 elements time[us]: 4599
+super search k_min | 1170 elements time[us]: 43
+stl search k_min | 1170 elements time[us]: 4637
+
+super search less_than | 1171 elements time[us]: 55
+stl search less_than | 1171 elements time[us]: 4855
+super search k_min | 1171 elements time[us]: 44
+stl search k_min | 1171 elements time[us]: 4672
+
+super search less_than | 1172 elements time[us]: 44
+stl search less_than | 1172 elements time[us]: 3735
+super search k_min | 1172 elements time[us]: 34
+stl search k_min | 1172 elements time[us]: 3751
+
+super search less_than | 1173 elements time[us]: 43
+stl search less_than | 1173 elements time[us]: 3990
+super search k_min | 1173 elements time[us]: 37
+stl search k_min | 1173 elements time[us]: 3903
+
+super search less_than | 1174 elements time[us]: 48
+stl search less_than | 1174 elements time[us]: 4062
+super search k_min | 1174 elements time[us]: 38
+stl search k_min | 1174 elements time[us]: 3987
+
+super search less_than | 1175 elements time[us]: 47
+stl search less_than | 1175 elements time[us]: 4145
+super search k_min | 1175 elements time[us]: 37
+stl search k_min | 1175 elements time[us]: 4050
+
+super search less_than | 1176 elements time[us]: 50
+stl search less_than | 1176 elements time[us]: 4185
+super search k_min | 1176 elements time[us]: 43
+stl search k_min | 1176 elements time[us]: 4059
+
+super search less_than | 1177 elements time[us]: 49
+stl search less_than | 1177 elements time[us]: 4360
+super search k_min | 1177 elements time[us]: 39
+stl search k_min | 1177 elements time[us]: 4211
+
+super search less_than | 1178 elements time[us]: 51
+stl search less_than | 1178 elements time[us]: 4986
+super search k_min | 1178 elements time[us]: 39
+stl search k_min | 1178 elements time[us]: 4747
+
+super search less_than | 1179 elements time[us]: 50
+stl search less_than | 1179 elements time[us]: 5016
+super search k_min | 1179 elements time[us]: 39
+stl search k_min | 1179 elements time[us]: 4726
+
+super search less_than | 1180 elements time[us]: 50
+stl search less_than | 1180 elements time[us]: 4439
+super search k_min | 1180 elements time[us]: 39
+stl search k_min | 1180 elements time[us]: 4372
+
+super search less_than | 1181 elements time[us]: 49
+stl search less_than | 1181 elements time[us]: 4544
+super search k_min | 1181 elements time[us]: 41
+stl search k_min | 1181 elements time[us]: 4314
+
+super search less_than | 1182 elements time[us]: 50
+stl search less_than | 1182 elements time[us]: 5004
+super search k_min | 1182 elements time[us]: 39
+stl search k_min | 1182 elements time[us]: 4723
+
+super search less_than | 1183 elements time[us]: 56
+stl search less_than | 1183 elements time[us]: 3907
+super search k_min | 1183 elements time[us]: 35
+stl search k_min | 1183 elements time[us]: 3927
+
+super search less_than | 1184 elements time[us]: 41
+stl search less_than | 1184 elements time[us]: 4180
+super search k_min | 1184 elements time[us]: 35
+stl search k_min | 1184 elements time[us]: 4238
+
+super search less_than | 1185 elements time[us]: 40
+stl search less_than | 1185 elements time[us]: 4025
+super search k_min | 1185 elements time[us]: 35
+stl search k_min | 1185 elements time[us]: 4024
+
+super search less_than | 1186 elements time[us]: 47
+stl search less_than | 1186 elements time[us]: 4552
+super search k_min | 1186 elements time[us]: 37
+stl search k_min | 1186 elements time[us]: 4154
+
+super search less_than | 1187 elements time[us]: 42
+stl search less_than | 1187 elements time[us]: 3879
+super search k_min | 1187 elements time[us]: 36
+stl search k_min | 1187 elements time[us]: 3893
+
+super search less_than | 1188 elements time[us]: 44
+stl search less_than | 1188 elements time[us]: 4187
+super search k_min | 1188 elements time[us]: 36
+stl search k_min | 1188 elements time[us]: 4208
+
+super search less_than | 1189 elements time[us]: 44
+stl search less_than | 1189 elements time[us]: 3880
+super search k_min | 1189 elements time[us]: 35
+stl search k_min | 1189 elements time[us]: 3923
+
+super search less_than | 1190 elements time[us]: 48
+stl search less_than | 1190 elements time[us]: 4676
+super search k_min | 1190 elements time[us]: 40
+stl search k_min | 1190 elements time[us]: 4587
+
+super search less_than | 1191 elements time[us]: 55
+stl search less_than | 1191 elements time[us]: 4798
+super search k_min | 1191 elements time[us]: 41
+stl search k_min | 1191 elements time[us]: 4760
+
+super search less_than | 1192 elements time[us]: 57
+stl search less_than | 1192 elements time[us]: 4929
+super search k_min | 1192 elements time[us]: 44
+stl search k_min | 1192 elements time[us]: 4706
+
+super search less_than | 1193 elements time[us]: 58
+stl search less_than | 1193 elements time[us]: 5184
+super search k_min | 1193 elements time[us]: 44
+stl search k_min | 1193 elements time[us]: 5135
+
+super search less_than | 1194 elements time[us]: 54
+stl search less_than | 1194 elements time[us]: 4815
+super search k_min | 1194 elements time[us]: 44
+stl search k_min | 1194 elements time[us]: 4823
+
+super search less_than | 1195 elements time[us]: 58
+stl search less_than | 1195 elements time[us]: 5509
+super search k_min | 1195 elements time[us]: 42
+stl search k_min | 1195 elements time[us]: 5332
+
+super search less_than | 1196 elements time[us]: 55
+stl search less_than | 1196 elements time[us]: 4896
+super search k_min | 1196 elements time[us]: 44
+stl search k_min | 1196 elements time[us]: 4834
+
+super search less_than | 1197 elements time[us]: 56
+stl search less_than | 1197 elements time[us]: 5034
+super search k_min | 1197 elements time[us]: 43
+stl search k_min | 1197 elements time[us]: 4951
+
+super search less_than | 1198 elements time[us]: 58
+stl search less_than | 1198 elements time[us]: 4933
+super search k_min | 1198 elements time[us]: 44
+stl search k_min | 1198 elements time[us]: 4763
+
+super search less_than | 1199 elements time[us]: 57
+stl search less_than | 1199 elements time[us]: 5001
+super search k_min | 1199 elements time[us]: 43
+stl search k_min | 1199 elements time[us]: 4841
+
+super search less_than | 1200 elements time[us]: 57
+stl search less_than | 1200 elements time[us]: 4925
+super search k_min | 1200 elements time[us]: 43
+stl search k_min | 1200 elements time[us]: 4809
+
+super search less_than | 1201 elements time[us]: 57
+stl search less_than | 1201 elements time[us]: 5000
+super search k_min | 1201 elements time[us]: 45
+stl search k_min | 1201 elements time[us]: 4804
+
+super search less_than | 1202 elements time[us]: 59
+stl search less_than | 1202 elements time[us]: 4955
+super search k_min | 1202 elements time[us]: 43
+stl search k_min | 1202 elements time[us]: 4795
+
+super search less_than | 1203 elements time[us]: 59
+stl search less_than | 1203 elements time[us]: 5689
+super search k_min | 1203 elements time[us]: 45
+stl search k_min | 1203 elements time[us]: 5336
+
+super search less_than | 1204 elements time[us]: 55
+stl search less_than | 1204 elements time[us]: 4911
+super search k_min | 1204 elements time[us]: 44
+stl search k_min | 1204 elements time[us]: 4784
+
+super search less_than | 1205 elements time[us]: 57
+stl search less_than | 1205 elements time[us]: 5519
+super search k_min | 1205 elements time[us]: 44
+stl search k_min | 1205 elements time[us]: 5140
+
+super search less_than | 1206 elements time[us]: 56
+stl search less_than | 1206 elements time[us]: 4845
+super search k_min | 1206 elements time[us]: 44
+stl search k_min | 1206 elements time[us]: 4772
+
+super search less_than | 1207 elements time[us]: 57
+stl search less_than | 1207 elements time[us]: 5632
+super search k_min | 1207 elements time[us]: 45
+stl search k_min | 1207 elements time[us]: 5392
+
+super search less_than | 1208 elements time[us]: 56
+stl search less_than | 1208 elements time[us]: 4846
+super search k_min | 1208 elements time[us]: 43
+stl search k_min | 1208 elements time[us]: 4819
+
+super search less_than | 1209 elements time[us]: 56
+stl search less_than | 1209 elements time[us]: 5194
+super search k_min | 1209 elements time[us]: 44
+stl search k_min | 1209 elements time[us]: 4968
+
+super search less_than | 1210 elements time[us]: 56
+stl search less_than | 1210 elements time[us]: 5040
+super search k_min | 1210 elements time[us]: 43
+stl search k_min | 1210 elements time[us]: 4840
+
+super search less_than | 1211 elements time[us]: 59
+stl search less_than | 1211 elements time[us]: 5960
+super search k_min | 1211 elements time[us]: 100
+stl search k_min | 1211 elements time[us]: 5484
+
+super search less_than | 1212 elements time[us]: 74
+stl search less_than | 1212 elements time[us]: 4944
+super search k_min | 1212 elements time[us]: 43
+stl search k_min | 1212 elements time[us]: 4783
+
+super search less_than | 1213 elements time[us]: 56
+stl search less_than | 1213 elements time[us]: 5980
+super search k_min | 1213 elements time[us]: 45
+stl search k_min | 1213 elements time[us]: 5886
+
+super search less_than | 1214 elements time[us]: 58
+stl search less_than | 1214 elements time[us]: 5125
+super search k_min | 1214 elements time[us]: 43
+stl search k_min | 1214 elements time[us]: 5023
+
+super search less_than | 1215 elements time[us]: 57
+stl search less_than | 1215 elements time[us]: 5776
+super search k_min | 1215 elements time[us]: 42
+stl search k_min | 1215 elements time[us]: 5527
+
+super search less_than | 1216 elements time[us]: 55
+stl search less_than | 1216 elements time[us]: 5035
+super search k_min | 1216 elements time[us]: 45
+stl search k_min | 1216 elements time[us]: 4881
+
+super search less_than | 1217 elements time[us]: 57
+stl search less_than | 1217 elements time[us]: 5462
+super search k_min | 1217 elements time[us]: 44
+stl search k_min | 1217 elements time[us]: 5237
+
+super search less_than | 1218 elements time[us]: 57
+stl search less_than | 1218 elements time[us]: 5681
+super search k_min | 1218 elements time[us]: 42
+stl search k_min | 1218 elements time[us]: 5444
+
+super search less_than | 1219 elements time[us]: 57
+stl search less_than | 1219 elements time[us]: 4931
+super search k_min | 1219 elements time[us]: 45
+stl search k_min | 1219 elements time[us]: 4819
+
+super search less_than | 1220 elements time[us]: 58
+stl search less_than | 1220 elements time[us]: 5758
+super search k_min | 1220 elements time[us]: 45
+stl search k_min | 1220 elements time[us]: 5596
+
+super search less_than | 1221 elements time[us]: 55
+stl search less_than | 1221 elements time[us]: 5325
+super search k_min | 1221 elements time[us]: 46
+stl search k_min | 1221 elements time[us]: 5146
+
+super search less_than | 1222 elements time[us]: 62
+stl search less_than | 1222 elements time[us]: 5490
+super search k_min | 1222 elements time[us]: 45
+stl search k_min | 1222 elements time[us]: 5249
+
+super search less_than | 1223 elements time[us]: 61
+stl search less_than | 1223 elements time[us]: 5858
+super search k_min | 1223 elements time[us]: 44
+stl search k_min | 1223 elements time[us]: 5437
+
+super search less_than | 1224 elements time[us]: 59
+stl search less_than | 1224 elements time[us]: 5159
+super search k_min | 1224 elements time[us]: 43
+stl search k_min | 1224 elements time[us]: 5079
+
+super search less_than | 1225 elements time[us]: 57
+stl search less_than | 1225 elements time[us]: 5329
+super search k_min | 1225 elements time[us]: 44
+stl search k_min | 1225 elements time[us]: 5332
+
+super search less_than | 1226 elements time[us]: 57
+stl search less_than | 1226 elements time[us]: 5343
+super search k_min | 1226 elements time[us]: 42
+stl search k_min | 1226 elements time[us]: 5173
+
+super search less_than | 1227 elements time[us]: 57
+stl search less_than | 1227 elements time[us]: 5173
+super search k_min | 1227 elements time[us]: 45
+stl search k_min | 1227 elements time[us]: 5066
+
+super search less_than | 1228 elements time[us]: 57
+stl search less_than | 1228 elements time[us]: 5186
+super search k_min | 1228 elements time[us]: 45
+stl search k_min | 1228 elements time[us]: 4982
+
+super search less_than | 1229 elements time[us]: 59
+stl search less_than | 1229 elements time[us]: 5160
+super search k_min | 1229 elements time[us]: 45
+stl search k_min | 1229 elements time[us]: 4977
+
+super search less_than | 1230 elements time[us]: 60
+stl search less_than | 1230 elements time[us]: 5491
+super search k_min | 1230 elements time[us]: 45
+stl search k_min | 1230 elements time[us]: 5210
+
+super search less_than | 1231 elements time[us]: 61
+stl search less_than | 1231 elements time[us]: 5192
+super search k_min | 1231 elements time[us]: 44
+stl search k_min | 1231 elements time[us]: 5089
+
+super search less_than | 1232 elements time[us]: 57
+stl search less_than | 1232 elements time[us]: 5126
+super search k_min | 1232 elements time[us]: 44
+stl search k_min | 1232 elements time[us]: 5068
+
+super search less_than | 1233 elements time[us]: 57
+stl search less_than | 1233 elements time[us]: 5197
+super search k_min | 1233 elements time[us]: 43
+stl search k_min | 1233 elements time[us]: 4919
+
+super search less_than | 1234 elements time[us]: 58
+stl search less_than | 1234 elements time[us]: 5161
+super search k_min | 1234 elements time[us]: 44
+stl search k_min | 1234 elements time[us]: 5069
+
+super search less_than | 1235 elements time[us]: 58
+stl search less_than | 1235 elements time[us]: 5240
+super search k_min | 1235 elements time[us]: 61
+stl search k_min | 1235 elements time[us]: 5204
+
+super search less_than | 1236 elements time[us]: 58
+stl search less_than | 1236 elements time[us]: 5247
+super search k_min | 1236 elements time[us]: 45
+stl search k_min | 1236 elements time[us]: 5165
+
+super search less_than | 1237 elements time[us]: 57
+stl search less_than | 1237 elements time[us]: 5225
+super search k_min | 1237 elements time[us]: 46
+stl search k_min | 1237 elements time[us]: 5123
+
+super search less_than | 1238 elements time[us]: 56
+stl search less_than | 1238 elements time[us]: 5179
+super search k_min | 1238 elements time[us]: 46
+stl search k_min | 1238 elements time[us]: 5021
+
+super search less_than | 1239 elements time[us]: 57
+stl search less_than | 1239 elements time[us]: 5328
+super search k_min | 1239 elements time[us]: 45
+stl search k_min | 1239 elements time[us]: 5126
+
+super search less_than | 1240 elements time[us]: 59
+stl search less_than | 1240 elements time[us]: 5356
+super search k_min | 1240 elements time[us]: 46
+stl search k_min | 1240 elements time[us]: 5105
+
+super search less_than | 1241 elements time[us]: 60
+stl search less_than | 1241 elements time[us]: 5460
+super search k_min | 1241 elements time[us]: 45
+stl search k_min | 1241 elements time[us]: 5138
+
+super search less_than | 1242 elements time[us]: 57
+stl search less_than | 1242 elements time[us]: 5195
+super search k_min | 1242 elements time[us]: 44
+stl search k_min | 1242 elements time[us]: 5087
+
+super search less_than | 1243 elements time[us]: 59
+stl search less_than | 1243 elements time[us]: 5254
+super search k_min | 1243 elements time[us]: 44
+stl search k_min | 1243 elements time[us]: 5096
+
+super search less_than | 1244 elements time[us]: 57
+stl search less_than | 1244 elements time[us]: 5243
+super search k_min | 1244 elements time[us]: 45
+stl search k_min | 1244 elements time[us]: 5133
+
+super search less_than | 1245 elements time[us]: 59
+stl search less_than | 1245 elements time[us]: 5668
+super search k_min | 1245 elements time[us]: 44
+stl search k_min | 1245 elements time[us]: 5383
+
+super search less_than | 1246 elements time[us]: 58
+stl search less_than | 1246 elements time[us]: 5464
+super search k_min | 1246 elements time[us]: 45
+stl search k_min | 1246 elements time[us]: 5138
+
+super search less_than | 1247 elements time[us]: 59
+stl search less_than | 1247 elements time[us]: 5405
+super search k_min | 1247 elements time[us]: 45
+stl search k_min | 1247 elements time[us]: 5171
+
+super search less_than | 1248 elements time[us]: 60
+stl search less_than | 1248 elements time[us]: 5303
+super search k_min | 1248 elements time[us]: 45
+stl search k_min | 1248 elements time[us]: 5191
+
+super search less_than | 1249 elements time[us]: 58
+stl search less_than | 1249 elements time[us]: 5383
+super search k_min | 1249 elements time[us]: 45
+stl search k_min | 1249 elements time[us]: 5102
+
+super search less_than | 1250 elements time[us]: 59
+stl search less_than | 1250 elements time[us]: 5627
+super search k_min | 1250 elements time[us]: 46
+stl search k_min | 1250 elements time[us]: 5392
+
+super search less_than | 1251 elements time[us]: 57
+stl search less_than | 1251 elements time[us]: 5399
+super search k_min | 1251 elements time[us]: 46
+stl search k_min | 1251 elements time[us]: 5199
+
+super search less_than | 1252 elements time[us]: 56
+stl search less_than | 1252 elements time[us]: 5330
+super search k_min | 1252 elements time[us]: 46
+stl search k_min | 1252 elements time[us]: 5404
+
+super search less_than | 1253 elements time[us]: 62
+stl search less_than | 1253 elements time[us]: 5648
+super search k_min | 1253 elements time[us]: 46
+stl search k_min | 1253 elements time[us]: 5429
+
+super search less_than | 1254 elements time[us]: 58
+stl search less_than | 1254 elements time[us]: 5295
+super search k_min | 1254 elements time[us]: 46
+stl search k_min | 1254 elements time[us]: 5347
+
+super search less_than | 1255 elements time[us]: 57
+stl search less_than | 1255 elements time[us]: 5494
+super search k_min | 1255 elements time[us]: 45
+stl search k_min | 1255 elements time[us]: 5281
+
+super search less_than | 1256 elements time[us]: 57
+stl search less_than | 1256 elements time[us]: 5492
+super search k_min | 1256 elements time[us]: 46
+stl search k_min | 1256 elements time[us]: 5347
+
+super search less_than | 1257 elements time[us]: 58
+stl search less_than | 1257 elements time[us]: 5609
+super search k_min | 1257 elements time[us]: 46
+stl search k_min | 1257 elements time[us]: 5437
+
+super search less_than | 1258 elements time[us]: 58
+stl search less_than | 1258 elements time[us]: 5509
+super search k_min | 1258 elements time[us]: 45
+stl search k_min | 1258 elements time[us]: 5416
+
+super search less_than | 1259 elements time[us]: 62
+stl search less_than | 1259 elements time[us]: 5401
+super search k_min | 1259 elements time[us]: 47
+stl search k_min | 1259 elements time[us]: 5277
+
+super search less_than | 1260 elements time[us]: 60
+stl search less_than | 1260 elements time[us]: 5483
+super search k_min | 1260 elements time[us]: 46
+stl search k_min | 1260 elements time[us]: 5300
+
+super search less_than | 1261 elements time[us]: 63
+stl search less_than | 1261 elements time[us]: 5584
+super search k_min | 1261 elements time[us]: 47
+stl search k_min | 1261 elements time[us]: 5281
+
+super search less_than | 1262 elements time[us]: 58
+stl search less_than | 1262 elements time[us]: 5419
+super search k_min | 1262 elements time[us]: 44
+stl search k_min | 1262 elements time[us]: 5317
+
+super search less_than | 1263 elements time[us]: 60
+stl search less_than | 1263 elements time[us]: 5596
+super search k_min | 1263 elements time[us]: 47
+stl search k_min | 1263 elements time[us]: 5388
+
+super search less_than | 1264 elements time[us]: 59
+stl search less_than | 1264 elements time[us]: 5572
+super search k_min | 1264 elements time[us]: 47
+stl search k_min | 1264 elements time[us]: 5280
+
+super search less_than | 1265 elements time[us]: 58
+stl search less_than | 1265 elements time[us]: 5584
+super search k_min | 1265 elements time[us]: 63
+stl search k_min | 1265 elements time[us]: 5400
+
+super search less_than | 1266 elements time[us]: 58
+stl search less_than | 1266 elements time[us]: 5667
+super search k_min | 1266 elements time[us]: 45
+stl search k_min | 1266 elements time[us]: 5474
+
+super search less_than | 1267 elements time[us]: 61
+stl search less_than | 1267 elements time[us]: 5733
+super search k_min | 1267 elements time[us]: 47
+stl search k_min | 1267 elements time[us]: 5549
+
+super search less_than | 1268 elements time[us]: 59
+stl search less_than | 1268 elements time[us]: 5509
+super search k_min | 1268 elements time[us]: 45
+stl search k_min | 1268 elements time[us]: 5300
+
+super search less_than | 1269 elements time[us]: 60
+stl search less_than | 1269 elements time[us]: 5800
+super search k_min | 1269 elements time[us]: 45
+stl search k_min | 1269 elements time[us]: 5541
+
+super search less_than | 1270 elements time[us]: 59
+stl search less_than | 1270 elements time[us]: 5778
+super search k_min | 1270 elements time[us]: 47
+stl search k_min | 1270 elements time[us]: 5711
+
+super search less_than | 1271 elements time[us]: 57
+stl search less_than | 1271 elements time[us]: 5663
+super search k_min | 1271 elements time[us]: 46
+stl search k_min | 1271 elements time[us]: 5532
+
+super search less_than | 1272 elements time[us]: 46
+stl search less_than | 1272 elements time[us]: 4603
+super search k_min | 1272 elements time[us]: 38
+stl search k_min | 1272 elements time[us]: 4562
+
+super search less_than | 1273 elements time[us]: 59
+stl search less_than | 1273 elements time[us]: 4254
+super search k_min | 1273 elements time[us]: 34
+stl search k_min | 1273 elements time[us]: 4346
+
+super search less_than | 1274 elements time[us]: 44
+stl search less_than | 1274 elements time[us]: 4901
+super search k_min | 1274 elements time[us]: 35
+stl search k_min | 1274 elements time[us]: 5030
+
+super search less_than | 1275 elements time[us]: 45
+stl search less_than | 1275 elements time[us]: 4439
+super search k_min | 1275 elements time[us]: 36
+stl search k_min | 1275 elements time[us]: 4440
+
+super search less_than | 1276 elements time[us]: 53
+stl search less_than | 1276 elements time[us]: 4973
+super search k_min | 1276 elements time[us]: 42
+stl search k_min | 1276 elements time[us]: 4975
+
+super search less_than | 1277 elements time[us]: 57
+stl search less_than | 1277 elements time[us]: 5637
+super search k_min | 1277 elements time[us]: 46
+stl search k_min | 1277 elements time[us]: 5572
+
+super search less_than | 1278 elements time[us]: 58
+stl search less_than | 1278 elements time[us]: 5505
+super search k_min | 1278 elements time[us]: 47
+stl search k_min | 1278 elements time[us]: 5643
+
+super search less_than | 1279 elements time[us]: 60
+stl search less_than | 1279 elements time[us]: 6457
+super search k_min | 1279 elements time[us]: 47
+stl search k_min | 1279 elements time[us]: 6183
+
+super search less_than | 1280 elements time[us]: 57
+stl search less_than | 1280 elements time[us]: 5699
+super search k_min | 1280 elements time[us]: 46
+stl search k_min | 1280 elements time[us]: 5634
+
+super search less_than | 1281 elements time[us]: 57
+stl search less_than | 1281 elements time[us]: 6241
+super search k_min | 1281 elements time[us]: 46
+stl search k_min | 1281 elements time[us]: 5845
+
+super search less_than | 1282 elements time[us]: 58
+stl search less_than | 1282 elements time[us]: 5714
+super search k_min | 1282 elements time[us]: 46
+stl search k_min | 1282 elements time[us]: 5659
+
+super search less_than | 1283 elements time[us]: 64
+stl search less_than | 1283 elements time[us]: 6659
+super search k_min | 1283 elements time[us]: 47
+stl search k_min | 1283 elements time[us]: 6263
+
+super search less_than | 1284 elements time[us]: 60
+stl search less_than | 1284 elements time[us]: 5656
+super search k_min | 1284 elements time[us]: 47
+stl search k_min | 1284 elements time[us]: 5658
+
+super search less_than | 1285 elements time[us]: 62
+stl search less_than | 1285 elements time[us]: 6570
+super search k_min | 1285 elements time[us]: 49
+stl search k_min | 1285 elements time[us]: 6310
+
+super search less_than | 1286 elements time[us]: 59
+stl search less_than | 1286 elements time[us]: 5752
+super search k_min | 1286 elements time[us]: 47
+stl search k_min | 1286 elements time[us]: 5607
+
+super search less_than | 1287 elements time[us]: 63
+stl search less_than | 1287 elements time[us]: 6839
+super search k_min | 1287 elements time[us]: 47
+stl search k_min | 1287 elements time[us]: 6733
+
+super search less_than | 1288 elements time[us]: 58
+stl search less_than | 1288 elements time[us]: 6038
+super search k_min | 1288 elements time[us]: 47
+stl search k_min | 1288 elements time[us]: 5709
+
+super search less_than | 1289 elements time[us]: 63
+stl search less_than | 1289 elements time[us]: 6467
+super search k_min | 1289 elements time[us]: 47
+stl search k_min | 1289 elements time[us]: 6329
+
+super search less_than | 1290 elements time[us]: 62
+stl search less_than | 1290 elements time[us]: 6018
+super search k_min | 1290 elements time[us]: 47
+stl search k_min | 1290 elements time[us]: 5871
+
+super search less_than | 1291 elements time[us]: 60
+stl search less_than | 1291 elements time[us]: 6469
+super search k_min | 1291 elements time[us]: 49
+stl search k_min | 1291 elements time[us]: 6268
+
+super search less_than | 1292 elements time[us]: 61
+stl search less_than | 1292 elements time[us]: 5985
+super search k_min | 1292 elements time[us]: 47
+stl search k_min | 1292 elements time[us]: 6075
+
+super search less_than | 1293 elements time[us]: 72
+stl search less_than | 1293 elements time[us]: 6075
+super search k_min | 1293 elements time[us]: 48
+stl search k_min | 1293 elements time[us]: 5867
+
+super search less_than | 1294 elements time[us]: 63
+stl search less_than | 1294 elements time[us]: 5873
+super search k_min | 1294 elements time[us]: 48
+stl search k_min | 1294 elements time[us]: 5714
+
+super search less_than | 1295 elements time[us]: 63
+stl search less_than | 1295 elements time[us]: 6114
+super search k_min | 1295 elements time[us]: 48
+stl search k_min | 1295 elements time[us]: 5846
+
+super search less_than | 1296 elements time[us]: 61
+stl search less_than | 1296 elements time[us]: 6328
+super search k_min | 1296 elements time[us]: 49
+stl search k_min | 1296 elements time[us]: 6005
+
+super search less_than | 1297 elements time[us]: 60
+stl search less_than | 1297 elements time[us]: 6035
+super search k_min | 1297 elements time[us]: 46
+stl search k_min | 1297 elements time[us]: 5918
+
+super search less_than | 1298 elements time[us]: 63
+stl search less_than | 1298 elements time[us]: 5887
+super search k_min | 1298 elements time[us]: 48
+stl search k_min | 1298 elements time[us]: 5683
+
+super search less_than | 1299 elements time[us]: 49
+stl search less_than | 1299 elements time[us]: 4909
+super search k_min | 1299 elements time[us]: 39
+stl search k_min | 1299 elements time[us]: 4812
+
+super search less_than | 1300 elements time[us]: 54
+stl search less_than | 1300 elements time[us]: 5428
+super search k_min | 1300 elements time[us]: 42
+stl search k_min | 1300 elements time[us]: 5553
+
+super search less_than | 1301 elements time[us]: 59
+stl search less_than | 1301 elements time[us]: 6094
+super search k_min | 1301 elements time[us]: 46
+stl search k_min | 1301 elements time[us]: 6137
+
+super search less_than | 1302 elements time[us]: 60
+stl search less_than | 1302 elements time[us]: 6322
+super search k_min | 1302 elements time[us]: 48
+stl search k_min | 1302 elements time[us]: 6426
+
+super search less_than | 1303 elements time[us]: 59
+stl search less_than | 1303 elements time[us]: 5941
+super search k_min | 1303 elements time[us]: 51
+stl search k_min | 1303 elements time[us]: 5913
+
+super search less_than | 1304 elements time[us]: 61
+stl search less_than | 1304 elements time[us]: 6559
+super search k_min | 1304 elements time[us]: 46
+stl search k_min | 1304 elements time[us]: 6279
+
+super search less_than | 1305 elements time[us]: 61
+stl search less_than | 1305 elements time[us]: 6192
+super search k_min | 1305 elements time[us]: 48
+stl search k_min | 1305 elements time[us]: 6064
+
+super search less_than | 1306 elements time[us]: 64
+stl search less_than | 1306 elements time[us]: 6424
+super search k_min | 1306 elements time[us]: 46
+stl search k_min | 1306 elements time[us]: 6452
+
+super search less_than | 1307 elements time[us]: 64
+stl search less_than | 1307 elements time[us]: 6454
+super search k_min | 1307 elements time[us]: 49
+stl search k_min | 1307 elements time[us]: 6256
+
+super search less_than | 1308 elements time[us]: 59
+stl search less_than | 1308 elements time[us]: 5964
+super search k_min | 1308 elements time[us]: 48
+stl search k_min | 1308 elements time[us]: 5895
+
+super search less_than | 1309 elements time[us]: 61
+stl search less_than | 1309 elements time[us]: 6346
+super search k_min | 1309 elements time[us]: 49
+stl search k_min | 1309 elements time[us]: 5893
+
+super search less_than | 1310 elements time[us]: 63
+stl search less_than | 1310 elements time[us]: 6248
+super search k_min | 1310 elements time[us]: 48
+stl search k_min | 1310 elements time[us]: 6057
+
+super search less_than | 1311 elements time[us]: 63
+stl search less_than | 1311 elements time[us]: 6221
+super search k_min | 1311 elements time[us]: 49
+stl search k_min | 1311 elements time[us]: 6082
+
+super search less_than | 1312 elements time[us]: 60
+stl search less_than | 1312 elements time[us]: 6116
+super search k_min | 1312 elements time[us]: 49
+stl search k_min | 1312 elements time[us]: 5813
+
+super search less_than | 1313 elements time[us]: 64
+stl search less_than | 1313 elements time[us]: 6430
+super search k_min | 1313 elements time[us]: 50
+stl search k_min | 1313 elements time[us]: 6259
+
+super search less_than | 1314 elements time[us]: 59
+stl search less_than | 1314 elements time[us]: 6299
+super search k_min | 1314 elements time[us]: 48
+stl search k_min | 1314 elements time[us]: 6153
+
+super search less_than | 1315 elements time[us]: 62
+stl search less_than | 1315 elements time[us]: 6134
+super search k_min | 1315 elements time[us]: 48
+stl search k_min | 1315 elements time[us]: 6032
+
+super search less_than | 1316 elements time[us]: 61
+stl search less_than | 1316 elements time[us]: 6412
+super search k_min | 1316 elements time[us]: 49
+stl search k_min | 1316 elements time[us]: 6181
+
+super search less_than | 1317 elements time[us]: 64
+stl search less_than | 1317 elements time[us]: 6448
+super search k_min | 1317 elements time[us]: 49
+stl search k_min | 1317 elements time[us]: 6178
+
+super search less_than | 1318 elements time[us]: 60
+stl search less_than | 1318 elements time[us]: 6254
+super search k_min | 1318 elements time[us]: 53
+stl search k_min | 1318 elements time[us]: 6061
+
+super search less_than | 1319 elements time[us]: 61
+stl search less_than | 1319 elements time[us]: 6274
+super search k_min | 1319 elements time[us]: 54
+stl search k_min | 1319 elements time[us]: 6075
+
+super search less_than | 1320 elements time[us]: 62
+stl search less_than | 1320 elements time[us]: 6482
+super search k_min | 1320 elements time[us]: 50
+stl search k_min | 1320 elements time[us]: 5921
+
+super search less_than | 1321 elements time[us]: 62
+stl search less_than | 1321 elements time[us]: 6018
+super search k_min | 1321 elements time[us]: 54
+stl search k_min | 1321 elements time[us]: 6052
+
+super search less_than | 1322 elements time[us]: 61
+stl search less_than | 1322 elements time[us]: 6662
+super search k_min | 1322 elements time[us]: 48
+stl search k_min | 1322 elements time[us]: 6394
+
+super search less_than | 1323 elements time[us]: 60
+stl search less_than | 1323 elements time[us]: 6370
+super search k_min | 1323 elements time[us]: 48
+stl search k_min | 1323 elements time[us]: 6205
+
+super search less_than | 1324 elements time[us]: 63
+stl search less_than | 1324 elements time[us]: 6552
+super search k_min | 1324 elements time[us]: 49
+stl search k_min | 1324 elements time[us]: 6325
+
+super search less_than | 1325 elements time[us]: 63
+stl search less_than | 1325 elements time[us]: 6609
+super search k_min | 1325 elements time[us]: 49
+stl search k_min | 1325 elements time[us]: 6288
+
+super search less_than | 1326 elements time[us]: 62
+stl search less_than | 1326 elements time[us]: 6699
+super search k_min | 1326 elements time[us]: 50
+stl search k_min | 1326 elements time[us]: 6547
+
+super search less_than | 1327 elements time[us]: 60
+stl search less_than | 1327 elements time[us]: 6653
+super search k_min | 1327 elements time[us]: 48
+stl search k_min | 1327 elements time[us]: 6396
+
+super search less_than | 1328 elements time[us]: 61
+stl search less_than | 1328 elements time[us]: 6861
+super search k_min | 1328 elements time[us]: 50
+stl search k_min | 1328 elements time[us]: 6470
+
+super search less_than | 1329 elements time[us]: 64
+stl search less_than | 1329 elements time[us]: 6743
+super search k_min | 1329 elements time[us]: 48
+stl search k_min | 1329 elements time[us]: 6483
+
+super search less_than | 1330 elements time[us]: 63
+stl search less_than | 1330 elements time[us]: 6755
+super search k_min | 1330 elements time[us]: 50
+stl search k_min | 1330 elements time[us]: 6613
+
+super search less_than | 1331 elements time[us]: 63
+stl search less_than | 1331 elements time[us]: 6132
+super search k_min | 1331 elements time[us]: 49
+stl search k_min | 1331 elements time[us]: 6005
+
+super search less_than | 1332 elements time[us]: 64
+stl search less_than | 1332 elements time[us]: 6849
+super search k_min | 1332 elements time[us]: 50
+stl search k_min | 1332 elements time[us]: 6563
+
+super search less_than | 1333 elements time[us]: 62
+stl search less_than | 1333 elements time[us]: 6223
+super search k_min | 1333 elements time[us]: 49
+stl search k_min | 1333 elements time[us]: 6169
+
+super search less_than | 1334 elements time[us]: 62
+stl search less_than | 1334 elements time[us]: 6622
+super search k_min | 1334 elements time[us]: 51
+stl search k_min | 1334 elements time[us]: 6261
+
+super search less_than | 1335 elements time[us]: 61
+stl search less_than | 1335 elements time[us]: 6186
+super search k_min | 1335 elements time[us]: 49
+stl search k_min | 1335 elements time[us]: 6099
+
+super search less_than | 1336 elements time[us]: 60
+stl search less_than | 1336 elements time[us]: 6686
+super search k_min | 1336 elements time[us]: 48
+stl search k_min | 1336 elements time[us]: 6334
+
+super search less_than | 1337 elements time[us]: 62
+stl search less_than | 1337 elements time[us]: 6521
+super search k_min | 1337 elements time[us]: 49
+stl search k_min | 1337 elements time[us]: 6213
+
+super search less_than | 1338 elements time[us]: 64
+stl search less_than | 1338 elements time[us]: 6771
+super search k_min | 1338 elements time[us]: 50
+stl search k_min | 1338 elements time[us]: 6355
+
+super search less_than | 1339 elements time[us]: 64
+stl search less_than | 1339 elements time[us]: 6477
+super search k_min | 1339 elements time[us]: 49
+stl search k_min | 1339 elements time[us]: 6145
+
+super search less_than | 1340 elements time[us]: 66
+stl search less_than | 1340 elements time[us]: 6736
+super search k_min | 1340 elements time[us]: 49
+stl search k_min | 1340 elements time[us]: 6560
+
+super search less_than | 1341 elements time[us]: 61
+stl search less_than | 1341 elements time[us]: 6293
+super search k_min | 1341 elements time[us]: 50
+stl search k_min | 1341 elements time[us]: 6237
+
+super search less_than | 1342 elements time[us]: 64
+stl search less_than | 1342 elements time[us]: 7122
+super search k_min | 1342 elements time[us]: 48
+stl search k_min | 1342 elements time[us]: 7117
+
+super search less_than | 1343 elements time[us]: 63
+stl search less_than | 1343 elements time[us]: 6661
+super search k_min | 1343 elements time[us]: 49
+stl search k_min | 1343 elements time[us]: 6312
+
+super search less_than | 1344 elements time[us]: 60
+stl search less_than | 1344 elements time[us]: 7202
+super search k_min | 1344 elements time[us]: 48
+stl search k_min | 1344 elements time[us]: 6979
+
+super search less_than | 1345 elements time[us]: 63
+stl search less_than | 1345 elements time[us]: 6317
+super search k_min | 1345 elements time[us]: 49
+stl search k_min | 1345 elements time[us]: 6382
+
+super search less_than | 1346 elements time[us]: 61
+stl search less_than | 1346 elements time[us]: 7053
+super search k_min | 1346 elements time[us]: 49
+stl search k_min | 1346 elements time[us]: 7000
+
+super search less_than | 1347 elements time[us]: 72
+stl search less_than | 1347 elements time[us]: 6628
+super search k_min | 1347 elements time[us]: 50
+stl search k_min | 1347 elements time[us]: 6411
+
+super search less_than | 1348 elements time[us]: 62
+stl search less_than | 1348 elements time[us]: 6617
+super search k_min | 1348 elements time[us]: 66
+stl search k_min | 1348 elements time[us]: 6429
+
+super search less_than | 1349 elements time[us]: 63
+stl search less_than | 1349 elements time[us]: 6683
+super search k_min | 1349 elements time[us]: 49
+stl search k_min | 1349 elements time[us]: 6379
+
+super search less_than | 1350 elements time[us]: 63
+stl search less_than | 1350 elements time[us]: 6321
+super search k_min | 1350 elements time[us]: 50
+stl search k_min | 1350 elements time[us]: 6309
+
+super search less_than | 1351 elements time[us]: 63
+stl search less_than | 1351 elements time[us]: 6636
+super search k_min | 1351 elements time[us]: 50
+stl search k_min | 1351 elements time[us]: 6607
+
+super search less_than | 1352 elements time[us]: 67
+stl search less_than | 1352 elements time[us]: 6585
+super search k_min | 1352 elements time[us]: 49
+stl search k_min | 1352 elements time[us]: 6430
+
+super search less_than | 1353 elements time[us]: 63
+stl search less_than | 1353 elements time[us]: 6792
+super search k_min | 1353 elements time[us]: 48
+stl search k_min | 1353 elements time[us]: 6528
+
+super search less_than | 1354 elements time[us]: 65
+stl search less_than | 1354 elements time[us]: 6690
+super search k_min | 1354 elements time[us]: 52
+stl search k_min | 1354 elements time[us]: 6384
+
+super search less_than | 1355 elements time[us]: 47
+stl search less_than | 1355 elements time[us]: 4972
+super search k_min | 1355 elements time[us]: 37
+stl search k_min | 1355 elements time[us]: 4743
+
+super search less_than | 1356 elements time[us]: 50
+stl search less_than | 1356 elements time[us]: 5489
+super search k_min | 1356 elements time[us]: 42
+stl search k_min | 1356 elements time[us]: 5604
+
+super search less_than | 1357 elements time[us]: 61
+stl search less_than | 1357 elements time[us]: 6730
+super search k_min | 1357 elements time[us]: 47
+stl search k_min | 1357 elements time[us]: 6838
+
+super search less_than | 1358 elements time[us]: 62
+stl search less_than | 1358 elements time[us]: 7177
+super search k_min | 1358 elements time[us]: 49
+stl search k_min | 1358 elements time[us]: 7044
+
+super search less_than | 1359 elements time[us]: 67
+stl search less_than | 1359 elements time[us]: 7012
+super search k_min | 1359 elements time[us]: 50
+stl search k_min | 1359 elements time[us]: 6779
+
+super search less_than | 1360 elements time[us]: 63
+stl search less_than | 1360 elements time[us]: 7577
+super search k_min | 1360 elements time[us]: 51
+stl search k_min | 1360 elements time[us]: 7317
+
+super search less_than | 1361 elements time[us]: 63
+stl search less_than | 1361 elements time[us]: 6738
+super search k_min | 1361 elements time[us]: 50
+stl search k_min | 1361 elements time[us]: 6648
+
+super search less_than | 1362 elements time[us]: 67
+stl search less_than | 1362 elements time[us]: 7320
+super search k_min | 1362 elements time[us]: 49
+stl search k_min | 1362 elements time[us]: 7042
+
+super search less_than | 1363 elements time[us]: 64
+stl search less_than | 1363 elements time[us]: 6676
+super search k_min | 1363 elements time[us]: 50
+stl search k_min | 1363 elements time[us]: 6449
+
+super search less_than | 1364 elements time[us]: 70
+stl search less_than | 1364 elements time[us]: 7283
+super search k_min | 1364 elements time[us]: 51
+stl search k_min | 1364 elements time[us]: 7043
+
+super search less_than | 1365 elements time[us]: 65
+stl search less_than | 1365 elements time[us]: 6682
+super search k_min | 1365 elements time[us]: 49
+stl search k_min | 1365 elements time[us]: 6655
+
+super search less_than | 1366 elements time[us]: 69
+stl search less_than | 1366 elements time[us]: 7019
+super search k_min | 1366 elements time[us]: 51
+stl search k_min | 1366 elements time[us]: 6907
+
+super search less_than | 1367 elements time[us]: 63
+stl search less_than | 1367 elements time[us]: 6797
+super search k_min | 1367 elements time[us]: 51
+stl search k_min | 1367 elements time[us]: 6732
+
+super search less_than | 1368 elements time[us]: 64
+stl search less_than | 1368 elements time[us]: 7078
+super search k_min | 1368 elements time[us]: 49
+stl search k_min | 1368 elements time[us]: 6703
+
+super search less_than | 1369 elements time[us]: 72
+stl search less_than | 1369 elements time[us]: 6659
+super search k_min | 1369 elements time[us]: 51
+stl search k_min | 1369 elements time[us]: 6619
+
+super search less_than | 1370 elements time[us]: 65
+stl search less_than | 1370 elements time[us]: 6995
+super search k_min | 1370 elements time[us]: 51
+stl search k_min | 1370 elements time[us]: 6598
+
+super search less_than | 1371 elements time[us]: 66
+stl search less_than | 1371 elements time[us]: 6898
+super search k_min | 1371 elements time[us]: 49
+stl search k_min | 1371 elements time[us]: 6824
+
+super search less_than | 1372 elements time[us]: 63
+stl search less_than | 1372 elements time[us]: 6793
+super search k_min | 1372 elements time[us]: 51
+stl search k_min | 1372 elements time[us]: 6557
+
+super search less_than | 1373 elements time[us]: 62
+stl search less_than | 1373 elements time[us]: 6592
+super search k_min | 1373 elements time[us]: 52
+stl search k_min | 1373 elements time[us]: 6452
+
+super search less_than | 1374 elements time[us]: 67
+stl search less_than | 1374 elements time[us]: 6728
+super search k_min | 1374 elements time[us]: 51
+stl search k_min | 1374 elements time[us]: 6637
+
+super search less_than | 1375 elements time[us]: 67
+stl search less_than | 1375 elements time[us]: 6693
+super search k_min | 1375 elements time[us]: 51
+stl search k_min | 1375 elements time[us]: 6463
+
+super search less_than | 1376 elements time[us]: 63
+stl search less_than | 1376 elements time[us]: 6920
+super search k_min | 1376 elements time[us]: 51
+stl search k_min | 1376 elements time[us]: 6787
+
+super search less_than | 1377 elements time[us]: 67
+stl search less_than | 1377 elements time[us]: 6817
+super search k_min | 1377 elements time[us]: 51
+stl search k_min | 1377 elements time[us]: 6387
+
+super search less_than | 1378 elements time[us]: 69
+stl search less_than | 1378 elements time[us]: 7109
+super search k_min | 1378 elements time[us]: 50
+stl search k_min | 1378 elements time[us]: 6874
+
+super search less_than | 1379 elements time[us]: 66
+stl search less_than | 1379 elements time[us]: 6648
+super search k_min | 1379 elements time[us]: 51
+stl search k_min | 1379 elements time[us]: 6411
+
+super search less_than | 1380 elements time[us]: 65
+stl search less_than | 1380 elements time[us]: 7188
+super search k_min | 1380 elements time[us]: 49
+stl search k_min | 1380 elements time[us]: 7100
+
+super search less_than | 1381 elements time[us]: 64
+stl search less_than | 1381 elements time[us]: 6783
+super search k_min | 1381 elements time[us]: 51
+stl search k_min | 1381 elements time[us]: 6683
+
+super search less_than | 1382 elements time[us]: 65
+stl search less_than | 1382 elements time[us]: 6824
+super search k_min | 1382 elements time[us]: 58
+stl search k_min | 1382 elements time[us]: 6712
+
+super search less_than | 1383 elements time[us]: 66
+stl search less_than | 1383 elements time[us]: 7553
+super search k_min | 1383 elements time[us]: 50
+stl search k_min | 1383 elements time[us]: 7142
+
+super search less_than | 1384 elements time[us]: 67
+stl search less_than | 1384 elements time[us]: 7528
+super search k_min | 1384 elements time[us]: 50
+stl search k_min | 1384 elements time[us]: 7135
+
+super search less_than | 1385 elements time[us]: 66
+stl search less_than | 1385 elements time[us]: 7402
+super search k_min | 1385 elements time[us]: 50
+stl search k_min | 1385 elements time[us]: 6950
+
+super search less_than | 1386 elements time[us]: 65
+stl search less_than | 1386 elements time[us]: 7565
+super search k_min | 1386 elements time[us]: 50
+stl search k_min | 1386 elements time[us]: 7178
+
+super search less_than | 1387 elements time[us]: 66
+stl search less_than | 1387 elements time[us]: 7324
+super search k_min | 1387 elements time[us]: 53
+stl search k_min | 1387 elements time[us]: 7069
+
+super search less_than | 1388 elements time[us]: 65
+stl search less_than | 1388 elements time[us]: 7522
+super search k_min | 1388 elements time[us]: 51
+stl search k_min | 1388 elements time[us]: 7312
+
+super search less_than | 1389 elements time[us]: 66
+stl search less_than | 1389 elements time[us]: 7414
+super search k_min | 1389 elements time[us]: 53
+stl search k_min | 1389 elements time[us]: 7131
+
+super search less_than | 1390 elements time[us]: 66
+stl search less_than | 1390 elements time[us]: 7217
+super search k_min | 1390 elements time[us]: 54
+stl search k_min | 1390 elements time[us]: 6910
+
+super search less_than | 1391 elements time[us]: 69
+stl search less_than | 1391 elements time[us]: 7431
+super search k_min | 1391 elements time[us]: 51
+stl search k_min | 1391 elements time[us]: 7211
+
+super search less_than | 1392 elements time[us]: 67
+stl search less_than | 1392 elements time[us]: 6823
+super search k_min | 1392 elements time[us]: 52
+stl search k_min | 1392 elements time[us]: 6529
+
+super search less_than | 1393 elements time[us]: 68
+stl search less_than | 1393 elements time[us]: 7049
+super search k_min | 1393 elements time[us]: 51
+stl search k_min | 1393 elements time[us]: 6760
+
+super search less_than | 1394 elements time[us]: 67
+stl search less_than | 1394 elements time[us]: 6817
+super search k_min | 1394 elements time[us]: 52
+stl search k_min | 1394 elements time[us]: 6669
+
+super search less_than | 1395 elements time[us]: 68
+stl search less_than | 1395 elements time[us]: 7046
+super search k_min | 1395 elements time[us]: 52
+stl search k_min | 1395 elements time[us]: 6898
+
+super search less_than | 1396 elements time[us]: 66
+stl search less_than | 1396 elements time[us]: 6807
+super search k_min | 1396 elements time[us]: 52
+stl search k_min | 1396 elements time[us]: 6618
+
+super search less_than | 1397 elements time[us]: 65
+stl search less_than | 1397 elements time[us]: 6860
+super search k_min | 1397 elements time[us]: 50
+stl search k_min | 1397 elements time[us]: 6577
+
+super search less_than | 1398 elements time[us]: 68
+stl search less_than | 1398 elements time[us]: 6856
+super search k_min | 1398 elements time[us]: 49
+stl search k_min | 1398 elements time[us]: 6766
+
+super search less_than | 1399 elements time[us]: 63
+stl search less_than | 1399 elements time[us]: 7046
+super search k_min | 1399 elements time[us]: 50
+stl search k_min | 1399 elements time[us]: 6801
+
+super search less_than | 1400 elements time[us]: 66
+stl search less_than | 1400 elements time[us]: 7048
+super search k_min | 1400 elements time[us]: 52
+stl search k_min | 1400 elements time[us]: 6744
+
+super search less_than | 1401 elements time[us]: 69
+stl search less_than | 1401 elements time[us]: 6818
+super search k_min | 1401 elements time[us]: 51
+stl search k_min | 1401 elements time[us]: 6719
+
+super search less_than | 1402 elements time[us]: 68
+stl search less_than | 1402 elements time[us]: 7040
+super search k_min | 1402 elements time[us]: 52
+stl search k_min | 1402 elements time[us]: 7082
+
+super search less_than | 1403 elements time[us]: 64
+stl search less_than | 1403 elements time[us]: 7116
+super search k_min | 1403 elements time[us]: 53
+stl search k_min | 1403 elements time[us]: 6939
+
+super search less_than | 1404 elements time[us]: 67
+stl search less_than | 1404 elements time[us]: 7514
+super search k_min | 1404 elements time[us]: 51
+stl search k_min | 1404 elements time[us]: 7291
+
+super search less_than | 1405 elements time[us]: 65
+stl search less_than | 1405 elements time[us]: 7211
+super search k_min | 1405 elements time[us]: 55
+stl search k_min | 1405 elements time[us]: 6912
+
+super search less_than | 1406 elements time[us]: 69
+stl search less_than | 1406 elements time[us]: 7820
+super search k_min | 1406 elements time[us]: 53
+stl search k_min | 1406 elements time[us]: 7413
+
+super search less_than | 1407 elements time[us]: 68
+stl search less_than | 1407 elements time[us]: 7081
+super search k_min | 1407 elements time[us]: 51
+stl search k_min | 1407 elements time[us]: 7030
+
+super search less_than | 1408 elements time[us]: 68
+stl search less_than | 1408 elements time[us]: 7464
+super search k_min | 1408 elements time[us]: 51
+stl search k_min | 1408 elements time[us]: 7029
+
+super search less_than | 1409 elements time[us]: 69
+stl search less_than | 1409 elements time[us]: 7070
+super search k_min | 1409 elements time[us]: 51
+stl search k_min | 1409 elements time[us]: 6958
+
+super search less_than | 1410 elements time[us]: 67
+stl search less_than | 1410 elements time[us]: 7314
+super search k_min | 1410 elements time[us]: 51
+stl search k_min | 1410 elements time[us]: 6897
+
+super search less_than | 1411 elements time[us]: 67
+stl search less_than | 1411 elements time[us]: 7515
+super search k_min | 1411 elements time[us]: 51
+stl search k_min | 1411 elements time[us]: 7126
+
+super search less_than | 1412 elements time[us]: 65
+stl search less_than | 1412 elements time[us]: 7160
+super search k_min | 1412 elements time[us]: 50
+stl search k_min | 1412 elements time[us]: 7234
+
+super search less_than | 1413 elements time[us]: 67
+stl search less_than | 1413 elements time[us]: 7188
+super search k_min | 1413 elements time[us]: 52
+stl search k_min | 1413 elements time[us]: 7115
+
+super search less_than | 1414 elements time[us]: 66
+stl search less_than | 1414 elements time[us]: 7639
+super search k_min | 1414 elements time[us]: 51
+stl search k_min | 1414 elements time[us]: 7385
+
+super search less_than | 1415 elements time[us]: 66
+stl search less_than | 1415 elements time[us]: 7803
+super search k_min | 1415 elements time[us]: 53
+stl search k_min | 1415 elements time[us]: 7581
+
+super search less_than | 1416 elements time[us]: 71
+stl search less_than | 1416 elements time[us]: 7740
+super search k_min | 1416 elements time[us]: 52
+stl search k_min | 1416 elements time[us]: 7468
+
+super search less_than | 1417 elements time[us]: 66
+stl search less_than | 1417 elements time[us]: 7698
+super search k_min | 1417 elements time[us]: 52
+stl search k_min | 1417 elements time[us]: 7446
+
+super search less_than | 1418 elements time[us]: 69
+stl search less_than | 1418 elements time[us]: 8157
+super search k_min | 1418 elements time[us]: 51
+stl search k_min | 1418 elements time[us]: 7983
+
+super search less_than | 1419 elements time[us]: 66
+stl search less_than | 1419 elements time[us]: 8020
+super search k_min | 1419 elements time[us]: 54
+stl search k_min | 1419 elements time[us]: 7536
+
+super search less_than | 1420 elements time[us]: 67
+stl search less_than | 1420 elements time[us]: 8199
+super search k_min | 1420 elements time[us]: 51
+stl search k_min | 1420 elements time[us]: 7944
+
+super search less_than | 1421 elements time[us]: 70
+stl search less_than | 1421 elements time[us]: 8011
+super search k_min | 1421 elements time[us]: 54
+stl search k_min | 1421 elements time[us]: 7669
+
+super search less_than | 1422 elements time[us]: 68
+stl search less_than | 1422 elements time[us]: 8154
+super search k_min | 1422 elements time[us]: 53
+stl search k_min | 1422 elements time[us]: 8031
+
+super search less_than | 1423 elements time[us]: 62
+stl search less_than | 1423 elements time[us]: 7744
+super search k_min | 1423 elements time[us]: 53
+stl search k_min | 1423 elements time[us]: 7647
+
+super search less_than | 1424 elements time[us]: 68
+stl search less_than | 1424 elements time[us]: 7996
+super search k_min | 1424 elements time[us]: 51
+stl search k_min | 1424 elements time[us]: 7615
+
+super search less_than | 1425 elements time[us]: 69
+stl search less_than | 1425 elements time[us]: 7946
+super search k_min | 1425 elements time[us]: 51
+stl search k_min | 1425 elements time[us]: 7569
+
+super search less_than | 1426 elements time[us]: 69
+stl search less_than | 1426 elements time[us]: 7806
+super search k_min | 1426 elements time[us]: 54
+stl search k_min | 1426 elements time[us]: 7322
+
+super search less_than | 1427 elements time[us]: 69
+stl search less_than | 1427 elements time[us]: 7824
+super search k_min | 1427 elements time[us]: 53
+stl search k_min | 1427 elements time[us]: 7858
+
+super search less_than | 1428 elements time[us]: 68
+stl search less_than | 1428 elements time[us]: 7337
+super search k_min | 1428 elements time[us]: 53
+stl search k_min | 1428 elements time[us]: 7242
+
+super search less_than | 1429 elements time[us]: 67
+stl search less_than | 1429 elements time[us]: 8531
+super search k_min | 1429 elements time[us]: 54
+stl search k_min | 1429 elements time[us]: 7923
+
+super search less_than | 1430 elements time[us]: 69
+stl search less_than | 1430 elements time[us]: 7266
+super search k_min | 1430 elements time[us]: 52
+stl search k_min | 1430 elements time[us]: 7229
+
+super search less_than | 1431 elements time[us]: 68
+stl search less_than | 1431 elements time[us]: 8095
+super search k_min | 1431 elements time[us]: 53
+stl search k_min | 1431 elements time[us]: 7545
+
+super search less_than | 1432 elements time[us]: 66
+stl search less_than | 1432 elements time[us]: 7656
+super search k_min | 1432 elements time[us]: 52
+stl search k_min | 1432 elements time[us]: 7578
+
+super search less_than | 1433 elements time[us]: 68
+stl search less_than | 1433 elements time[us]: 7609
+super search k_min | 1433 elements time[us]: 51
+stl search k_min | 1433 elements time[us]: 7422
+
+super search less_than | 1434 elements time[us]: 67
+stl search less_than | 1434 elements time[us]: 7600
+super search k_min | 1434 elements time[us]: 85
+stl search k_min | 1434 elements time[us]: 7371
+
+super search less_than | 1435 elements time[us]: 70
+stl search less_than | 1435 elements time[us]: 7505
+super search k_min | 1435 elements time[us]: 54
+stl search k_min | 1435 elements time[us]: 7258
+
+super search less_than | 1436 elements time[us]: 65
+stl search less_than | 1436 elements time[us]: 7656
+super search k_min | 1436 elements time[us]: 53
+stl search k_min | 1436 elements time[us]: 7232
+
+super search less_than | 1437 elements time[us]: 72
+stl search less_than | 1437 elements time[us]: 7784
+super search k_min | 1437 elements time[us]: 55
+stl search k_min | 1437 elements time[us]: 7399
+
+super search less_than | 1438 elements time[us]: 68
+stl search less_than | 1438 elements time[us]: 7414
+super search k_min | 1438 elements time[us]: 53
+stl search k_min | 1438 elements time[us]: 7200
+
+super search less_than | 1439 elements time[us]: 70
+stl search less_than | 1439 elements time[us]: 8159
+super search k_min | 1439 elements time[us]: 54
+stl search k_min | 1439 elements time[us]: 7724
+
+super search less_than | 1440 elements time[us]: 68
+stl search less_than | 1440 elements time[us]: 7399
+super search k_min | 1440 elements time[us]: 53
+stl search k_min | 1440 elements time[us]: 7253
+
+super search less_than | 1441 elements time[us]: 68
+stl search less_than | 1441 elements time[us]: 8379
+super search k_min | 1441 elements time[us]: 52
+stl search k_min | 1441 elements time[us]: 7968
+
+super search less_than | 1442 elements time[us]: 70
+stl search less_than | 1442 elements time[us]: 7412
+super search k_min | 1442 elements time[us]: 53
+stl search k_min | 1442 elements time[us]: 7370
+
+super search less_than | 1443 elements time[us]: 71
+stl search less_than | 1443 elements time[us]: 8520
+super search k_min | 1443 elements time[us]: 52
+stl search k_min | 1443 elements time[us]: 8448
+
+super search less_than | 1444 elements time[us]: 68
+stl search less_than | 1444 elements time[us]: 7499
+super search k_min | 1444 elements time[us]: 54
+stl search k_min | 1444 elements time[us]: 7369
+
+super search less_than | 1445 elements time[us]: 74
+stl search less_than | 1445 elements time[us]: 8765
+super search k_min | 1445 elements time[us]: 55
+stl search k_min | 1445 elements time[us]: 8357
+
+super search less_than | 1446 elements time[us]: 74
+stl search less_than | 1446 elements time[us]: 7634
+super search k_min | 1446 elements time[us]: 53
+stl search k_min | 1446 elements time[us]: 7342
+
+super search less_than | 1447 elements time[us]: 56
+stl search less_than | 1447 elements time[us]: 6306
+super search k_min | 1447 elements time[us]: 44
+stl search k_min | 1447 elements time[us]: 6208
+
+super search less_than | 1448 elements time[us]: 51
+stl search less_than | 1448 elements time[us]: 5872
+super search k_min | 1448 elements time[us]: 41
+stl search k_min | 1448 elements time[us]: 6018
+
+super search less_than | 1449 elements time[us]: 53
+stl search less_than | 1449 elements time[us]: 6119
+super search k_min | 1449 elements time[us]: 42
+stl search k_min | 1449 elements time[us]: 6263
+
+super search less_than | 1450 elements time[us]: 60
+stl search less_than | 1450 elements time[us]: 7021
+super search k_min | 1450 elements time[us]: 48
+stl search k_min | 1450 elements time[us]: 6680
+
+super search less_than | 1451 elements time[us]: 65
+stl search less_than | 1451 elements time[us]: 7890
+super search k_min | 1451 elements time[us]: 53
+stl search k_min | 1451 elements time[us]: 7448
+
+super search less_than | 1452 elements time[us]: 68
+stl search less_than | 1452 elements time[us]: 7592
+super search k_min | 1452 elements time[us]: 50
+stl search k_min | 1452 elements time[us]: 7107
+
+super search less_than | 1453 elements time[us]: 66
+stl search less_than | 1453 elements time[us]: 7318
+super search k_min | 1453 elements time[us]: 51
+stl search k_min | 1453 elements time[us]: 6997
+
+super search less_than | 1454 elements time[us]: 67
+stl search less_than | 1454 elements time[us]: 7556
+super search k_min | 1454 elements time[us]: 50
+stl search k_min | 1454 elements time[us]: 7447
+
+super search less_than | 1455 elements time[us]: 67
+stl search less_than | 1455 elements time[us]: 7735
+super search k_min | 1455 elements time[us]: 68
+stl search k_min | 1455 elements time[us]: 7336
+
+super search less_than | 1456 elements time[us]: 67
+stl search less_than | 1456 elements time[us]: 8195
+super search k_min | 1456 elements time[us]: 51
+stl search k_min | 1456 elements time[us]: 7674
+
+super search less_than | 1457 elements time[us]: 52
+stl search less_than | 1457 elements time[us]: 6114
+super search k_min | 1457 elements time[us]: 43
+stl search k_min | 1457 elements time[us]: 6081
+
+super search less_than | 1458 elements time[us]: 57
+stl search less_than | 1458 elements time[us]: 6858
+super search k_min | 1458 elements time[us]: 46
+stl search k_min | 1458 elements time[us]: 7073
+
+super search less_than | 1459 elements time[us]: 53
+stl search less_than | 1459 elements time[us]: 6735
+super search k_min | 1459 elements time[us]: 45
+stl search k_min | 1459 elements time[us]: 6628
+
+super search less_than | 1460 elements time[us]: 56
+stl search less_than | 1460 elements time[us]: 7194
+super search k_min | 1460 elements time[us]: 46
+stl search k_min | 1460 elements time[us]: 7097
+
+super search less_than | 1461 elements time[us]: 53
+stl search less_than | 1461 elements time[us]: 6075
+super search k_min | 1461 elements time[us]: 45
+stl search k_min | 1461 elements time[us]: 6308
+
+super search less_than | 1462 elements time[us]: 61
+stl search less_than | 1462 elements time[us]: 6938
+super search k_min | 1462 elements time[us]: 50
+stl search k_min | 1462 elements time[us]: 6866
+
+super search less_than | 1463 elements time[us]: 56
+stl search less_than | 1463 elements time[us]: 6835
+super search k_min | 1463 elements time[us]: 46
+stl search k_min | 1463 elements time[us]: 6822
+
+super search less_than | 1464 elements time[us]: 72
+stl search less_than | 1464 elements time[us]: 6434
+super search k_min | 1464 elements time[us]: 46
+stl search k_min | 1464 elements time[us]: 6264
+
+super search less_than | 1465 elements time[us]: 55
+stl search less_than | 1465 elements time[us]: 6771
+super search k_min | 1465 elements time[us]: 45
+stl search k_min | 1465 elements time[us]: 6760
+
+super search less_than | 1466 elements time[us]: 55
+stl search less_than | 1466 elements time[us]: 7316
+super search k_min | 1466 elements time[us]: 46
+stl search k_min | 1466 elements time[us]: 7375
+
+super search less_than | 1467 elements time[us]: 57
+stl search less_than | 1467 elements time[us]: 7566
+super search k_min | 1467 elements time[us]: 46
+stl search k_min | 1467 elements time[us]: 7455
+
+super search less_than | 1468 elements time[us]: 55
+stl search less_than | 1468 elements time[us]: 6855
+super search k_min | 1468 elements time[us]: 47

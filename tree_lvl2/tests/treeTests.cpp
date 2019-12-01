@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
+#define OPEN_SRC_FOR_UNIT_TST_
 #include "../super_tree.hpp"
-#include "../super_search.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -10,8 +10,8 @@ using AVL_node_t = typename Super_tree::node_t;
 
 std::ostream& operator<<(std::ostream& os, const AVL_node_t& node) {
     os << "{[k: " << node.key_ << "] [h:" << node.height_  << std::hex
-            << "] [this: " << &node << "] [p: " << node.parent_
-            << "] [l: " << node.left_ << "] [r: " << node.right_ << "]}" << std::endl << std::dec;
+       << "] [this: " << &node << "] [p: " << node.parent_
+       << "] [l: " << node.left_ << "] [r: " << node.right_ << "]}" << std::endl << std::dec;
     return os;
 }
 
@@ -51,7 +51,7 @@ bool Is_Balanced(AVL_node_t * node) {
         return true;
 
     if(node->left_)
-         left_balanced = Is_Balanced(node->left_);
+        left_balanced = Is_Balanced(node->left_);
     if(node->right_)
         right_balanced = Is_Balanced(node->right_);
 
@@ -65,7 +65,7 @@ TEST(Super_tree, insert) {
     srand(time(nullptr));
 
     for(int i = 0; i < 100; i++) {
-        tree.root_ = tree.insert(tree.root_, rand());
+        tree.root_ = tree.insert_intern(tree.root_, rand());
         ASSERT_TRUE(Is_Balanced(tree.root_));
     }
 }
@@ -81,20 +81,20 @@ TEST(Super_tree, remove) {
     srand(time(nullptr));
 
     for(int i = 0; i < test_iterations; i++) {    Super_tree tree;
-    std::vector<int> test_vec(test_iterations);
-    std::set<int> used_numders;
-    int rand_num = 0;
-    bool find = false;
+        std::vector<int> test_vec(test_iterations);
+        std::set<int> used_numders;
+        int rand_num = 0;
+        bool find = false;
 
-    srand(time(nullptr));
+        srand(time(nullptr));
 
-    for(int i = 0; i < test_iterations; i++) {
+        for(int i = 0; i < test_iterations; i++) {
+            test_vec[i] = rand();
+            tree.root_ = tree.insert_intern(tree.root_,test_vec[i]);
+            ASSERT_TRUE(Is_Balanced(tree.root_));
+        }
         test_vec[i] = rand();
-        tree.root_ = tree.insert(tree.root_,test_vec[i]);
-        ASSERT_TRUE(Is_Balanced(tree.root_));
-    }
-        test_vec[i] = rand();
-        tree.root_ = tree.insert(tree.root_,test_vec[i]);
+        tree.root_ = tree.insert_intern(tree.root_,test_vec[i]);
         ASSERT_TRUE(Is_Balanced(tree.root_));
     }
 
@@ -108,7 +108,7 @@ TEST(Super_tree, remove) {
 
         used_numders.insert(rand_index);
 
-        tree.root_ = tree.remove(tree.root_, test_vec[rand_index]);
+        tree.root_ = tree.remove_intern(tree.root_, test_vec[rand_index]);
         //std::cout << tree;
         ASSERT_TRUE(Is_Balanced(tree.root_));
     }
@@ -124,14 +124,14 @@ TEST(Super_tree, copy_ctor) {
 
     for(int i = 0; i < test_iterations; i++) {
         test_vec[i] = rand();
-        tree.root_ = tree.insert(tree.root_,test_vec[i]);
+        tree.root_ = tree.insert_intern(tree.root_,test_vec[i]);
         ASSERT_TRUE(Is_Balanced(tree.root_));
     }
 
     Super_tree copy_tree(tree);
 
     for(int i = 0; i < test_iterations; i++) {
-        ASSERT_NE(copy_tree.find(copy_tree.root_, test_vec[i]), nullptr);
+        ASSERT_NE(copy_tree.find_intern(copy_tree.root_, test_vec[i]), nullptr);
     }
 }
 
@@ -144,19 +144,19 @@ TEST(Super_tree, assignment_oper) {
 
     for(int i = 0; i < test_iterations; i++) {
         test_vec[i] = rand();
-        tree.root_ = tree.insert(tree.root_,test_vec[i]);
+        tree.root_ = tree.insert_intern(tree.root_,test_vec[i]);
         ASSERT_TRUE(Is_Balanced(tree.root_));
     }
 
     Super_tree other_tree = tree;
 
     for(int i = 0; i < test_iterations; i++) {
-        ASSERT_NE(other_tree.find(other_tree.root_, test_vec[i]), nullptr);
+        ASSERT_NE(other_tree.find_intern(other_tree.root_, test_vec[i]), nullptr);
     }
 
     other_tree = tree;
     for(int i = 0; i < test_iterations; i++) {
-        ASSERT_NE(other_tree.find(other_tree.root_, test_vec[i]), nullptr);
+        ASSERT_NE(other_tree.find_intern(other_tree.root_, test_vec[i]), nullptr);
     }
 }
 
@@ -169,18 +169,18 @@ TEST(Super_tree, calc_lsub) {
 
     for(int i = 0; i < test_iterations; i++) {
         test_vec[i] = rand();
-        tree.root_ = tree.insert(tree.root_,test_vec[i]);
+        tree.root_ = tree.insert_intern(tree.root_,test_vec[i]);
         ASSERT_TRUE(Is_Balanced(tree.root_));
     }
 
     std::cout << tree.root_ -> left_ -> lsubnum_;
     std::cout << tree;
 
-    tree.insert(tree.root_, 1011);
+    tree.insert_intern(tree.root_, 1011);
     std::cout << tree.root_ -> left_ -> lsubnum_;
     std::cout << tree;
 
-    tree.insert(tree.root_, 1);
+    tree.insert_intern(tree.root_, 1);
     std::cout << tree.root_ -> left_ -> lsubnum_;
     std::cout << tree;
 }
@@ -194,7 +194,7 @@ TEST(Super_tree, k_min) {
 
     for(int i = 0; i < test_iterations; i++) {
         test_vec[i] = rand();
-        tree.root_ = tree.insert(tree.root_,test_vec[i]);
+        tree.root_ = tree.insert_intern(tree.root_,test_vec[i]);
         ASSERT_TRUE(Is_Balanced(tree.root_));
     }
 
@@ -205,7 +205,7 @@ TEST(Super_tree, k_min) {
     std::cout << std::endl;
 
     for(int i = 0; i < test_iterations; i++) {
-        AVL_node_t* k_min = tree.k_min(i+1, tree.root_);
+        AVL_node_t* k_min = tree.k_min_intern(i+1, tree.root_);
         ASSERT_TRUE(errno != EINVAL);
         ASSERT_EQ(k_min->key_, test_vec[i]);
     }
@@ -220,7 +220,7 @@ TEST(Super_tree, less_than) {
 
     for(int i = 0; i < test_iterations; i++) {
         test_vec[i] = rand() % 1000000;
-        tree.root_ = tree.insert(tree.root_,test_vec[i]);
+        tree.root_ = tree.insert_intern(tree.root_,test_vec[i]);
         ASSERT_TRUE(Is_Balanced(tree.root_));
     }
 
@@ -233,7 +233,7 @@ TEST(Super_tree, less_than) {
     std::cout << tree << std::endl;
 
     for(int i = 0; i < test_iterations; i++) {
-        int minN = tree.less_than(test_vec[i], tree.root_, 0);
+        int minN = tree.less_than_intern(test_vec[i], tree.root_, 0);
         ASSERT_TRUE(errno != EINVAL);
         ASSERT_EQ(minN, i);
     }

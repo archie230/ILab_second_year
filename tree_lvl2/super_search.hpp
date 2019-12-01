@@ -1,7 +1,9 @@
 #include "super_tree.hpp"
 #include <cassert>
+#include <set>
 
 namespace cxx_containers {
+
     template<typename Key, typename Compare = std::less<Key>>
     class SuperSearch final {
         super_tree<Key, Compare> tree_;
@@ -12,50 +14,52 @@ namespace cxx_containers {
             :
             tree_(comp) {}
 
-        void push(const Key& elem) noexcept{
-            tree_.root_ = tree_.insert(tree_.root_, elem);
+        void push(const Key& elem) {
+            tree_.insert(elem);
         }
 
-        void remove(const Key& elem) noexcept{
-            auto node = tree_.remove(tree_.root_, elem);
-            if(!node) return;
-            tree_.root_ = node;
+        void remove(const Key& elem) {
+            tree_.remove(elem);
         }
 
-        bool exists(const Key& elem) const noexcept{
-            return tree_.find(tree_.root_, elem) != nullptr;
+        bool exists(const Key& elem) const noexcept {
+            return tree_.find(elem);
         }
 
-        const Key& min() const noexcept{
-            auto min = tree_.findmin(tree_.root);
-            return min ? min->key_:Key();
+        const Key& min() const {
+            try {
+                const Key& min = tree_.findmin();
+                return min;
+            } catch(...) {
+                throw;
+            }
         }
 
-        const Key& max() const noexcept{
-            auto max = tree_.findmax(tree_.root);
-            return max ? max->key_ : Key();
+        const Key& max() const {
+            try {
+                const Key& max = tree_.findmax();
+                return max;
+            } catch(...) {
+                throw;
+            }
         }
 
         int size() const noexcept {
-            if(tree_)
-                return tree_.size_;
-            return 0;
+            return tree_.size();
         }
 
         const Key& k_min(int k) const {
-            if(k <= 0)
-                throw std::runtime_error("k less than or equal zero");
-            if(k > tree_.size_)
-                throw std::out_of_range("k greater than tree size");
-
-            typename super_tree<Key, Compare>::node_t* answ = nullptr;
-            answ = tree_.k_min(k, tree_.root_);
-            assert(answ);
-            return answ -> key_;
+            try {
+                const Key& k_minimal = tree_.k_min(k);
+                return k_minimal;
+            } catch(...) {
+                throw;
+            }
         }
 
         int less_than(const Key& elem) const noexcept {
-            return tree_.less_than(elem, tree_.root_, 0);
+            return tree_.less_than(elem);
         }
     };
+
 }
