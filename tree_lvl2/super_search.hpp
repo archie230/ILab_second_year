@@ -1,6 +1,5 @@
 #include "super_tree.hpp"
 #include <cassert>
-#include <set>
 
 namespace cxx_containers {
 
