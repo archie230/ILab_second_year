@@ -25,21 +25,11 @@ namespace cxx_containers {
         }
 
         const Key& min() const {
-            try {
-                const Key& min = tree_.findmin();
-                return min;
-            } catch(...) {
-                throw;
-            }
+            return tree_.findmin();
         }
 
         const Key& max() const {
-            try {
-                const Key& max = tree_.findmax();
-                return max;
-            } catch(...) {
-                throw;
-            }
+            return tree_.findmax();
         }
 
         int size() const noexcept {
