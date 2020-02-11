@@ -1,3 +1,4 @@
+#pragma once
 #include "super_tree.hpp"
 
 namespace cxx_containers {
