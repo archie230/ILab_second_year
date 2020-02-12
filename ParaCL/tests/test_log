@@ -1,0 +1,32 @@
+=====CORRECT DATA TESTS=====
+TEST 001 OK : answ = 1  expected = 1
+TEST 002 OK : answ = 5
+4  expected = 5
+4
+TEST 003 OK : answ = 2  expected = 2
+TEST 004 OK : answ = 123321  expected = 123321
+TEST 005 OK : answ = 0
+1
+1
+2
+3
+5
+8
+13
+21
+34  expected = 0
+1
+1
+2
+3
+5
+8
+13
+21
+34
+=====BAD DATA TESTS=====
+TEST 006 OK
+TEST 007 OK
+TEST 008 OK
+TEST 009 OK
+TEST 010 OK
