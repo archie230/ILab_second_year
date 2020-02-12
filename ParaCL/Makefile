@@ -1,16 +1,16 @@
 CXXFLAGS=-g -std=c++17 -pedantic-errors
 CXX=g++
 
-PARS_DIR=frontend/src/parser/
-LEX_DIR=frontend/src/lexer/
-SRC_DIR=frontend/src/
+PARS_DIR=src/parser/
+LEX_DIR=src/lexer/
+SRC_DIR=src/
 BIN_DIR=bin/
 
 OBJECTS=parser.o lexer.o driver.o ast.o symtbl.o interpreter.o
 BISONFLAGS=-t -v
 FLEXFLAGS=-d
 
-.PHONY: all clean
+.PHONY: all clean debug
 
 all: interpreter
 
