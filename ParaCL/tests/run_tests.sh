@@ -28,7 +28,8 @@ echo "=====BAD DATA TESTS=====" >> test_log
 for i in ${BadDataRange[@]}
 do
     ./../bin/interpreter ${BadDataPath}${i}.cl 2> ${BadOutPath}${i}.txt
-    if [[ ! -s ${BadOutPath}${i}.txt ]]; then
+    ANSW=$(echo ${BadOutPath}${i}.txt)
+    if [[ -z ANSW ]]; then
         STATUS="FAILED"
     else
         STATUS="OK"
