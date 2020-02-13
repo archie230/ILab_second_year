@@ -189,7 +189,7 @@ int yy::PCL_Driver::interpretate(AST::INode *node) {
                 if (binary_node->GetType() == T_ADD)
                     return interpretate(binary_node->GetKid('r'));
                 else
-                    return 1 * interpretate(binary_node->GetKid('r'));
+                    return -1 * interpretate(binary_node->GetKid('r'));
             }
         }
 
