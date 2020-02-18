@@ -27,7 +27,7 @@ namespace AST {
             tname_ = tname;
         }
 
-        TokenName GetType() {
+        TokenName GetType() const {
             return tname_;
         }
 	};
@@ -64,7 +64,7 @@ namespace AST {
 #ifdef DEBUG
         void print() override;
 #endif
-        int GetNum() {
+        int GetNum() const {
             return num_;
         }
 	};
@@ -94,7 +94,7 @@ namespace AST {
 #ifdef DEBUG
         void print() override;
 #endif
-	    INode* GetKid(char side);
+	    INode* GetKid(char side) const;
 	    void SetKid(char side, INode* val);
 	};
 
@@ -120,11 +120,11 @@ namespace AST {
             kids_.push_back(kid);
         }
 
-        int size() {
+        int size() const {
             return kids_.size();
         }
 
-        int GetTable_id() {
+        int GetTable_id() const {
             return id_;
         }
 
@@ -132,7 +132,7 @@ namespace AST {
             id_ = id;
         }
 
-        INode* operator[] (int idx);
+        INode* operator[] (int idx) const;
     };
 
 // If statement node
@@ -152,7 +152,7 @@ namespace AST {
         {}
 
         ~IfNode();
-        INode* GetKid(char side);
+        INode* GetKid(char side) const;
         void SetKid(char side, INode* val);
 #ifdef DEBUG
         void print() override;

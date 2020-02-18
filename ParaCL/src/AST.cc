@@ -45,7 +45,7 @@ void AST::TwoKidsNode::print() {
 }
 #endif
 
-AST::INode *AST::TwoKidsNode::GetKid(char side) {
+AST::INode *AST::TwoKidsNode::GetKid(char side) const {
     switch(side) {
         case 'l':
             return left_;
@@ -84,7 +84,7 @@ void AST::ListNode::print() {
 }
 #endif
 
-AST::INode *AST::ListNode::operator[](int idx) {
+AST::INode *AST::ListNode::operator[](int idx) const{
     if(idx >= kids_.size() || idx < 0)
         return nullptr;
 
@@ -102,7 +102,7 @@ AST::IfNode::~IfNode() {
     delete else_;
 }
 
-AST::INode *AST::IfNode::GetKid(char side) {
+AST::INode *AST::IfNode::GetKid(char side) const{
     switch(side) {
         case 'l':
             return expr_;
