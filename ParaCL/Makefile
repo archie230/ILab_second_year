@@ -14,7 +14,7 @@ FLEXFLAGS=-d
 
 all: interpreter
 
-debug: CXXFLAGS += -D_DEBUG
+debug: CXXFLAGS += -DDEBUG
 debug: interpreter
 
 clean:
