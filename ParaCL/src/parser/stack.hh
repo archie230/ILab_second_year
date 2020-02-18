@@ -24,7 +24,7 @@
 // as a parser skeleton.  Alternatively, if you modify or redistribute
 // the parser skeleton itself, you may (at your option) remove this
 // special exception, which will cause the skeleton and the resulting
-// Bison bad_outputs files to be licensed under the GNU General Public
+// Bison output files to be licensed under the GNU General Public
 // License without this special exception.
 
 // This special exception was added by the Free Software Foundation in

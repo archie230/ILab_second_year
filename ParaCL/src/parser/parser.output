@@ -3,6 +3,9 @@ Terminals unused in grammar
    TERR
 
 
+State 90 conflicts: 1 shift/reduce
+
+
 Grammar
 
     0 $accept: translation_unit $end
@@ -19,131 +22,140 @@ Grammar
     6 statement_list: statement
     7               | statement_list statement
 
-    8 statement: expression ';'
-    9          | expression error
-   10          | error ';'
-   11          | selection_statement
-   12          | iteration_statement
-   13          | block
-   14          | TOUTPUT expression ';'
-   15          | TOUTPUT expression error
+    8 statement: matched_statement
+    9          | open_statement
 
-   16 selection_statement: TIF '(' expression ')' statement
-   17                    | TIF error expression ')' statement
-   18                    | TIF '(' expression error statement
+   10 matched_statement: expression ';'
+   11                  | expression error
+   12                  | error ';'
+   13                  | TIF '(' expression ')' matched_statement TELSE matched_statement
+   14                  | iteration_statement
+   15                  | block
+   16                  | TOUTPUT expression ';'
+   17                  | TOUTPUT expression error
 
-   19 iteration_statement: TWHILE '(' expression ')' statement
-   20                    | TWHILE '(' expression error statement
-   21                    | TWHILE error expression ')' statement
+   18 open_statement: TIF '(' expression ')' statement
+   19               | TIF '(' expression ')' matched_statement TELSE open_statement
 
-   22 expression: assignment_expression
+   20 iteration_statement: TWHILE '(' expression ')' statement
+   21                    | TWHILE '(' expression error statement
+   22                    | TWHILE error expression ')' statement
 
-   23 assignment_expression: logical_or_expression
-   24                      | TID TASSIGN logical_or_expression
+   23 expression: assignment_expression
 
-   25 logical_or_expression: logical_and_expression
-   26                      | logical_or_expression TOR logical_and_expression
+   24 assignment_expression: logical_or_expression
+   25                      | TID TASSIGN logical_or_expression
 
-   27 logical_and_expression: equality_expression
-   28                       | logical_and_expression TAND equality_expression
+   26 logical_or_expression: logical_and_expression
+   27                      | logical_or_expression TOR logical_and_expression
 
-   29 equality_expression: relational_expression
-   30                    | equality_expression TEQUAL relational_expression
-   31                    | equality_expression TNEQUAL relational_expression
+   28 logical_and_expression: equality_expression
+   29                       | logical_and_expression TAND equality_expression
 
-   32 relational_expression: additive_expression
-   33                      | relational_expression TLESS additive_expression
-   34                      | relational_expression TGR additive_expression
-   35                      | relational_expression TLESS_EQ additive_expression
-   36                      | relational_expression TGR_EQ additive_expression
+   30 equality_expression: relational_expression
+   31                    | equality_expression TEQUAL relational_expression
+   32                    | equality_expression TNEQUAL relational_expression
 
-   37 additive_expression: multiplicative_expression
-   38                    | additive_expression TADD multiplicative_expression
-   39                    | additive_expression TSUB multiplicative_expression
+   33 relational_expression: additive_expression
+   34                      | relational_expression TLESS additive_expression
+   35                      | relational_expression TGR additive_expression
+   36                      | relational_expression TLESS_EQ additive_expression
+   37                      | relational_expression TGR_EQ additive_expression
 
-   40 multiplicative_expression: unary_expression
-   41                          | multiplicative_expression TMUL unary_expression
-   42                          | multiplicative_expression TDIV unary_expression
+   38 additive_expression: multiplicative_expression
+   39                    | additive_expression TADD multiplicative_expression
+   40                    | additive_expression TSUB multiplicative_expression
 
-   43 unary_expression: primary_expression
-   44                 | TADD unary_expression
-   45                 | TSUB unary_expression
+   41 multiplicative_expression: unary_expression
+   42                          | multiplicative_expression TMUL unary_expression
+   43                          | multiplicative_expression TDIV unary_expression
+   44                          | multiplicative_expression TPERCENT unary_expression
 
-   46 primary_expression: TID
-   47                   | TNUM
-   48                   | TINPUT
-   49                   | '(' expression ')'
+   45 unary_expression: primary_expression
+   46                 | TADD unary_expression
+   47                 | TSUB unary_expression
+   48                 | TEXCLAM unary_expression
+
+   49 primary_expression: TID
+   50                   | TNUM
+   51                   | TINPUT
+   52                   | '(' expression ')'
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-'(' (40) 16 18 19 20 49
-')' (41) 16 17 19 21 49
-';' (59) 8 10 14
+'(' (40) 13 18 19 20 21 52
+')' (41) 13 18 19 20 22 52
+';' (59) 10 12 16
 '{' (123) 3 5
 '}' (125) 3 5
-error (256) 9 10 15 17 18 20 21
-TNUM (258) 47
-TID (259) 24 46
-TWHILE (260) 19 20 21
-TIF (261) 16 17 18
-TOR (262) 26
-TAND (263) 28
-TLESS (264) 33
-TGR (265) 34
-TLESS_EQ (266) 35
-TGR_EQ (267) 36
-TEQUAL (268) 30
-TNEQUAL (269) 31
-TADD (270) 38 44
-TSUB (271) 39 45
-TMUL (272) 41
-TDIV (273) 42
-TINPUT (274) 48
-TOUTPUT (275) 14 15
-TASSIGN (276) 24
-TERR (277)
+error (256) 11 12 17 21 22
+TNUM (258) 50
+TID (259) 25 49
+TWHILE (260) 20 21 22
+TIF (261) 13 18 19
+TOR (262) 27
+TAND (263) 29
+TLESS (264) 34
+TGR (265) 35
+TLESS_EQ (266) 36
+TGR_EQ (267) 37
+TEQUAL (268) 31
+TNEQUAL (269) 32
+TADD (270) 39 46
+TSUB (271) 40 47
+TMUL (272) 42
+TDIV (273) 43
+TINPUT (274) 51
+TOUTPUT (275) 16 17
+TASSIGN (276) 25
+TEXCLAM (277) 48
+TPERCENT (278) 44
+TELSE (279) 13 19
+TERR (280)
 
 
 Nonterminals, with rules where they appear
 
-$accept (28)
+$accept (31)
     on left: 0
-translation_unit (29)
+translation_unit (32)
     on left: 1 2, on right: 0
-block (30)
-    on left: 3 5, on right: 13
-$@1 (31)
+block (33)
+    on left: 3 5, on right: 15
+$@1 (34)
     on left: 4, on right: 5
-statement_list (32)
+statement_list (35)
     on left: 6 7, on right: 2 5 7
-statement (33)
-    on left: 8 9 10 11 12 13 14 15, on right: 6 7 16 17 18 19 20 21
-selection_statement (34)
-    on left: 16 17 18, on right: 11
-iteration_statement (35)
-    on left: 19 20 21, on right: 12
-expression (36)
-    on left: 22, on right: 8 9 14 15 16 17 18 19 20 21 49
-assignment_expression (37)
-    on left: 23 24, on right: 22
-logical_or_expression (38)
-    on left: 25 26, on right: 23 24 26
-logical_and_expression (39)
-    on left: 27 28, on right: 25 26 28
-equality_expression (40)
-    on left: 29 30 31, on right: 27 28 30 31
-relational_expression (41)
-    on left: 32 33 34 35 36, on right: 29 30 31 33 34 35 36
-additive_expression (42)
-    on left: 37 38 39, on right: 32 33 34 35 36 38 39
-multiplicative_expression (43)
-    on left: 40 41 42, on right: 37 38 39 41 42
-unary_expression (44)
-    on left: 43 44 45, on right: 40 41 42 44 45
-primary_expression (45)
-    on left: 46 47 48 49, on right: 43
+statement (36)
+    on left: 8 9, on right: 6 7 18 20 21 22
+matched_statement (37)
+    on left: 10 11 12 13 14 15 16 17, on right: 8 13 19
+open_statement (38)
+    on left: 18 19, on right: 9 19
+iteration_statement (39)
+    on left: 20 21 22, on right: 14
+expression (40)
+    on left: 23, on right: 10 11 13 16 17 18 19 20 21 22 52
+assignment_expression (41)
+    on left: 24 25, on right: 23
+logical_or_expression (42)
+    on left: 26 27, on right: 24 25 27
+logical_and_expression (43)
+    on left: 28 29, on right: 26 27 29
+equality_expression (44)
+    on left: 30 31 32, on right: 28 29 31 32
+relational_expression (45)
+    on left: 33 34 35 36 37, on right: 30 31 32 34 35 36 37
+additive_expression (46)
+    on left: 38 39 40, on right: 33 34 35 36 37 39 40
+multiplicative_expression (47)
+    on left: 41 42 43 44, on right: 38 39 40 42 43 44
+unary_expression (48)
+    on left: 45 46 47 48, on right: 41 42 43 44 46 47 48
+primary_expression (49)
+    on left: 49 50 51 52, on right: 45
 
 
 State 0
@@ -159,184 +171,205 @@ State 0
     TSUB     shift, and go to state 7
     TINPUT   shift, and go to state 8
     TOUTPUT  shift, and go to state 9
-    '{'      shift, and go to state 10
-    '('      shift, and go to state 11
+    TEXCLAM  shift, and go to state 10
+    '{'      shift, and go to state 11
+    '('      shift, and go to state 12
 
     $end  reduce using rule 1 (translation_unit)
 
-    translation_unit           go to state 12
-    block                      go to state 13
-    statement_list             go to state 14
-    statement                  go to state 15
-    selection_statement        go to state 16
-    iteration_statement        go to state 17
-    expression                 go to state 18
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    translation_unit           go to state 13
+    block                      go to state 14
+    statement_list             go to state 15
+    statement                  go to state 16
+    matched_statement          go to state 17
+    open_statement             go to state 18
+    iteration_statement        go to state 19
+    expression                 go to state 20
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 1
 
-   10 statement: error . ';'
+   12 matched_statement: error . ';'
 
-    ';'  shift, and go to state 28
+    ';'  shift, and go to state 30
 
 
 State 2
 
-   47 primary_expression: TNUM .
+   50 primary_expression: TNUM .
 
-    $default  reduce using rule 47 (primary_expression)
+    $default  reduce using rule 50 (primary_expression)
 
 
 State 3
 
-   24 assignment_expression: TID . TASSIGN logical_or_expression
-   46 primary_expression: TID .
+   25 assignment_expression: TID . TASSIGN logical_or_expression
+   49 primary_expression: TID .
 
-    TASSIGN  shift, and go to state 29
+    TASSIGN  shift, and go to state 31
 
-    $default  reduce using rule 46 (primary_expression)
+    $default  reduce using rule 49 (primary_expression)
 
 
 State 4
 
-   19 iteration_statement: TWHILE . '(' expression ')' statement
-   20                    | TWHILE . '(' expression error statement
-   21                    | TWHILE . error expression ')' statement
-
-    error  shift, and go to state 30
-    '('    shift, and go to state 31
-
-
-State 5
-
-   16 selection_statement: TIF . '(' expression ')' statement
-   17                    | TIF . error expression ')' statement
-   18                    | TIF . '(' expression error statement
+   20 iteration_statement: TWHILE . '(' expression ')' statement
+   21                    | TWHILE . '(' expression error statement
+   22                    | TWHILE . error expression ')' statement
 
     error  shift, and go to state 32
     '('    shift, and go to state 33
 
 
+State 5
+
+   13 matched_statement: TIF . '(' expression ')' matched_statement TELSE matched_statement
+   18 open_statement: TIF . '(' expression ')' statement
+   19               | TIF . '(' expression ')' matched_statement TELSE open_statement
+
+    '('  shift, and go to state 34
+
+
 State 6
 
-   44 unary_expression: TADD . unary_expression
+   46 unary_expression: TADD . unary_expression
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    unary_expression    go to state 35
-    primary_expression  go to state 27
+    unary_expression    go to state 36
+    primary_expression  go to state 29
 
 
 State 7
 
-   45 unary_expression: TSUB . unary_expression
+   47 unary_expression: TSUB . unary_expression
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    unary_expression    go to state 36
-    primary_expression  go to state 27
+    unary_expression    go to state 37
+    primary_expression  go to state 29
 
 
 State 8
 
-   48 primary_expression: TINPUT .
+   51 primary_expression: TINPUT .
 
-    $default  reduce using rule 48 (primary_expression)
+    $default  reduce using rule 51 (primary_expression)
 
 
 State 9
 
-   14 statement: TOUTPUT . expression ';'
-   15          | TOUTPUT . expression error
+   16 matched_statement: TOUTPUT . expression ';'
+   17                  | TOUTPUT . expression error
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 3
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 3
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    expression                 go to state 37
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    expression                 go to state 38
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 10
 
-    3 block: '{' . '}'
-    5      | '{' . $@1 statement_list '}'
+   48 unary_expression: TEXCLAM . unary_expression
 
-    '}'  shift, and go to state 38
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    $default  reduce using rule 4 ($@1)
-
-    $@1  go to state 39
+    unary_expression    go to state 39
+    primary_expression  go to state 29
 
 
 State 11
 
-   49 primary_expression: '(' . expression ')'
+    3 block: '{' . '}'
+    5      | '{' . $@1 statement_list '}'
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 3
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    '}'  shift, and go to state 40
 
-    expression                 go to state 40
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    $default  reduce using rule 4 ($@1)
+
+    $@1  go to state 41
 
 
 State 12
 
-    0 $accept: translation_unit . $end
+   52 primary_expression: '(' . expression ')'
 
-    $end  shift, and go to state 41
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 3
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
+
+    expression                 go to state 42
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 13
 
-   13 statement: block .
+    0 $accept: translation_unit . $end
 
-    $default  reduce using rule 13 (statement)
+    $end  shift, and go to state 43
 
 
 State 14
+
+   15 matched_statement: block .
+
+    $default  reduce using rule 15 (matched_statement)
+
+
+State 15
 
     2 translation_unit: statement_list .
     7 statement_list: statement_list . statement
@@ -350,310 +383,310 @@ State 14
     TSUB     shift, and go to state 7
     TINPUT   shift, and go to state 8
     TOUTPUT  shift, and go to state 9
-    '{'      shift, and go to state 10
-    '('      shift, and go to state 11
+    TEXCLAM  shift, and go to state 10
+    '{'      shift, and go to state 11
+    '('      shift, and go to state 12
 
     $end  reduce using rule 2 (translation_unit)
 
-    block                      go to state 13
-    statement                  go to state 42
-    selection_statement        go to state 16
-    iteration_statement        go to state 17
-    expression                 go to state 18
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    block                      go to state 14
+    statement                  go to state 44
+    matched_statement          go to state 17
+    open_statement             go to state 18
+    iteration_statement        go to state 19
+    expression                 go to state 20
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
-State 15
+State 16
 
     6 statement_list: statement .
 
     $default  reduce using rule 6 (statement_list)
 
 
-State 16
-
-   11 statement: selection_statement .
-
-    $default  reduce using rule 11 (statement)
-
-
 State 17
 
-   12 statement: iteration_statement .
+    8 statement: matched_statement .
 
-    $default  reduce using rule 12 (statement)
+    $default  reduce using rule 8 (statement)
 
 
 State 18
 
-    8 statement: expression . ';'
-    9          | expression . error
+    9 statement: open_statement .
 
-    error  shift, and go to state 43
-    ';'    shift, and go to state 44
+    $default  reduce using rule 9 (statement)
 
 
 State 19
 
-   22 expression: assignment_expression .
+   14 matched_statement: iteration_statement .
 
-    $default  reduce using rule 22 (expression)
+    $default  reduce using rule 14 (matched_statement)
 
 
 State 20
 
-   23 assignment_expression: logical_or_expression .
-   26 logical_or_expression: logical_or_expression . TOR logical_and_expression
+   10 matched_statement: expression . ';'
+   11                  | expression . error
 
-    TOR  shift, and go to state 45
-
-    $default  reduce using rule 23 (assignment_expression)
+    error  shift, and go to state 45
+    ';'    shift, and go to state 46
 
 
 State 21
 
-   25 logical_or_expression: logical_and_expression .
-   28 logical_and_expression: logical_and_expression . TAND equality_expression
+   23 expression: assignment_expression .
 
-    TAND  shift, and go to state 46
-
-    $default  reduce using rule 25 (logical_or_expression)
+    $default  reduce using rule 23 (expression)
 
 
 State 22
 
-   27 logical_and_expression: equality_expression .
-   30 equality_expression: equality_expression . TEQUAL relational_expression
-   31                    | equality_expression . TNEQUAL relational_expression
+   24 assignment_expression: logical_or_expression .
+   27 logical_or_expression: logical_or_expression . TOR logical_and_expression
 
-    TEQUAL   shift, and go to state 47
-    TNEQUAL  shift, and go to state 48
+    TOR  shift, and go to state 47
 
-    $default  reduce using rule 27 (logical_and_expression)
+    $default  reduce using rule 24 (assignment_expression)
 
 
 State 23
 
-   29 equality_expression: relational_expression .
-   33 relational_expression: relational_expression . TLESS additive_expression
-   34                      | relational_expression . TGR additive_expression
-   35                      | relational_expression . TLESS_EQ additive_expression
-   36                      | relational_expression . TGR_EQ additive_expression
+   26 logical_or_expression: logical_and_expression .
+   29 logical_and_expression: logical_and_expression . TAND equality_expression
 
-    TLESS     shift, and go to state 49
-    TGR       shift, and go to state 50
-    TLESS_EQ  shift, and go to state 51
-    TGR_EQ    shift, and go to state 52
+    TAND  shift, and go to state 48
 
-    $default  reduce using rule 29 (equality_expression)
+    $default  reduce using rule 26 (logical_or_expression)
 
 
 State 24
 
-   32 relational_expression: additive_expression .
-   38 additive_expression: additive_expression . TADD multiplicative_expression
-   39                    | additive_expression . TSUB multiplicative_expression
+   28 logical_and_expression: equality_expression .
+   31 equality_expression: equality_expression . TEQUAL relational_expression
+   32                    | equality_expression . TNEQUAL relational_expression
 
-    TADD  shift, and go to state 53
-    TSUB  shift, and go to state 54
+    TEQUAL   shift, and go to state 49
+    TNEQUAL  shift, and go to state 50
 
-    $default  reduce using rule 32 (relational_expression)
+    $default  reduce using rule 28 (logical_and_expression)
 
 
 State 25
 
-   37 additive_expression: multiplicative_expression .
-   41 multiplicative_expression: multiplicative_expression . TMUL unary_expression
-   42                          | multiplicative_expression . TDIV unary_expression
+   30 equality_expression: relational_expression .
+   34 relational_expression: relational_expression . TLESS additive_expression
+   35                      | relational_expression . TGR additive_expression
+   36                      | relational_expression . TLESS_EQ additive_expression
+   37                      | relational_expression . TGR_EQ additive_expression
 
-    TMUL  shift, and go to state 55
-    TDIV  shift, and go to state 56
+    TLESS     shift, and go to state 51
+    TGR       shift, and go to state 52
+    TLESS_EQ  shift, and go to state 53
+    TGR_EQ    shift, and go to state 54
 
-    $default  reduce using rule 37 (additive_expression)
+    $default  reduce using rule 30 (equality_expression)
 
 
 State 26
 
-   40 multiplicative_expression: unary_expression .
+   33 relational_expression: additive_expression .
+   39 additive_expression: additive_expression . TADD multiplicative_expression
+   40                    | additive_expression . TSUB multiplicative_expression
 
-    $default  reduce using rule 40 (multiplicative_expression)
+    TADD  shift, and go to state 55
+    TSUB  shift, and go to state 56
+
+    $default  reduce using rule 33 (relational_expression)
 
 
 State 27
 
-   43 unary_expression: primary_expression .
+   38 additive_expression: multiplicative_expression .
+   42 multiplicative_expression: multiplicative_expression . TMUL unary_expression
+   43                          | multiplicative_expression . TDIV unary_expression
+   44                          | multiplicative_expression . TPERCENT unary_expression
 
-    $default  reduce using rule 43 (unary_expression)
+    TMUL      shift, and go to state 57
+    TDIV      shift, and go to state 58
+    TPERCENT  shift, and go to state 59
+
+    $default  reduce using rule 38 (additive_expression)
 
 
 State 28
 
-   10 statement: error ';' .
+   41 multiplicative_expression: unary_expression .
 
-    $default  reduce using rule 10 (statement)
+    $default  reduce using rule 41 (multiplicative_expression)
 
 
 State 29
 
-   24 assignment_expression: TID TASSIGN . logical_or_expression
-
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
-
-    logical_or_expression      go to state 57
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
-
-
-State 30
-
-   21 iteration_statement: TWHILE error . expression ')' statement
-
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 3
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
-
-    expression                 go to state 58
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
-
-
-State 31
-
-   19 iteration_statement: TWHILE '(' . expression ')' statement
-   20                    | TWHILE '(' . expression error statement
-
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 3
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
-
-    expression                 go to state 59
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
-
-
-State 32
-
-   17 selection_statement: TIF error . expression ')' statement
-
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 3
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
-
-    expression                 go to state 60
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
-
-
-State 33
-
-   16 selection_statement: TIF '(' . expression ')' statement
-   18                    | TIF '(' . expression error statement
-
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 3
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
-
-    expression                 go to state 61
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
-
-
-State 34
-
-   46 primary_expression: TID .
-
-    $default  reduce using rule 46 (primary_expression)
-
-
-State 35
-
-   44 unary_expression: TADD unary_expression .
-
-    $default  reduce using rule 44 (unary_expression)
-
-
-State 36
-
-   45 unary_expression: TSUB unary_expression .
+   45 unary_expression: primary_expression .
 
     $default  reduce using rule 45 (unary_expression)
 
 
+State 30
+
+   12 matched_statement: error ';' .
+
+    $default  reduce using rule 12 (matched_statement)
+
+
+State 31
+
+   25 assignment_expression: TID TASSIGN . logical_or_expression
+
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
+
+    logical_or_expression      go to state 60
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
+
+
+State 32
+
+   22 iteration_statement: TWHILE error . expression ')' statement
+
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 3
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
+
+    expression                 go to state 61
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
+
+
+State 33
+
+   20 iteration_statement: TWHILE '(' . expression ')' statement
+   21                    | TWHILE '(' . expression error statement
+
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 3
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
+
+    expression                 go to state 62
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
+
+
+State 34
+
+   13 matched_statement: TIF '(' . expression ')' matched_statement TELSE matched_statement
+   18 open_statement: TIF '(' . expression ')' statement
+   19               | TIF '(' . expression ')' matched_statement TELSE open_statement
+
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 3
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
+
+    expression                 go to state 63
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
+
+
+State 35
+
+   49 primary_expression: TID .
+
+    $default  reduce using rule 49 (primary_expression)
+
+
+State 36
+
+   46 unary_expression: TADD unary_expression .
+
+    $default  reduce using rule 46 (unary_expression)
+
+
 State 37
 
-   14 statement: TOUTPUT expression . ';'
-   15          | TOUTPUT expression . error
+   47 unary_expression: TSUB unary_expression .
 
-    error  shift, and go to state 62
-    ';'    shift, and go to state 63
+    $default  reduce using rule 47 (unary_expression)
 
 
 State 38
+
+   16 matched_statement: TOUTPUT expression . ';'
+   17                  | TOUTPUT expression . error
+
+    error  shift, and go to state 64
+    ';'    shift, and go to state 65
+
+
+State 39
+
+   48 unary_expression: TEXCLAM unary_expression .
+
+    $default  reduce using rule 48 (unary_expression)
+
+
+State 40
 
     3 block: '{' '}' .
 
     $default  reduce using rule 3 (block)
 
 
-State 39
+State 41
 
     5 block: '{' $@1 . statement_list '}'
 
@@ -666,323 +699,346 @@ State 39
     TSUB     shift, and go to state 7
     TINPUT   shift, and go to state 8
     TOUTPUT  shift, and go to state 9
-    '{'      shift, and go to state 10
-    '('      shift, and go to state 11
+    TEXCLAM  shift, and go to state 10
+    '{'      shift, and go to state 11
+    '('      shift, and go to state 12
 
-    block                      go to state 13
-    statement_list             go to state 64
-    statement                  go to state 15
-    selection_statement        go to state 16
-    iteration_statement        go to state 17
-    expression                 go to state 18
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
-
-
-State 40
-
-   49 primary_expression: '(' expression . ')'
-
-    ')'  shift, and go to state 65
+    block                      go to state 14
+    statement_list             go to state 66
+    statement                  go to state 16
+    matched_statement          go to state 17
+    open_statement             go to state 18
+    iteration_statement        go to state 19
+    expression                 go to state 20
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
-State 41
+State 42
+
+   52 primary_expression: '(' expression . ')'
+
+    ')'  shift, and go to state 67
+
+
+State 43
 
     0 $accept: translation_unit $end .
 
     $default  accept
 
 
-State 42
+State 44
 
     7 statement_list: statement_list statement .
 
     $default  reduce using rule 7 (statement_list)
 
 
-State 43
-
-    9 statement: expression error .
-
-    $default  reduce using rule 9 (statement)
-
-
-State 44
-
-    8 statement: expression ';' .
-
-    $default  reduce using rule 8 (statement)
-
-
 State 45
 
-   26 logical_or_expression: logical_or_expression TOR . logical_and_expression
+   11 matched_statement: expression error .
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
-
-    logical_and_expression     go to state 66
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    $default  reduce using rule 11 (matched_statement)
 
 
 State 46
 
-   28 logical_and_expression: logical_and_expression TAND . equality_expression
+   10 matched_statement: expression ';' .
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
-
-    equality_expression        go to state 67
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    $default  reduce using rule 10 (matched_statement)
 
 
 State 47
 
-   30 equality_expression: equality_expression TEQUAL . relational_expression
+   27 logical_or_expression: logical_or_expression TOR . logical_and_expression
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    relational_expression      go to state 68
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    logical_and_expression     go to state 68
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 48
 
-   31 equality_expression: equality_expression TNEQUAL . relational_expression
+   29 logical_and_expression: logical_and_expression TAND . equality_expression
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    relational_expression      go to state 69
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    equality_expression        go to state 69
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 49
 
-   33 relational_expression: relational_expression TLESS . additive_expression
+   31 equality_expression: equality_expression TEQUAL . relational_expression
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    additive_expression        go to state 70
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    relational_expression      go to state 70
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 50
 
-   34 relational_expression: relational_expression TGR . additive_expression
+   32 equality_expression: equality_expression TNEQUAL . relational_expression
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    additive_expression        go to state 71
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    relational_expression      go to state 71
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 51
 
-   35 relational_expression: relational_expression TLESS_EQ . additive_expression
+   34 relational_expression: relational_expression TLESS . additive_expression
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
     additive_expression        go to state 72
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 52
 
-   36 relational_expression: relational_expression TGR_EQ . additive_expression
+   35 relational_expression: relational_expression TGR . additive_expression
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
     additive_expression        go to state 73
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 53
 
-   38 additive_expression: additive_expression TADD . multiplicative_expression
+   36 relational_expression: relational_expression TLESS_EQ . additive_expression
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    multiplicative_expression  go to state 74
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    additive_expression        go to state 74
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 54
 
-   39 additive_expression: additive_expression TSUB . multiplicative_expression
+   37 relational_expression: relational_expression TGR_EQ . additive_expression
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    multiplicative_expression  go to state 75
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    additive_expression        go to state 75
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 55
 
-   41 multiplicative_expression: multiplicative_expression TMUL . unary_expression
+   39 additive_expression: additive_expression TADD . multiplicative_expression
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    unary_expression    go to state 76
-    primary_expression  go to state 27
+    multiplicative_expression  go to state 76
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 56
 
-   42 multiplicative_expression: multiplicative_expression TDIV . unary_expression
+   40 additive_expression: additive_expression TSUB . multiplicative_expression
 
-    TNUM    shift, and go to state 2
-    TID     shift, and go to state 34
-    TADD    shift, and go to state 6
-    TSUB    shift, and go to state 7
-    TINPUT  shift, and go to state 8
-    '('     shift, and go to state 11
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    unary_expression    go to state 77
-    primary_expression  go to state 27
+    multiplicative_expression  go to state 77
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 57
 
-   24 assignment_expression: TID TASSIGN logical_or_expression .
-   26 logical_or_expression: logical_or_expression . TOR logical_and_expression
+   42 multiplicative_expression: multiplicative_expression TMUL . unary_expression
 
-    TOR  shift, and go to state 45
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
 
-    $default  reduce using rule 24 (assignment_expression)
+    unary_expression    go to state 78
+    primary_expression  go to state 29
 
 
 State 58
 
-   21 iteration_statement: TWHILE error expression . ')' statement
+   43 multiplicative_expression: multiplicative_expression TDIV . unary_expression
 
-    ')'  shift, and go to state 78
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
+
+    unary_expression    go to state 79
+    primary_expression  go to state 29
 
 
 State 59
 
-   19 iteration_statement: TWHILE '(' expression . ')' statement
-   20                    | TWHILE '(' expression . error statement
+   44 multiplicative_expression: multiplicative_expression TPERCENT . unary_expression
 
-    error  shift, and go to state 79
-    ')'    shift, and go to state 80
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 35
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TEXCLAM  shift, and go to state 10
+    '('      shift, and go to state 12
+
+    unary_expression    go to state 80
+    primary_expression  go to state 29
 
 
 State 60
 
-   17 selection_statement: TIF error expression . ')' statement
+   25 assignment_expression: TID TASSIGN logical_or_expression .
+   27 logical_or_expression: logical_or_expression . TOR logical_and_expression
 
-    ')'  shift, and go to state 81
+    TOR  shift, and go to state 47
+
+    $default  reduce using rule 25 (assignment_expression)
 
 
 State 61
 
-   16 selection_statement: TIF '(' expression . ')' statement
-   18                    | TIF '(' expression . error statement
+   22 iteration_statement: TWHILE error expression . ')' statement
+
+    ')'  shift, and go to state 81
+
+
+State 62
+
+   20 iteration_statement: TWHILE '(' expression . ')' statement
+   21                    | TWHILE '(' expression . error statement
 
     error  shift, and go to state 82
     ')'    shift, and go to state 83
 
 
-State 62
-
-   15 statement: TOUTPUT expression error .
-
-    $default  reduce using rule 15 (statement)
-
-
 State 63
 
-   14 statement: TOUTPUT expression ';' .
+   13 matched_statement: TIF '(' expression . ')' matched_statement TELSE matched_statement
+   18 open_statement: TIF '(' expression . ')' statement
+   19               | TIF '(' expression . ')' matched_statement TELSE open_statement
 
-    $default  reduce using rule 14 (statement)
+    ')'  shift, and go to state 84
 
 
 State 64
+
+   17 matched_statement: TOUTPUT expression error .
+
+    $default  reduce using rule 17 (matched_statement)
+
+
+State 65
+
+   16 matched_statement: TOUTPUT expression ';' .
+
+    $default  reduce using rule 16 (matched_statement)
+
+
+State 66
 
     5 block: '{' $@1 statement_list . '}'
     7 statement_list: statement_list . statement
@@ -996,272 +1052,189 @@ State 64
     TSUB     shift, and go to state 7
     TINPUT   shift, and go to state 8
     TOUTPUT  shift, and go to state 9
-    '{'      shift, and go to state 10
-    '}'      shift, and go to state 84
-    '('      shift, and go to state 11
+    TEXCLAM  shift, and go to state 10
+    '{'      shift, and go to state 11
+    '}'      shift, and go to state 85
+    '('      shift, and go to state 12
 
-    block                      go to state 13
-    statement                  go to state 42
-    selection_statement        go to state 16
-    iteration_statement        go to state 17
-    expression                 go to state 18
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
-
-
-State 65
-
-   49 primary_expression: '(' expression ')' .
-
-    $default  reduce using rule 49 (primary_expression)
-
-
-State 66
-
-   26 logical_or_expression: logical_or_expression TOR logical_and_expression .
-   28 logical_and_expression: logical_and_expression . TAND equality_expression
-
-    TAND  shift, and go to state 46
-
-    $default  reduce using rule 26 (logical_or_expression)
+    block                      go to state 14
+    statement                  go to state 44
+    matched_statement          go to state 17
+    open_statement             go to state 18
+    iteration_statement        go to state 19
+    expression                 go to state 20
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 67
 
-   28 logical_and_expression: logical_and_expression TAND equality_expression .
-   30 equality_expression: equality_expression . TEQUAL relational_expression
-   31                    | equality_expression . TNEQUAL relational_expression
+   52 primary_expression: '(' expression ')' .
 
-    TEQUAL   shift, and go to state 47
-    TNEQUAL  shift, and go to state 48
-
-    $default  reduce using rule 28 (logical_and_expression)
+    $default  reduce using rule 52 (primary_expression)
 
 
 State 68
 
-   30 equality_expression: equality_expression TEQUAL relational_expression .
-   33 relational_expression: relational_expression . TLESS additive_expression
-   34                      | relational_expression . TGR additive_expression
-   35                      | relational_expression . TLESS_EQ additive_expression
-   36                      | relational_expression . TGR_EQ additive_expression
+   27 logical_or_expression: logical_or_expression TOR logical_and_expression .
+   29 logical_and_expression: logical_and_expression . TAND equality_expression
 
-    TLESS     shift, and go to state 49
-    TGR       shift, and go to state 50
-    TLESS_EQ  shift, and go to state 51
-    TGR_EQ    shift, and go to state 52
+    TAND  shift, and go to state 48
 
-    $default  reduce using rule 30 (equality_expression)
+    $default  reduce using rule 27 (logical_or_expression)
 
 
 State 69
 
-   31 equality_expression: equality_expression TNEQUAL relational_expression .
-   33 relational_expression: relational_expression . TLESS additive_expression
-   34                      | relational_expression . TGR additive_expression
-   35                      | relational_expression . TLESS_EQ additive_expression
-   36                      | relational_expression . TGR_EQ additive_expression
+   29 logical_and_expression: logical_and_expression TAND equality_expression .
+   31 equality_expression: equality_expression . TEQUAL relational_expression
+   32                    | equality_expression . TNEQUAL relational_expression
 
-    TLESS     shift, and go to state 49
-    TGR       shift, and go to state 50
-    TLESS_EQ  shift, and go to state 51
-    TGR_EQ    shift, and go to state 52
+    TEQUAL   shift, and go to state 49
+    TNEQUAL  shift, and go to state 50
 
-    $default  reduce using rule 31 (equality_expression)
+    $default  reduce using rule 29 (logical_and_expression)
 
 
 State 70
 
-   33 relational_expression: relational_expression TLESS additive_expression .
-   38 additive_expression: additive_expression . TADD multiplicative_expression
-   39                    | additive_expression . TSUB multiplicative_expression
+   31 equality_expression: equality_expression TEQUAL relational_expression .
+   34 relational_expression: relational_expression . TLESS additive_expression
+   35                      | relational_expression . TGR additive_expression
+   36                      | relational_expression . TLESS_EQ additive_expression
+   37                      | relational_expression . TGR_EQ additive_expression
 
-    TADD  shift, and go to state 53
-    TSUB  shift, and go to state 54
+    TLESS     shift, and go to state 51
+    TGR       shift, and go to state 52
+    TLESS_EQ  shift, and go to state 53
+    TGR_EQ    shift, and go to state 54
 
-    $default  reduce using rule 33 (relational_expression)
+    $default  reduce using rule 31 (equality_expression)
 
 
 State 71
 
-   34 relational_expression: relational_expression TGR additive_expression .
-   38 additive_expression: additive_expression . TADD multiplicative_expression
-   39                    | additive_expression . TSUB multiplicative_expression
+   32 equality_expression: equality_expression TNEQUAL relational_expression .
+   34 relational_expression: relational_expression . TLESS additive_expression
+   35                      | relational_expression . TGR additive_expression
+   36                      | relational_expression . TLESS_EQ additive_expression
+   37                      | relational_expression . TGR_EQ additive_expression
 
-    TADD  shift, and go to state 53
-    TSUB  shift, and go to state 54
+    TLESS     shift, and go to state 51
+    TGR       shift, and go to state 52
+    TLESS_EQ  shift, and go to state 53
+    TGR_EQ    shift, and go to state 54
 
-    $default  reduce using rule 34 (relational_expression)
+    $default  reduce using rule 32 (equality_expression)
 
 
 State 72
 
-   35 relational_expression: relational_expression TLESS_EQ additive_expression .
-   38 additive_expression: additive_expression . TADD multiplicative_expression
-   39                    | additive_expression . TSUB multiplicative_expression
+   34 relational_expression: relational_expression TLESS additive_expression .
+   39 additive_expression: additive_expression . TADD multiplicative_expression
+   40                    | additive_expression . TSUB multiplicative_expression
 
-    TADD  shift, and go to state 53
-    TSUB  shift, and go to state 54
+    TADD  shift, and go to state 55
+    TSUB  shift, and go to state 56
 
-    $default  reduce using rule 35 (relational_expression)
+    $default  reduce using rule 34 (relational_expression)
 
 
 State 73
 
-   36 relational_expression: relational_expression TGR_EQ additive_expression .
-   38 additive_expression: additive_expression . TADD multiplicative_expression
-   39                    | additive_expression . TSUB multiplicative_expression
+   35 relational_expression: relational_expression TGR additive_expression .
+   39 additive_expression: additive_expression . TADD multiplicative_expression
+   40                    | additive_expression . TSUB multiplicative_expression
 
-    TADD  shift, and go to state 53
-    TSUB  shift, and go to state 54
+    TADD  shift, and go to state 55
+    TSUB  shift, and go to state 56
 
-    $default  reduce using rule 36 (relational_expression)
+    $default  reduce using rule 35 (relational_expression)
 
 
 State 74
 
-   38 additive_expression: additive_expression TADD multiplicative_expression .
-   41 multiplicative_expression: multiplicative_expression . TMUL unary_expression
-   42                          | multiplicative_expression . TDIV unary_expression
+   36 relational_expression: relational_expression TLESS_EQ additive_expression .
+   39 additive_expression: additive_expression . TADD multiplicative_expression
+   40                    | additive_expression . TSUB multiplicative_expression
 
-    TMUL  shift, and go to state 55
-    TDIV  shift, and go to state 56
+    TADD  shift, and go to state 55
+    TSUB  shift, and go to state 56
 
-    $default  reduce using rule 38 (additive_expression)
+    $default  reduce using rule 36 (relational_expression)
 
 
 State 75
 
-   39 additive_expression: additive_expression TSUB multiplicative_expression .
-   41 multiplicative_expression: multiplicative_expression . TMUL unary_expression
-   42                          | multiplicative_expression . TDIV unary_expression
+   37 relational_expression: relational_expression TGR_EQ additive_expression .
+   39 additive_expression: additive_expression . TADD multiplicative_expression
+   40                    | additive_expression . TSUB multiplicative_expression
 
-    TMUL  shift, and go to state 55
-    TDIV  shift, and go to state 56
+    TADD  shift, and go to state 55
+    TSUB  shift, and go to state 56
 
-    $default  reduce using rule 39 (additive_expression)
+    $default  reduce using rule 37 (relational_expression)
 
 
 State 76
 
-   41 multiplicative_expression: multiplicative_expression TMUL unary_expression .
+   39 additive_expression: additive_expression TADD multiplicative_expression .
+   42 multiplicative_expression: multiplicative_expression . TMUL unary_expression
+   43                          | multiplicative_expression . TDIV unary_expression
+   44                          | multiplicative_expression . TPERCENT unary_expression
 
-    $default  reduce using rule 41 (multiplicative_expression)
+    TMUL      shift, and go to state 57
+    TDIV      shift, and go to state 58
+    TPERCENT  shift, and go to state 59
+
+    $default  reduce using rule 39 (additive_expression)
 
 
 State 77
 
-   42 multiplicative_expression: multiplicative_expression TDIV unary_expression .
+   40 additive_expression: additive_expression TSUB multiplicative_expression .
+   42 multiplicative_expression: multiplicative_expression . TMUL unary_expression
+   43                          | multiplicative_expression . TDIV unary_expression
+   44                          | multiplicative_expression . TPERCENT unary_expression
 
-    $default  reduce using rule 42 (multiplicative_expression)
+    TMUL      shift, and go to state 57
+    TDIV      shift, and go to state 58
+    TPERCENT  shift, and go to state 59
+
+    $default  reduce using rule 40 (additive_expression)
 
 
 State 78
 
-   21 iteration_statement: TWHILE error expression ')' . statement
+   42 multiplicative_expression: multiplicative_expression TMUL unary_expression .
 
-    error    shift, and go to state 1
-    TNUM     shift, and go to state 2
-    TID      shift, and go to state 3
-    TWHILE   shift, and go to state 4
-    TIF      shift, and go to state 5
-    TADD     shift, and go to state 6
-    TSUB     shift, and go to state 7
-    TINPUT   shift, and go to state 8
-    TOUTPUT  shift, and go to state 9
-    '{'      shift, and go to state 10
-    '('      shift, and go to state 11
-
-    block                      go to state 13
-    statement                  go to state 85
-    selection_statement        go to state 16
-    iteration_statement        go to state 17
-    expression                 go to state 18
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    $default  reduce using rule 42 (multiplicative_expression)
 
 
 State 79
 
-   20 iteration_statement: TWHILE '(' expression error . statement
+   43 multiplicative_expression: multiplicative_expression TDIV unary_expression .
 
-    error    shift, and go to state 1
-    TNUM     shift, and go to state 2
-    TID      shift, and go to state 3
-    TWHILE   shift, and go to state 4
-    TIF      shift, and go to state 5
-    TADD     shift, and go to state 6
-    TSUB     shift, and go to state 7
-    TINPUT   shift, and go to state 8
-    TOUTPUT  shift, and go to state 9
-    '{'      shift, and go to state 10
-    '('      shift, and go to state 11
-
-    block                      go to state 13
-    statement                  go to state 86
-    selection_statement        go to state 16
-    iteration_statement        go to state 17
-    expression                 go to state 18
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    $default  reduce using rule 43 (multiplicative_expression)
 
 
 State 80
 
-   19 iteration_statement: TWHILE '(' expression ')' . statement
+   44 multiplicative_expression: multiplicative_expression TPERCENT unary_expression .
 
-    error    shift, and go to state 1
-    TNUM     shift, and go to state 2
-    TID      shift, and go to state 3
-    TWHILE   shift, and go to state 4
-    TIF      shift, and go to state 5
-    TADD     shift, and go to state 6
-    TSUB     shift, and go to state 7
-    TINPUT   shift, and go to state 8
-    TOUTPUT  shift, and go to state 9
-    '{'      shift, and go to state 10
-    '('      shift, and go to state 11
-
-    block                      go to state 13
-    statement                  go to state 87
-    selection_statement        go to state 16
-    iteration_statement        go to state 17
-    expression                 go to state 18
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    $default  reduce using rule 44 (multiplicative_expression)
 
 
 State 81
 
-   17 selection_statement: TIF error expression ')' . statement
+   22 iteration_statement: TWHILE error expression ')' . statement
 
     error    shift, and go to state 1
     TNUM     shift, and go to state 2
@@ -1272,28 +1245,30 @@ State 81
     TSUB     shift, and go to state 7
     TINPUT   shift, and go to state 8
     TOUTPUT  shift, and go to state 9
-    '{'      shift, and go to state 10
-    '('      shift, and go to state 11
+    TEXCLAM  shift, and go to state 10
+    '{'      shift, and go to state 11
+    '('      shift, and go to state 12
 
-    block                      go to state 13
-    statement                  go to state 88
-    selection_statement        go to state 16
-    iteration_statement        go to state 17
-    expression                 go to state 18
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    block                      go to state 14
+    statement                  go to state 86
+    matched_statement          go to state 17
+    open_statement             go to state 18
+    iteration_statement        go to state 19
+    expression                 go to state 20
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 82
 
-   18 selection_statement: TIF '(' expression error . statement
+   21 iteration_statement: TWHILE '(' expression error . statement
 
     error    shift, and go to state 1
     TNUM     shift, and go to state 2
@@ -1304,28 +1279,30 @@ State 82
     TSUB     shift, and go to state 7
     TINPUT   shift, and go to state 8
     TOUTPUT  shift, and go to state 9
-    '{'      shift, and go to state 10
-    '('      shift, and go to state 11
+    TEXCLAM  shift, and go to state 10
+    '{'      shift, and go to state 11
+    '('      shift, and go to state 12
 
-    block                      go to state 13
-    statement                  go to state 89
-    selection_statement        go to state 16
-    iteration_statement        go to state 17
-    expression                 go to state 18
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    block                      go to state 14
+    statement                  go to state 87
+    matched_statement          go to state 17
+    open_statement             go to state 18
+    iteration_statement        go to state 19
+    expression                 go to state 20
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 83
 
-   16 selection_statement: TIF '(' expression ')' . statement
+   20 iteration_statement: TWHILE '(' expression ')' . statement
 
     error    shift, and go to state 1
     TNUM     shift, and go to state 2
@@ -1336,69 +1313,153 @@ State 83
     TSUB     shift, and go to state 7
     TINPUT   shift, and go to state 8
     TOUTPUT  shift, and go to state 9
-    '{'      shift, and go to state 10
-    '('      shift, and go to state 11
+    TEXCLAM  shift, and go to state 10
+    '{'      shift, and go to state 11
+    '('      shift, and go to state 12
 
-    block                      go to state 13
-    statement                  go to state 90
-    selection_statement        go to state 16
-    iteration_statement        go to state 17
-    expression                 go to state 18
-    assignment_expression      go to state 19
-    logical_or_expression      go to state 20
-    logical_and_expression     go to state 21
-    equality_expression        go to state 22
-    relational_expression      go to state 23
-    additive_expression        go to state 24
-    multiplicative_expression  go to state 25
-    unary_expression           go to state 26
-    primary_expression         go to state 27
+    block                      go to state 14
+    statement                  go to state 88
+    matched_statement          go to state 17
+    open_statement             go to state 18
+    iteration_statement        go to state 19
+    expression                 go to state 20
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
 
 
 State 84
+
+   13 matched_statement: TIF '(' expression ')' . matched_statement TELSE matched_statement
+   18 open_statement: TIF '(' expression ')' . statement
+   19               | TIF '(' expression ')' . matched_statement TELSE open_statement
+
+    error    shift, and go to state 1
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 3
+    TWHILE   shift, and go to state 4
+    TIF      shift, and go to state 5
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TOUTPUT  shift, and go to state 9
+    TEXCLAM  shift, and go to state 10
+    '{'      shift, and go to state 11
+    '('      shift, and go to state 12
+
+    block                      go to state 14
+    statement                  go to state 89
+    matched_statement          go to state 90
+    open_statement             go to state 18
+    iteration_statement        go to state 19
+    expression                 go to state 20
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
+
+
+State 85
 
     5 block: '{' $@1 statement_list '}' .
 
     $default  reduce using rule 5 (block)
 
 
-State 85
-
-   21 iteration_statement: TWHILE error expression ')' statement .
-
-    $default  reduce using rule 21 (iteration_statement)
-
-
 State 86
 
-   20 iteration_statement: TWHILE '(' expression error statement .
+   22 iteration_statement: TWHILE error expression ')' statement .
 
-    $default  reduce using rule 20 (iteration_statement)
+    $default  reduce using rule 22 (iteration_statement)
 
 
 State 87
 
-   19 iteration_statement: TWHILE '(' expression ')' statement .
+   21 iteration_statement: TWHILE '(' expression error statement .
 
-    $default  reduce using rule 19 (iteration_statement)
+    $default  reduce using rule 21 (iteration_statement)
 
 
 State 88
 
-   17 selection_statement: TIF error expression ')' statement .
+   20 iteration_statement: TWHILE '(' expression ')' statement .
 
-    $default  reduce using rule 17 (selection_statement)
+    $default  reduce using rule 20 (iteration_statement)
 
 
 State 89
 
-   18 selection_statement: TIF '(' expression error statement .
+   18 open_statement: TIF '(' expression ')' statement .
 
-    $default  reduce using rule 18 (selection_statement)
+    $default  reduce using rule 18 (open_statement)
 
 
 State 90
 
-   16 selection_statement: TIF '(' expression ')' statement .
+    8 statement: matched_statement .
+   13 matched_statement: TIF '(' expression ')' matched_statement . TELSE matched_statement
+   19 open_statement: TIF '(' expression ')' matched_statement . TELSE open_statement
 
-    $default  reduce using rule 16 (selection_statement)
+    TELSE  shift, and go to state 91
+
+    TELSE     [reduce using rule 8 (statement)]
+    $default  reduce using rule 8 (statement)
+
+
+State 91
+
+   13 matched_statement: TIF '(' expression ')' matched_statement TELSE . matched_statement
+   19 open_statement: TIF '(' expression ')' matched_statement TELSE . open_statement
+
+    error    shift, and go to state 1
+    TNUM     shift, and go to state 2
+    TID      shift, and go to state 3
+    TWHILE   shift, and go to state 4
+    TIF      shift, and go to state 5
+    TADD     shift, and go to state 6
+    TSUB     shift, and go to state 7
+    TINPUT   shift, and go to state 8
+    TOUTPUT  shift, and go to state 9
+    TEXCLAM  shift, and go to state 10
+    '{'      shift, and go to state 11
+    '('      shift, and go to state 12
+
+    block                      go to state 14
+    matched_statement          go to state 92
+    open_statement             go to state 93
+    iteration_statement        go to state 19
+    expression                 go to state 20
+    assignment_expression      go to state 21
+    logical_or_expression      go to state 22
+    logical_and_expression     go to state 23
+    equality_expression        go to state 24
+    relational_expression      go to state 25
+    additive_expression        go to state 26
+    multiplicative_expression  go to state 27
+    unary_expression           go to state 28
+    primary_expression         go to state 29
+
+
+State 92
+
+   13 matched_statement: TIF '(' expression ')' matched_statement TELSE matched_statement .
+
+    $default  reduce using rule 13 (matched_statement)
+
+
+State 93
+
+   19 open_statement: TIF '(' expression ')' matched_statement TELSE open_statement .
+
+    $default  reduce using rule 19 (open_statement)

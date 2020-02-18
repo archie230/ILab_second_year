@@ -24,7 +24,7 @@
 // as a parser skeleton.  Alternatively, if you modify or redistribute
 // the parser skeleton itself, you may (at your option) remove this
 // special exception, which will cause the skeleton and the resulting
-// Bison bad_outputs files to be licensed under the GNU General Public
+// Bison output files to be licensed under the GNU General Public
 // License without this special exception.
 
 // This special exception was added by the Free Software Foundation in
@@ -190,7 +190,10 @@ namespace yy {
         TINPUT = 274,
         TOUTPUT = 275,
         TASSIGN = 276,
-        TERR = 277
+        TEXCLAM = 277,
+        TPERCENT = 278,
+        TELSE = 279,
+        TERR = 280
       };
     };
 
@@ -410,7 +413,7 @@ namespace yy {
     std::ostream* yycdebug_;
 
     /// \brief Display a symbol type, value and location.
-    /// \param yyo    The bad_outputs stream.
+    /// \param yyo    The output stream.
     /// \param yysym  The symbol.
     template <typename Base>
     void yy_print_ (std::ostream& yyo, const basic_symbol<Base>& yysym) const;
@@ -478,14 +481,14 @@ namespace yy {
 
     /// Push a new state on the stack.
     /// \param m    a debug message to display
-    ///             if null, no trace is bad_outputs.
+    ///             if null, no trace is output.
     /// \param s    the symbol
     /// \warning the contents of \a s.value is stolen.
     void yypush_ (const char* m, stack_symbol_type& s);
 
     /// Push a new look ahead token on the state on the stack.
     /// \param m    a debug message to display
-    ///             if null, no trace is bad_outputs.
+    ///             if null, no trace is output.
     /// \param s    the state
     /// \param sym  the symbol (for its value and location).
     /// \warning the contents of \a s.value is stolen.
@@ -498,12 +501,12 @@ namespace yy {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 143,     ///< Last index in yytable_.
-      yynnts_ = 18,  ///< Number of nonterminal symbols.
-      yyfinal_ = 41, ///< Termination state number.
+      yylast_ = 139,     ///< Last index in yytable_.
+      yynnts_ = 19,  ///< Number of nonterminal symbols.
+      yyfinal_ = 43, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 28  ///< Number of tokens.
+      yyntokens_ = 31  ///< Number of tokens.
     };
 
 
@@ -514,7 +517,7 @@ namespace yy {
 
 
 } // yy
-#line 518 "frontend/src/parser/parser.hh" // lalr1.cc:377
+#line 521 "frontend/src/parser/parser.hh" // lalr1.cc:377
 
 
 

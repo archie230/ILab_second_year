@@ -1,84 +1,41 @@
 #include "AST.hpp"
 
-// interface node
-AST::INode::INode(TokenName tname)
-        :
-        tname_(tname)
-{}
-
-#ifdef _DEBUG
+#ifdef DEBUG
 void AST::INode::print() {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << tname_ << std::endl;
 }
 #endif
-
-void AST::INode::SetType(TokenName tname) {
-    tname_ = tname;
-}
-
-TokenName AST::INode::GetType() {
-    return tname_;
-}
 //
 
-// id node
-AST::IdNode::IdNode(TokenName tname, std::string *name)
-        :
-        INode(tname),
-        name_(name)
-{}
 
-AST::IdNode::~IdNode() {
-    delete name_;
-}
-
-#ifdef _DEBUG
+#ifdef DEBUG
 void AST::IdNode::print() {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
-              << tname_ << " [name:] " << *name_ << std::endl;
+              << tname_ << " [name:] " << name_ << std::endl;
 }
 #endif
 
-std::string *AST::IdNode::get_id() {
-    return name_;
-}
 //
 
-// num node
-AST::NumNode::NumNode(TokenName tname, int num)
-        :
-        INode(tname),
-        num_(num)
-{}
-
-#ifdef _DEBUG
+#ifdef DEBUG
 void AST::NumNode::print() {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << tname_ << " [num]: " << num_ << std::endl;
 }
 #endif
 
-int AST::NumNode::GetNum() {
-    return num_;
-}
 //
 
 // 2 kids node
-AST::_2kidsNode::_2kidsNode(TokenName tname, AST::INode *left, AST::INode *right)
-        :
-        INode(tname),
-        left_(left),
-        right_(right)
-{}
 
-AST::_2kidsNode::~_2kidsNode() {
+AST::TwoKidsNode::~TwoKidsNode() {
     delete left_;
     delete right_;
 }
 
-#ifdef _DEBUG
-void AST::_2kidsNode::print() {
+#ifdef DEBUG
+void AST::TwoKidsNode::print() {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << tname_ << " [left:] " << std::hex << left_ << " [right:] " << right_ << std::dec << std::endl;
     if(left_)
@@ -88,7 +45,7 @@ void AST::_2kidsNode::print() {
 }
 #endif
 
-AST::INode *AST::_2kidsNode::GetKid(char side) {
+AST::INode *AST::TwoKidsNode::GetKid(char side) {
     switch(side) {
         case 'l':
             return left_;
@@ -99,7 +56,7 @@ AST::INode *AST::_2kidsNode::GetKid(char side) {
     }
 }
 
-void AST::_2kidsNode::SetKid(char side, AST::INode *val) {
+void AST::TwoKidsNode::SetKid(char side, AST::INode *val) {
     switch(side) {
         case 'l':
             left_ = val;
@@ -112,16 +69,12 @@ void AST::_2kidsNode::SetKid(char side, AST::INode *val) {
 //
 
 // list node
-AST::ListNode::ListNode(TokenName tname)
-        :
-        INode(tname)
-{}
 
 AST::ListNode::~ListNode() {
     for_each(kids_.begin(), kids_.end(), [](INode* node) {delete node;});
 }
 
-#ifdef _DEBUG
+#ifdef DEBUG
 void AST::ListNode::print() {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << tname_ << std::hex << " [kids:]";
@@ -130,24 +83,6 @@ void AST::ListNode::print() {
     for_each(kids_.begin(), kids_.end(), [](INode* node) { if(node) node -> print();});
 }
 #endif
-
-void AST::ListNode::push_kid(AST::INode *kid) {
-    if(!kid)
-        return;
-    kids_.push_back(kid);
-}
-
-int AST::ListNode::size() {
-    return kids_.size();
-}
-
-int AST::ListNode::GetTable_id() {
-    return id_;
-}
-
-void AST::ListNode::SetTable_id(int id) {
-    id_ = id;
-}
 
 AST::INode *AST::ListNode::operator[](int idx) {
     if(idx >= kids_.size() || idx < 0)
@@ -160,3 +95,50 @@ AST::INode *AST::ListNode::operator[](int idx) {
     return *iter;
 }
 //
+
+AST::IfNode::~IfNode() {
+    delete expr_;
+    delete stmt_;
+    delete else_;
+}
+
+AST::INode *AST::IfNode::GetKid(char side) {
+    switch(side) {
+        case 'l':
+            return expr_;
+        case 'r':
+            return else_;
+        case 'm':
+            return stmt_;
+        default:
+            return nullptr;
+    }
+}
+
+void AST::IfNode::SetKid(char side, AST::INode *val) {
+    switch(side) {
+        case 'l':
+            expr_ = val;
+            break;
+        case 'r':
+            else_ = val;
+            break;
+        case 'm':
+            stmt_ = val;
+            break;
+    }
+}
+
+#ifdef DEBUG
+void AST::IfNode::print() {
+    std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
+              << tname_ << " [expression:] " << std::hex << expr_ << " [statement:] " << stmt_
+                << " [else:] " << else_ << std::dec << std::endl;
+    if(expr_)
+        expr_ -> print();
+    if(stmt_)
+        stmt_ -> print();
+    if(else_)
+        else_ -> print();
+}
+#endif

@@ -21,10 +21,19 @@ struct SymTbl final {
         Table* prev_;
         tbl_ident id_;
 
-        Table(Table* prev, tbl_ident id);
+        Table(SymTbl::Table *prev, SymTbl::tbl_ident id)
+                :
+                prev_(prev),
+                id_(id)
+        {}
+
         VarDec* find(const std::string& name);
-        void insert(const std::string& name, const VarDec& decl);
-#ifdef _DEBUG
+
+        void insert(const std::string &name, const SymTbl::Table::VarDec &decl) {
+            tbl_[name] = decl;
+        }
+
+#ifdef DEBUG
         void print();
 #endif
     };
@@ -36,9 +45,13 @@ private:
 public:
 
     Table* find_tbl(tbl_ident id);
-    void add_tbl(tbl_ident id, Table* tbl);
+
+    void add_tbl(SymTbl::tbl_ident id, SymTbl::Table *tbl) {
+        env_[id] = tbl;
+    }
+
     ~SymTbl();
-#ifdef _DEBUG
+#ifdef DEBUG
     void print();
 #endif
 };

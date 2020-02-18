@@ -30,9 +30,12 @@ NUM     [-+]?([0])|([1-9][0-9]*)
 "*"                     {return token_t::TMUL;                   }
 "/"                     {return token_t::TDIV;                   }
 "?"                     {return token_t::TINPUT;                 }
+"!"                     {return token_t::TEXCLAM;                }
+"%"                     {return token_t::TPERCENT;               }
 print                   {return token_t::TOUTPUT;                }
 while                   {return token_t::TWHILE;                 }
 if                      {return token_t::TIF;                    }
+else                    {return token_t::TELSE;                  }
 {NAME}                  {return token_t::TID;                    }
 {NUM}                   {return token_t::TNUM;                   }
 .                       {return token_t::TERR;                   }

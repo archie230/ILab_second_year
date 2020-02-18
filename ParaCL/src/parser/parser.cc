@@ -24,7 +24,7 @@
 // as a parser skeleton.  Alternatively, if you modify or redistribute
 // the parser skeleton itself, you may (at your option) remove this
 // special exception, which will cause the skeleton and the resulting
-// Bison bad_outputs files to be licensed under the GNU General Public
+// Bison output files to be licensed under the GNU General Public
 // License without this special exception.
 
 // This special exception was added by the Free Software Foundation in
@@ -395,16 +395,317 @@ namespace yy {
     {
             case 3: // TNUM
 
-#line 72 "frontend/src/parser/parser.y" // lalr1.cc:614
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
         { delete (yysym.value); }
 #line 401 "frontend/src/parser/parser.cc" // lalr1.cc:614
         break;
 
       case 4: // TID
 
-#line 73 "frontend/src/parser/parser.y" // lalr1.cc:614
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
         { delete (yysym.value); }
 #line 408 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 5: // TWHILE
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 415 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 6: // TIF
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 422 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 7: // TOR
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 429 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 8: // TAND
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 436 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 9: // TLESS
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 443 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 10: // TGR
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 450 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 11: // TLESS_EQ
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 457 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 12: // TGR_EQ
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 464 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 13: // TEQUAL
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 471 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 14: // TNEQUAL
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 478 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 15: // TADD
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 485 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 16: // TSUB
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 492 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 17: // TMUL
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 499 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 18: // TDIV
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 506 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 19: // TINPUT
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 513 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 20: // TOUTPUT
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 520 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 21: // TASSIGN
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 527 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 22: // TEXCLAM
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 534 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 23: // TPERCENT
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 541 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 24: // TELSE
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 548 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 25: // TERR
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 555 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 26: // '{'
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 562 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 27: // '}'
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 569 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 28: // ';'
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 576 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 29: // '('
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 583 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 30: // ')'
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 590 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 32: // translation_unit
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 597 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 33: // block
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 604 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 35: // statement_list
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 611 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 36: // statement
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 618 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 37: // matched_statement
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 625 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 38: // open_statement
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 632 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 39: // iteration_statement
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 639 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 40: // expression
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 646 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 41: // assignment_expression
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 653 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 42: // logical_or_expression
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 660 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 43: // logical_and_expression
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 667 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 44: // equality_expression
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 674 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 45: // relational_expression
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 681 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 46: // additive_expression
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 688 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 47: // multiplicative_expression
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 695 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 48: // unary_expression
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 702 "frontend/src/parser/parser.cc" // lalr1.cc:614
+        break;
+
+      case 49: // primary_expression
+
+#line 75 "frontend/src/parser/parser.y" // lalr1.cc:614
+        { delete (yysym.value); }
+#line 709 "frontend/src/parser/parser.cc" // lalr1.cc:614
         break;
 
 
@@ -641,37 +942,38 @@ namespace yy {
           switch (yyn)
             {
   case 2:
-#line 85 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { driver -> root_ = nullptr; }
-#line 647 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 90 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { driver -> root_ = nullptr; (yylhs.value) = nullptr; }
+#line 948 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 3:
-#line 86 "frontend/src/parser/parser.y" // lalr1.cc:859
+#line 91 "frontend/src/parser/parser.y" // lalr1.cc:859
     {
-                    driver -> root_ = (yystack_[0].value);
+			(yylhs.value) = nullptr;
+			driver -> root_ = (yystack_[0].value);
                   }
-#line 655 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 957 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 4:
-#line 92 "frontend/src/parser/parser.y" // lalr1.cc:859
+#line 98 "frontend/src/parser/parser.y" // lalr1.cc:859
     { (yylhs.value) = nullptr; }
-#line 661 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 963 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 5:
-#line 95 "frontend/src/parser/parser.y" // lalr1.cc:859
+#line 101 "frontend/src/parser/parser.y" // lalr1.cc:859
     {
 		SAVED = TOP;
 		TOP = new SymTbl::Table(TOP, ID++);
 		driver -> symtbl_.add_tbl(TOP -> id_, TOP);
 	}
-#line 671 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 973 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 6:
-#line 101 "frontend/src/parser/parser.y" // lalr1.cc:859
+#line 107 "frontend/src/parser/parser.y" // lalr1.cc:859
     {
                             if((yystack_[1].value)) {
                                 (yystack_[1].value) -> SetType(TokenName::T_SCOPE);
@@ -681,312 +983,331 @@ namespace yy {
                             (yylhs.value) = (yystack_[1].value);
                             TOP = SAVED;
 			}
-#line 685 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 987 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 7:
-#line 113 "frontend/src/parser/parser.y" // lalr1.cc:859
+#line 119 "frontend/src/parser/parser.y" // lalr1.cc:859
     {
                                 (yylhs.value) = new ListNode(TokenName::T_STMLST);
                                 static_cast<ListNode*>((yylhs.value)) -> push_kid((yystack_[0].value));
                               }
-#line 694 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 996 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 8:
-#line 118 "frontend/src/parser/parser.y" // lalr1.cc:859
+#line 124 "frontend/src/parser/parser.y" // lalr1.cc:859
     {
                                 static_cast<ListNode*>((yystack_[1].value)) -> push_kid((yystack_[0].value));
                                 (yylhs.value) = (yystack_[1].value);
                               }
-#line 703 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 1005 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 9:
-#line 125 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[1].value); }
-#line 709 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 131 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1011 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 10:
-#line 126 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[1].value); }
-#line 715 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 132 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1017 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 11:
-#line 127 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = nullptr; }
-#line 721 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 136 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[1].value); }
+#line 1023 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 12:
-#line 128 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 727 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 137 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[1].value); }
+#line 1029 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 13:
-#line 129 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 733 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 138 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = nullptr; }
+#line 1035 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 14:
-#line 130 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 739 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 141 "frontend/src/parser/parser.y" // lalr1.cc:859
+    {
+                                          	(yylhs.value) = new IfNode(TokenName::T_IF, (yystack_[4].value), (yystack_[2].value), (yystack_[0].value));
+                                    	}
+#line 1043 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 15:
-#line 131 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_OUTPUT, nullptr, (yystack_[1].value)); }
-#line 745 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 145 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1049 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 16:
-#line 132 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_OUTPUT, nullptr, (yystack_[1].value)); }
-#line 751 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 146 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1055 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 17:
-#line 136 "frontend/src/parser/parser.y" // lalr1.cc:859
-    {
-                                        	(yylhs.value) = new _2kidsNode(TokenName::T_IF, (yystack_[2].value), (yystack_[0].value));
-                                  	}
-#line 759 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 147 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_OUTPUT, nullptr, (yystack_[1].value)); }
+#line 1061 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 18:
-#line 140 "frontend/src/parser/parser.y" // lalr1.cc:859
-    {
-						(yylhs.value) = nullptr;
-                                        	delete (yystack_[2].value);
-                                        	delete (yystack_[0].value);
-                                  	}
-#line 769 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 148 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_OUTPUT, nullptr, (yystack_[1].value)); }
+#line 1067 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 19:
-#line 146 "frontend/src/parser/parser.y" // lalr1.cc:859
+#line 152 "frontend/src/parser/parser.y" // lalr1.cc:859
     {
-						(yylhs.value) = nullptr;
-						delete (yystack_[2].value);
-						delete (yystack_[0].value);
-					}
-#line 779 "frontend/src/parser/parser.cc" // lalr1.cc:859
+                                        	(yylhs.value) = new IfNode(TokenName::T_IF, (yystack_[2].value), (yystack_[0].value));
+                                  	}
+#line 1075 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 20:
-#line 154 "frontend/src/parser/parser.y" // lalr1.cc:859
+#line 157 "frontend/src/parser/parser.y" // lalr1.cc:859
     {
-                                                    (yylhs.value) = new _2kidsNode(TokenName::T_WHILE, (yystack_[2].value), (yystack_[0].value));
-                                        	}
-#line 787 "frontend/src/parser/parser.cc" // lalr1.cc:859
+						(yylhs.value) = new IfNode(TokenName::T_IF, (yystack_[4].value), (yystack_[2].value), (yystack_[0].value));
+					}
+#line 1083 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 21:
-#line 158 "frontend/src/parser/parser.y" // lalr1.cc:859
+#line 163 "frontend/src/parser/parser.y" // lalr1.cc:859
+    {
+                                                    (yylhs.value) = new TwoKidsNode(TokenName::T_WHILE, (yystack_[2].value), (yystack_[0].value));
+                                        	}
+#line 1091 "frontend/src/parser/parser.cc" // lalr1.cc:859
+    break;
+
+  case 22:
+#line 167 "frontend/src/parser/parser.y" // lalr1.cc:859
     {
 				 		    (yylhs.value) = nullptr;
 				 		    delete (yystack_[2].value);
 				 		    delete (yystack_[0].value);
                                        		}
-#line 797 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 1101 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
-  case 22:
-#line 164 "frontend/src/parser/parser.y" // lalr1.cc:859
+  case 23:
+#line 173 "frontend/src/parser/parser.y" // lalr1.cc:859
     {
   				 		    (yylhs.value) = nullptr;
 						    delete (yystack_[2].value);
 						    delete (yystack_[0].value);
   				 		}
-#line 807 "frontend/src/parser/parser.cc" // lalr1.cc:859
-    break;
-
-  case 23:
-#line 172 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 813 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 1111 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 24:
-#line 176 "frontend/src/parser/parser.y" // lalr1.cc:859
+#line 181 "frontend/src/parser/parser.y" // lalr1.cc:859
     { (yylhs.value) = (yystack_[0].value); }
-#line 819 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 1117 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 25:
-#line 178 "frontend/src/parser/parser.y" // lalr1.cc:859
-    {
-                                        (yylhs.value) = new _2kidsNode(TokenName::T_ASSIGN, (yystack_[2].value), (yystack_[0].value));
-                                        // if there is no same identifier add it to symtbl
-                                        auto p = TOP -> find(*(static_cast<IdNode*>((yystack_[2].value)) -> get_id()));
-                                        if(!p)
-                                            TOP -> insert(*(static_cast<IdNode*>((yystack_[2].value)) -> get_id()), {(yystack_[0].value), yystack_[2].location, 0});
-                                    }
-#line 831 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 185 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1123 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 26:
 #line 188 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 837 "frontend/src/parser/parser.cc" // lalr1.cc:859
+    {
+                                        (yylhs.value) = new TwoKidsNode(TokenName::T_ASSIGN, (yystack_[2].value), (yystack_[0].value));
+                                        // if there is no same identifier add it to symtbl
+                                        try {
+                                        	TOP -> find(static_cast<IdNode*>((yystack_[2].value)) -> get_id());
+                                        }
+                                        catch(const std::out_of_range&) {
+                                            TOP -> insert(static_cast<IdNode*>((yystack_[2].value)) -> get_id(), {(yystack_[0].value), yystack_[2].location, 0});
+                                        }
+                                    }
+#line 1138 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 27:
-#line 189 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_OR, (yystack_[2].value), (yystack_[0].value)); }
-#line 843 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 201 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1144 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 28:
-#line 193 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 849 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 202 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_OR, (yystack_[2].value), (yystack_[0].value)); }
+#line 1150 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 29:
-#line 194 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_AND, (yystack_[2].value), (yystack_[0].value)); }
-#line 855 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 206 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1156 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 30:
-#line 198 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 861 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 207 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_AND, (yystack_[2].value), (yystack_[0].value)); }
+#line 1162 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 31:
-#line 199 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_EQUAL, (yystack_[2].value), (yystack_[0].value)); }
-#line 867 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 211 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1168 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 32:
-#line 200 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_NEQUAL, (yystack_[2].value), (yystack_[0].value)); }
-#line 873 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 212 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_EQUAL, (yystack_[2].value), (yystack_[0].value)); }
+#line 1174 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 33:
-#line 204 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 879 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 213 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_NEQUAL, (yystack_[2].value), (yystack_[0].value)); }
+#line 1180 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 34:
-#line 205 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_LESS, (yystack_[2].value), (yystack_[0].value)); }
-#line 885 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 217 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1186 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 35:
-#line 206 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_GR, (yystack_[2].value), (yystack_[0].value)); }
-#line 891 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 218 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_LESS, (yystack_[2].value), (yystack_[0].value)); }
+#line 1192 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 36:
-#line 207 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_LESS_EQ, (yystack_[2].value), (yystack_[0].value)); }
-#line 897 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 219 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_GR, (yystack_[2].value), (yystack_[0].value)); }
+#line 1198 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 37:
-#line 208 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_GR_EQ, (yystack_[2].value), (yystack_[0].value)); }
-#line 903 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 220 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_LESS_EQ, (yystack_[2].value), (yystack_[0].value)); }
+#line 1204 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 38:
-#line 212 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 909 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 221 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_GR_EQ, (yystack_[2].value), (yystack_[0].value)); }
+#line 1210 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 39:
-#line 213 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_ADD, (yystack_[2].value), (yystack_[0].value)); }
-#line 915 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 225 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1216 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 40:
-#line 214 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_SUB, (yystack_[2].value), (yystack_[0].value)); }
-#line 921 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 226 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_ADD, (yystack_[2].value), (yystack_[0].value)); }
+#line 1222 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 41:
-#line 218 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 927 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 227 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_SUB, (yystack_[2].value), (yystack_[0].value)); }
+#line 1228 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 42:
-#line 219 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_MUL, (yystack_[2].value), (yystack_[0].value)); }
-#line 933 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 231 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1234 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 43:
-#line 220 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_DIV, (yystack_[2].value), (yystack_[0].value)); }
-#line 939 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 232 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_MUL, (yystack_[2].value), (yystack_[0].value)); }
+#line 1240 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 44:
-#line 224 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 945 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 233 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_DIV, (yystack_[2].value), (yystack_[0].value)); }
+#line 1246 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 45:
-#line 225 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_ADD, nullptr, (yystack_[0].value)); }
-#line 951 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 234 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_PERCENT, (yystack_[2].value), (yystack_[0].value)); }
+#line 1252 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 46:
-#line 226 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new _2kidsNode(TokenName::T_SUB, nullptr, (yystack_[0].value)); }
-#line 957 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 238 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1258 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 47:
-#line 230 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { // identifier at the right hand of assignment
-	    auto p = TOP -> find(*(static_cast<IdNode*>((yystack_[0].value)) -> get_id()));
-            if(!p)
-            	error(yystack_[0].location, "undeclarated variable " + *(static_cast<IdNode*>((yystack_[0].value)) -> get_id()));
-            (yylhs.value) = (yystack_[0].value);
-        }
-#line 968 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 239 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_ADD, nullptr, (yystack_[0].value)); }
+#line 1264 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 48:
-#line 236 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 974 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 240 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_SUB, nullptr, (yystack_[0].value)); }
+#line 1270 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 49:
-#line 237 "frontend/src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = new INode(TokenName::T_INPUT); }
-#line 980 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 241 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new TwoKidsNode(TokenName::T_EXCLAM, nullptr, (yystack_[0].value)); }
+#line 1276 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 50:
-#line 238 "frontend/src/parser/parser.y" // lalr1.cc:859
+#line 245 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { // identifier at the right hand of assignment
+	    try{
+	    	TOP -> find(static_cast<IdNode*>((yystack_[0].value)) -> get_id());
+	    } catch(const std::out_of_range&) {
+	   	error(yystack_[0].location, "undeclarated variable " + static_cast<IdNode*>((yystack_[0].value)) -> get_id());
+	    }
+            (yylhs.value) = (yystack_[0].value);
+        }
+#line 1289 "frontend/src/parser/parser.cc" // lalr1.cc:859
+    break;
+
+  case 51:
+#line 253 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value); }
+#line 1295 "frontend/src/parser/parser.cc" // lalr1.cc:859
+    break;
+
+  case 52:
+#line 254 "frontend/src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = new INode(TokenName::T_INPUT); }
+#line 1301 "frontend/src/parser/parser.cc" // lalr1.cc:859
+    break;
+
+  case 53:
+#line 255 "frontend/src/parser/parser.y" // lalr1.cc:859
     { (yylhs.value) = (yystack_[1].value); }
-#line 986 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 1307 "frontend/src/parser/parser.cc" // lalr1.cc:859
     break;
 
 
-#line 990 "frontend/src/parser/parser.cc" // lalr1.cc:859
+#line 1311 "frontend/src/parser/parser.cc" // lalr1.cc:859
             default:
               break;
             }
@@ -1024,7 +1345,7 @@ namespace yy {
         /* If just tried and failed to reuse lookahead token after an
            error, discard it.  */
 
-        // Return failure if at end of correct_data.
+        // Return failure if at end of input.
         if (yyla.type_get () == yyeof_)
           YYABORT;
         else if (!yyla.empty ())
@@ -1241,129 +1562,127 @@ namespace yy {
   }
 
 
-  const signed char PCL_Parser::yypact_ninf_ = -15;
+  const signed char PCL_Parser::yypact_ninf_ = -57;
 
   const signed char PCL_Parser::yytable_ninf_ = -4;
 
   const signed char
   PCL_Parser::yypact_[] =
   {
-       4,    20,   -15,    36,     0,    12,   109,   109,   -15,   117,
-       1,   117,    31,   -15,    55,   -15,   -15,   -15,    14,   -15,
-      65,    68,     8,    32,     2,    11,   -15,   -15,   -15,   109,
-     117,   117,   117,   117,   -15,   -15,   -15,    15,   -15,   103,
-      46,   -15,   -15,   -15,   -15,   109,   109,   109,   109,   109,
-     109,   109,   109,   109,   109,   109,   109,    65,    50,     5,
-      52,    10,   -15,   -15,    79,   -15,    68,     8,    32,    32,
-       2,     2,     2,     2,    11,    11,   -15,   -15,   103,   103,
-     103,   103,   103,   103,   -15,   -15,   -15,   -15,   -15,   -15,
-     -15
+       3,    -4,   -57,    13,    12,     7,    90,    90,   -57,   110,
+      90,    15,   110,    38,   -57,    11,   -57,   -57,   -57,   -57,
+      19,   -57,    43,    47,    32,    53,    57,    26,   -57,   -57,
+     -57,    90,   110,   110,   110,   -57,   -57,   -57,    20,   -57,
+     -57,    82,    27,   -57,   -57,   -57,   -57,    90,    90,    90,
+      90,    90,    90,    90,    90,    90,    90,    90,    90,    90,
+      43,    46,     9,    50,   -57,   -57,    55,   -57,    47,    32,
+      53,    53,    57,    57,    57,    57,    26,    26,   -57,   -57,
+     -57,    82,    82,    82,    82,   -57,   -57,   -57,   -57,   -57,
+      67,    82,   -57,   -57
   };
 
   const unsigned char
   PCL_Parser::yydefact_[] =
   {
-       0,     0,    48,    47,     0,     0,     0,     0,    49,     0,
-       5,     0,     0,    14,     0,     7,    12,    13,     0,    23,
-      24,    26,    28,    30,    33,    38,    41,    44,    11,     0,
-       0,     0,     0,     0,    47,    45,    46,     0,     4,     0,
-       0,     1,     8,    10,     9,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    25,     0,     0,
-       0,     0,    16,    15,     0,    50,    27,    29,    31,    32,
-      34,    35,    36,    37,    39,    40,    42,    43,     0,     0,
-       0,     0,     0,     0,     6,    22,    21,    20,    18,    19,
-      17
+       0,     0,    51,    50,     0,     0,     0,     0,    52,     0,
+       0,     5,     0,     0,    16,     0,     7,     9,    10,    15,
+       0,    24,    25,    27,    29,    31,    34,    39,    42,    46,
+      13,     0,     0,     0,     0,    50,    47,    48,     0,    49,
+       4,     0,     0,     1,     8,    12,    11,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+      26,     0,     0,     0,    18,    17,     0,    53,    28,    30,
+      32,    33,    35,    36,    37,    38,    40,    41,    43,    44,
+      45,     0,     0,     0,     0,     6,    23,    22,    21,    19,
+       9,     0,    14,    20
   };
 
   const signed char
   PCL_Parser::yypgoto_[] =
   {
-     -15,   -15,   -15,   -15,    47,   -14,   -15,   -15,     3,   -15,
-      58,    43,    44,     6,    -3,     9,    -4,   -15
+     -57,   -57,   -57,   -57,    58,   -15,   -56,     5,   -57,    83,
+     -57,    72,    60,    52,    29,    69,    34,    -5,   -57
   };
 
   const signed char
   PCL_Parser::yydefgoto_[] =
   {
-      -1,    12,    13,    39,    14,    15,    16,    17,    18,    19,
-      20,    21,    22,    23,    24,    25,    26,    27
+      -1,    13,    14,    41,    15,    16,    17,    18,    19,    20,
+      21,    22,    23,    24,    25,    26,    27,    28,    29
   };
 
   const signed char
   PCL_Parser::yytable_[] =
   {
-      42,    30,    35,    36,    -2,     1,    79,     2,     3,     4,
-       5,    82,    37,    32,    40,    43,    62,    53,    54,     6,
-       7,    47,    48,     8,     9,    38,    31,    10,    55,    56,
-      11,    41,    80,    58,    59,    60,    61,    83,    33,    44,
-      63,    49,    50,    51,    52,    28,    70,    71,    72,    73,
-      42,    76,    77,    68,    69,    -3,     1,    29,     2,     3,
-       4,     5,    74,    75,    85,    86,    87,    88,    89,    90,
-       6,     7,    45,    65,     8,     9,    46,    78,    10,    81,
-       1,    11,     2,     3,     4,     5,    64,    57,    66,     0,
-      67,     0,     0,     0,     6,     7,     0,     0,     8,     9,
-       0,     0,    10,    84,     1,    11,     2,     3,     4,     5,
-       0,     0,     2,    34,     0,     0,     0,     0,     6,     7,
-       2,     3,     8,     9,     6,     7,    10,     0,     8,    11,
-       0,     0,     6,     7,     0,    11,     8,     0,     0,     0,
-       0,     0,     0,    11
+      44,    36,    37,    -2,     1,    39,     2,     3,     4,     5,
+      82,    -3,     1,    32,     2,     3,     4,     5,     6,     7,
+      45,    64,     8,     9,    30,    10,     6,     7,    90,    11,
+       8,     9,    12,    10,    31,    92,    34,    11,    43,    83,
+      12,    33,    40,    57,    58,    49,    50,    46,    65,    59,
+      47,    44,    78,    79,    80,    48,     1,    67,     2,     3,
+       4,     5,    51,    52,    53,    54,    86,    87,    88,    89,
+       6,     7,    55,    56,     8,     9,    81,    10,    70,    71,
+      84,    11,    85,     1,    12,     2,     3,     4,     5,    76,
+      77,    91,    38,     2,    35,    42,    93,     6,     7,    66,
+      69,     8,     9,    60,    10,     6,     7,    68,    11,     8,
+       0,    12,    10,     2,     3,    61,    62,    63,     0,    12,
+      72,    73,    74,    75,     0,     6,     7,     0,     0,     8,
+       0,     0,    10,     0,     0,     0,     0,     0,     0,    12
   };
 
   const signed char
   PCL_Parser::yycheck_[] =
   {
-      14,     1,     6,     7,     0,     1,     1,     3,     4,     5,
-       6,     1,     9,     1,    11,     1,     1,    15,    16,    15,
-      16,    13,    14,    19,    20,    24,    26,    23,    17,    18,
-      26,     0,    27,    30,    31,    32,    33,    27,    26,    25,
-      25,     9,    10,    11,    12,    25,    49,    50,    51,    52,
-      64,    55,    56,    47,    48,     0,     1,    21,     3,     4,
-       5,     6,    53,    54,    78,    79,    80,    81,    82,    83,
-      15,    16,     7,    27,    19,    20,     8,    27,    23,    27,
-       1,    26,     3,     4,     5,     6,    39,    29,    45,    -1,
-      46,    -1,    -1,    -1,    15,    16,    -1,    -1,    19,    20,
-      -1,    -1,    23,    24,     1,    26,     3,     4,     5,     6,
-      -1,    -1,     3,     4,    -1,    -1,    -1,    -1,    15,    16,
-       3,     4,    19,    20,    15,    16,    23,    -1,    19,    26,
-      -1,    -1,    15,    16,    -1,    26,    19,    -1,    -1,    -1,
-      -1,    -1,    -1,    26
+      15,     6,     7,     0,     1,    10,     3,     4,     5,     6,
+       1,     0,     1,     1,     3,     4,     5,     6,    15,    16,
+       1,     1,    19,    20,    28,    22,    15,    16,    84,    26,
+      19,    20,    29,    22,    21,    91,    29,    26,     0,    30,
+      29,    29,    27,    17,    18,    13,    14,    28,    28,    23,
+       7,    66,    57,    58,    59,     8,     1,    30,     3,     4,
+       5,     6,     9,    10,    11,    12,    81,    82,    83,    84,
+      15,    16,    15,    16,    19,    20,    30,    22,    49,    50,
+      30,    26,    27,     1,    29,     3,     4,     5,     6,    55,
+      56,    24,     9,     3,     4,    12,    91,    15,    16,    41,
+      48,    19,    20,    31,    22,    15,    16,    47,    26,    19,
+      -1,    29,    22,     3,     4,    32,    33,    34,    -1,    29,
+      51,    52,    53,    54,    -1,    15,    16,    -1,    -1,    19,
+      -1,    -1,    22,    -1,    -1,    -1,    -1,    -1,    -1,    29
   };
 
   const unsigned char
   PCL_Parser::yystos_[] =
   {
        0,     1,     3,     4,     5,     6,    15,    16,    19,    20,
-      23,    26,    29,    30,    32,    33,    34,    35,    36,    37,
-      38,    39,    40,    41,    42,    43,    44,    45,    25,    21,
-       1,    26,     1,    26,     4,    44,    44,    36,    24,    31,
-      36,     0,    33,     1,    25,     7,     8,    13,    14,     9,
-      10,    11,    12,    15,    16,    17,    18,    38,    36,    36,
-      36,    36,     1,    25,    32,    27,    39,    40,    41,    41,
-      42,    42,    42,    42,    43,    43,    44,    44,    27,     1,
-      27,    27,     1,    27,    24,    33,    33,    33,    33,    33,
-      33
+      22,    26,    29,    32,    33,    35,    36,    37,    38,    39,
+      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
+      28,    21,     1,    29,    29,     4,    48,    48,    40,    48,
+      27,    34,    40,     0,    36,     1,    28,     7,     8,    13,
+      14,     9,    10,    11,    12,    15,    16,    17,    18,    23,
+      42,    40,    40,    40,     1,    28,    35,    30,    43,    44,
+      45,    45,    46,    46,    46,    46,    47,    47,    48,    48,
+      48,    30,     1,    30,    30,    27,    36,    36,    36,    36,
+      37,    24,    37,    38
   };
 
   const unsigned char
   PCL_Parser::yyr1_[] =
   {
-       0,    28,    29,    29,    30,    31,    30,    32,    32,    33,
-      33,    33,    33,    33,    33,    33,    33,    34,    34,    34,
-      35,    35,    35,    36,    37,    37,    38,    38,    39,    39,
-      40,    40,    40,    41,    41,    41,    41,    41,    42,    42,
-      42,    43,    43,    43,    44,    44,    44,    45,    45,    45,
-      45
+       0,    31,    32,    32,    33,    34,    33,    35,    35,    36,
+      36,    37,    37,    37,    37,    37,    37,    37,    37,    38,
+      38,    39,    39,    39,    40,    41,    41,    42,    42,    43,
+      43,    44,    44,    44,    45,    45,    45,    45,    45,    46,
+      46,    46,    47,    47,    47,    47,    48,    48,    48,    48,
+      49,    49,    49,    49
   };
 
   const unsigned char
   PCL_Parser::yyr2_[] =
   {
-       0,     2,     0,     1,     2,     0,     4,     1,     2,     2,
-       2,     2,     1,     1,     1,     3,     3,     5,     5,     5,
-       5,     5,     5,     1,     1,     3,     1,     3,     1,     3,
-       1,     3,     3,     1,     3,     3,     3,     3,     1,     3,
-       3,     1,     3,     3,     1,     2,     2,     1,     1,     1,
-       3
+       0,     2,     0,     1,     2,     0,     4,     1,     2,     1,
+       1,     2,     2,     2,     7,     1,     1,     3,     3,     5,
+       7,     5,     5,     5,     1,     1,     3,     1,     3,     1,
+       3,     1,     3,     3,     1,     3,     3,     3,     3,     1,
+       3,     3,     1,     3,     3,     3,     1,     2,     2,     2,
+       1,     1,     1,     3
   };
 
 
@@ -1375,9 +1694,10 @@ namespace yy {
   {
   "$end", "error", "$undefined", "TNUM", "TID", "TWHILE", "TIF", "TOR",
   "TAND", "TLESS", "TGR", "TLESS_EQ", "TGR_EQ", "TEQUAL", "TNEQUAL",
-  "TADD", "TSUB", "TMUL", "TDIV", "TINPUT", "TOUTPUT", "TASSIGN", "TERR",
-  "'{'", "'}'", "';'", "'('", "')'", "$accept", "translation_unit",
-  "block", "$@1", "statement_list", "statement", "selection_statement",
+  "TADD", "TSUB", "TMUL", "TDIV", "TINPUT", "TOUTPUT", "TASSIGN",
+  "TEXCLAM", "TPERCENT", "TELSE", "TERR", "'{'", "'}'", "';'", "'('",
+  "')'", "$accept", "translation_unit", "block", "$@1", "statement_list",
+  "statement", "matched_statement", "open_statement",
   "iteration_statement", "expression", "assignment_expression",
   "logical_or_expression", "logical_and_expression", "equality_expression",
   "relational_expression", "additive_expression",
@@ -1388,12 +1708,12 @@ namespace yy {
   const unsigned char
   PCL_Parser::yyrline_[] =
   {
-       0,    85,    85,    86,    92,    95,    94,   113,   118,   125,
-     126,   127,   128,   129,   130,   131,   132,   136,   140,   146,
-     154,   158,   164,   172,   176,   178,   188,   189,   193,   194,
-     198,   199,   200,   204,   205,   206,   207,   208,   212,   213,
-     214,   218,   219,   220,   224,   225,   226,   230,   236,   237,
-     238
+       0,    90,    90,    91,    98,   101,   100,   119,   124,   131,
+     132,   136,   137,   138,   140,   145,   146,   147,   148,   152,
+     156,   163,   167,   173,   181,   185,   188,   201,   202,   206,
+     207,   211,   212,   213,   217,   218,   219,   220,   221,   225,
+     226,   227,   231,   232,   233,   234,   238,   239,   240,   241,
+     245,   253,   254,   255
   };
 
   // Print the state stack on the debug stream.
@@ -1438,15 +1758,15 @@ namespace yy {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      26,    27,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    25,
+      29,    30,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    28,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,    23,     2,    24,     2,     2,     2,     2,
+       2,     2,     2,    26,     2,    27,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1461,9 +1781,10 @@ namespace yy {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25
     };
-    const unsigned int user_token_number_max_ = 277;
+    const unsigned int user_token_number_max_ = 280;
     const token_number_type undef_token_ = 2;
 
     if (static_cast<int>(t) <= yyeof_)
@@ -1476,8 +1797,8 @@ namespace yy {
 
 
 } // yy
-#line 1480 "frontend/src/parser/parser.cc" // lalr1.cc:1167
-#line 241 "frontend/src/parser/parser.y" // lalr1.cc:1168
+#line 1801 "frontend/src/parser/parser.cc" // lalr1.cc:1167
+#line 258 "frontend/src/parser/parser.y" // lalr1.cc:1168
 
 namespace yy {
 

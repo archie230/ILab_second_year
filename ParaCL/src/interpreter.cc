@@ -13,13 +13,14 @@ int main(int argc, const char* argv[]) {
         yy::PCL_Driver driver(&input);
         driver.parse();
 
-    #ifdef _DEBUG
-        driver.root_ -> print();
+    #ifdef DEBUG
+        std::cout << "root:" << std::hex << driver.root_ << std::dec << std::endl;
+        if(driver.root_)
+            driver.root_ -> print();
         driver.symtbl_.print();
     #endif
 
-        if(driver.err_counter_ == 0 && driver.root_)
-            driver.interpretate(driver.root_);
+        driver.interpretate(driver.root_);
     }
 
     return 0;

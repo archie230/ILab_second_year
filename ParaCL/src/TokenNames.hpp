@@ -22,4 +22,6 @@ enum TokenName {
     T_ASSIGN ,
     T_STMLST ,
     T_SCOPE  ,
+    T_PERCENT,
+    T_EXCLAM
 };

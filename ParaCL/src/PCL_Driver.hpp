@@ -3,6 +3,8 @@
 #include <FlexLexer.h>
 #include <iostream>
 #include <cassert>
+#include <stack>
+#include <sstream>
 #include "parser/parser.hh"
 #include "AST.hpp"
 #include "SymTbl.hpp"
@@ -26,7 +28,22 @@ using var_t = SymTbl::Table::VarDec;
         ~PCL_Driver();
     	token_t yylex(yy::PCL_Parser::semantic_type* yylval, yy::PCL_Parser::location_type* yylloc);
     	int parse();
-    	int interpretate(AST::INode* node);
+    	void interpretate(AST::INode* node);
+
+    private:
+        int calc_expression(AST::INode* node);
+        void interpretate_stmtlst(AST::INode* node);
+        void interpretate_stmt(AST::INode* node);
+        void post_order_trav(AST::INode *node, std::stack<AST::INode*> &s2);
+        // all predicates and "int return" functions lower
+        // expect that they have node that used in expressions(except assign node)
+        // otherwise they throw runtime_error
+        bool has_kid(AST::INode* node, char side);
+        bool is_operator(AST::INode* node);
+        bool is_unary_operator(AST::INode* node);
+        int get_value(AST::INode* node);
+        int calc_operator(AST::INode* opertr, int lhs, int rhs);
+        int calc_operator(AST::INode* opertr, int rhs);
     };
 
 }

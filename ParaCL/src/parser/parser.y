@@ -66,11 +66,16 @@
   TINPUT
   TOUTPUT
   TASSIGN
+  TEXCLAM
+  TPERCENT
+  TELSE
   TERR
 ;
 
-%destructor { delete $$; } TNUM
-%destructor { delete $$; } TID
+%destructor { delete $$; } <>
+//%destructor { delete $$; } TID
+//%destructor { delete $$; } TOUTPUT
+
 
 // making grammar unambiguous
 %left TADD TSUB
@@ -82,9 +87,10 @@
 %%
 
 translation_unit :
-    %empty { driver -> root_ = nullptr; }
+    %empty { driver -> root_ = nullptr; $$ = nullptr; }
 |  statement_list {
-                    driver -> root_ = $1;
+			$$ = nullptr;
+			driver -> root_ = $1;
                   }
 ;
 
@@ -122,37 +128,40 @@ statement_list :
 ;
 
 statement :
+  matched_statement { $$ = $1; }
+| open_statement    { $$ = $1; }
+;
+
+matched_statement :
   expression ';'              { $$ = $1; }
 | expression error	      { $$ = $1; }
 | error ';'                   { $$ = nullptr; }
-| selection_statement         { $$ = $1; }
+
+|   TIF '(' expression ')' matched_statement[body] TELSE matched_statement[else]
+    					{
+                                          	$$ = new IfNode(TokenName::T_IF, $expression, $body, $else);
+                                    	}
+
 | iteration_statement         { $$ = $1; }
 | block                       { $$ = $1; }
-| TOUTPUT expression ';'      { $$ = new _2kidsNode(TokenName::T_OUTPUT, nullptr, $2); }
-| TOUTPUT expression error    { $$ = new _2kidsNode(TokenName::T_OUTPUT, nullptr, $2); }
+| TOUTPUT expression ';'      { $$ = new TwoKidsNode(TokenName::T_OUTPUT, nullptr, $2); }
+| TOUTPUT expression error    { $$ = new TwoKidsNode(TokenName::T_OUTPUT, nullptr, $2); }
 ;
 
-selection_statement :
+open_statement :
   TIF '(' expression ')' statement  	{
-                                        	$$ = new _2kidsNode(TokenName::T_IF, $expression, $statement);
+                                        	$$ = new IfNode(TokenName::T_IF, $expression, $statement);
                                   	}
 
-| TIF error expression ')' statement  	{
-						$$ = nullptr;
-                                        	delete $expression;
-                                        	delete $statement;
-                                  	}
-
-| TIF '(' expression error statement  	{
-						$$ = nullptr;
-						delete $expression;
-						delete $statement;
+| TIF '(' expression ')' matched_statement[body] TELSE open_statement[else]
+					{
+						$$ = new IfNode(TokenName::T_IF, $expression, $body, $else);
 					}
 ;
 
 iteration_statement :
   TWHILE '(' expression ')' statement   	{
-                                                    $$ = new _2kidsNode(TokenName::T_WHILE, $expression, $statement);
+                                                    $$ = new TwoKidsNode(TokenName::T_WHILE, $expression, $statement);
                                         	}
 
 | TWHILE '(' expression error statement 	{
@@ -175,62 +184,70 @@ expression :
 assignment_expression :
   logical_or_expression             { $$ = $1; }
 
+// chains like a = b = c aren't allowed
 | TID TASSIGN logical_or_expression {
-                                        $$ = new _2kidsNode(TokenName::T_ASSIGN, $1, $3);
+                                        $$ = new TwoKidsNode(TokenName::T_ASSIGN, $1, $3);
                                         // if there is no same identifier add it to symtbl
-                                        auto p = TOP -> find(*(static_cast<IdNode*>($TID) -> get_id()));
-                                        if(!p)
-                                            TOP -> insert(*(static_cast<IdNode*>($TID) -> get_id()), {$3, @1, 0});
+                                        try {
+                                        	TOP -> find(static_cast<IdNode*>($TID) -> get_id());
+                                        }
+                                        catch(const std::out_of_range&) {
+                                            TOP -> insert(static_cast<IdNode*>($TID) -> get_id(), {$3, @1, 0});
+                                        }
                                     }
 ;
 
 logical_or_expression :
   logical_and_expression    { $$ = $1; }
-| logical_or_expression TOR logical_and_expression  { $$ = new _2kidsNode(TokenName::T_OR, $1, $3); }
+| logical_or_expression TOR logical_and_expression  { $$ = new TwoKidsNode(TokenName::T_OR, $1, $3); }
 ;
 
 logical_and_expression :
   equality_expression   { $$ = $1; }
-| logical_and_expression TAND equality_expression   { $$ = new _2kidsNode(TokenName::T_AND, $1, $3); }
+| logical_and_expression TAND equality_expression   { $$ = new TwoKidsNode(TokenName::T_AND, $1, $3); }
 ;
 
 equality_expression	:
   relational_expression { $$ = $1; }
-| equality_expression TEQUAL relational_expression  { $$ = new _2kidsNode(TokenName::T_EQUAL, $1, $3); }
-| equality_expression TNEQUAL relational_expression { $$ = new _2kidsNode(TokenName::T_NEQUAL, $1, $3); }
+| equality_expression TEQUAL relational_expression  { $$ = new TwoKidsNode(TokenName::T_EQUAL, $1, $3); }
+| equality_expression TNEQUAL relational_expression { $$ = new TwoKidsNode(TokenName::T_NEQUAL, $1, $3); }
 ;
 
 relational_expression :
   additive_expression   { $$ = $1; }
-| relational_expression TLESS additive_expression       { $$ = new _2kidsNode(TokenName::T_LESS, $1, $3); }
-| relational_expression TGR additive_expression         { $$ = new _2kidsNode(TokenName::T_GR, $1, $3); }
-| relational_expression TLESS_EQ additive_expression    { $$ = new _2kidsNode(TokenName::T_LESS_EQ, $1, $3); }
-| relational_expression TGR_EQ additive_expression      { $$ = new _2kidsNode(TokenName::T_GR_EQ, $1, $3); }
+| relational_expression TLESS additive_expression       { $$ = new TwoKidsNode(TokenName::T_LESS, $1, $3); }
+| relational_expression TGR additive_expression         { $$ = new TwoKidsNode(TokenName::T_GR, $1, $3); }
+| relational_expression TLESS_EQ additive_expression    { $$ = new TwoKidsNode(TokenName::T_LESS_EQ, $1, $3); }
+| relational_expression TGR_EQ additive_expression      { $$ = new TwoKidsNode(TokenName::T_GR_EQ, $1, $3); }
 ;
 
 additive_expression :
   multiplicative_expression { $$ = $1; }
-| additive_expression TADD multiplicative_expression    { $$ = new _2kidsNode(TokenName::T_ADD, $1, $3); }
-| additive_expression TSUB multiplicative_expression    { $$ = new _2kidsNode(TokenName::T_SUB, $1, $3); }
+| additive_expression TADD multiplicative_expression    { $$ = new TwoKidsNode(TokenName::T_ADD, $1, $3); }
+| additive_expression TSUB multiplicative_expression    { $$ = new TwoKidsNode(TokenName::T_SUB, $1, $3); }
 ;
 
 multiplicative_expression :
   unary_expression  { $$ = $1; }
-| multiplicative_expression TMUL unary_expression   { $$ = new _2kidsNode(TokenName::T_MUL, $1, $3); }
-| multiplicative_expression TDIV unary_expression   { $$ = new _2kidsNode(TokenName::T_DIV, $1, $3); }
+| multiplicative_expression TMUL unary_expression     { $$ = new TwoKidsNode(TokenName::T_MUL, $1, $3); }
+| multiplicative_expression TDIV unary_expression     { $$ = new TwoKidsNode(TokenName::T_DIV, $1, $3); }
+| multiplicative_expression TPERCENT unary_expression { $$ = new TwoKidsNode(TokenName::T_PERCENT, $1, $3); }
 ;
 
 unary_expression :
   primary_expression        { $$ = $1; }
-| TADD unary_expression     { $$ = new _2kidsNode(TokenName::T_ADD, nullptr, $2); }
-| TSUB unary_expression     { $$ = new _2kidsNode(TokenName::T_SUB, nullptr, $2); }
+| TADD unary_expression     { $$ = new TwoKidsNode(TokenName::T_ADD, nullptr, $2); }
+| TSUB unary_expression     { $$ = new TwoKidsNode(TokenName::T_SUB, nullptr, $2); }
+| TEXCLAM unary_expression  { $$ = new TwoKidsNode(TokenName::T_EXCLAM, nullptr, $2); }
 ;
 
 primary_expression :
   TID   { // identifier at the right hand of assignment
-	    auto p = TOP -> find(*(static_cast<IdNode*>($TID) -> get_id()));
-            if(!p)
-            	error(@1, "undeclarated variable " + *(static_cast<IdNode*>($TID) -> get_id()));
+	    try{
+	    	TOP -> find(static_cast<IdNode*>($TID) -> get_id());
+	    } catch(const std::out_of_range&) {
+	   	error(@1, "undeclarated variable " + static_cast<IdNode*>($TID) -> get_id());
+	    }
             $$ = $TID;
         }
 | TNUM                  { $$ = $1; }
