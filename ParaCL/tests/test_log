@@ -68,9 +68,23 @@ TEST 007 OK : answ = 0
 4181
 6765
 10946
+TEST 008 OK : answ = 5040  expected = 5040
+TEST 009 OK : answ = 42  expected = 42
+TEST 010 OK : answ = 15  expected = 15
+TEST 011 OK : answ = 15
+6  expected = 15
+6
+TEST 012 OK : answ = 500  expected = 500
+TEST 013 OK : answ = 0
+0
+0  expected = 0
+0
+0
+TEST 014 OK : answ = 56  expected = 56
 =====BAD DATA TESTS=====
 TEST 001 OK
 TEST 002 OK
 TEST 003 OK
 TEST 004 OK
 TEST 005 OK
+TEST 006 OK

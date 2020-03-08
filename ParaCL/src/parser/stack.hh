@@ -31,18 +31,18 @@
 // version 2.2 of Bison.
 
 /**
- ** \file frontend/src/parser/stack.hh
+ ** \file src/parser/stack.hh
  ** Define the yy::stack class.
  */
 
-#ifndef YY_YY_FRONTEND_SRC_PARSER_STACK_HH_INCLUDED
-# define YY_YY_FRONTEND_SRC_PARSER_STACK_HH_INCLUDED
+#ifndef YY_YY_SRC_PARSER_STACK_HH_INCLUDED
+# define YY_YY_SRC_PARSER_STACK_HH_INCLUDED
 
 # include <vector>
 
 
 namespace yy {
-#line 46 "frontend/src/parser/stack.hh" // stack.hh:132
+#line 46 "src/parser/stack.hh" // stack.hh:132
   template <class T, class S = std::vector<T> >
   class stack
   {
@@ -152,6 +152,6 @@ namespace yy {
 
 
 } // yy
-#line 156 "frontend/src/parser/stack.hh" // stack.hh:132
+#line 156 "src/parser/stack.hh" // stack.hh:132
 
-#endif // !YY_YY_FRONTEND_SRC_PARSER_STACK_HH_INCLUDED
+#endif // !YY_YY_SRC_PARSER_STACK_HH_INCLUDED

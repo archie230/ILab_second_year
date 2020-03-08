@@ -1,5 +1,4 @@
-a=?;
-b=?;
+euqlid = func(a, b) {
 
 while (a != 0 && b != 0)
 {
@@ -8,4 +7,10 @@ while (a != 0 && b != 0)
     else
         b = b % a;
 }
-print a + b;
+a + b;
+}
+
+a = ?;
+b = ?;
+
+print euqlid(a, b);

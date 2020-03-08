@@ -3,7 +3,7 @@
 #ifdef DEBUG
 void AST::INode::print() {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
-              << tname_ << std::endl;
+              << names[tname_] << std::endl;
 }
 #endif
 //
@@ -12,7 +12,7 @@ void AST::INode::print() {
 #ifdef DEBUG
 void AST::IdNode::print() {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
-              << tname_ << " [name:] " << name_ << std::endl;
+              << names[tname_] << " [name:] " << name_ << std::endl;
 }
 #endif
 
@@ -21,7 +21,7 @@ void AST::IdNode::print() {
 #ifdef DEBUG
 void AST::NumNode::print() {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
-              << tname_ << " [num]: " << num_ << std::endl;
+              << names[tname_] << " [num]: " << num_ << std::endl;
 }
 #endif
 
@@ -37,7 +37,7 @@ AST::TwoKidsNode::~TwoKidsNode() {
 #ifdef DEBUG
 void AST::TwoKidsNode::print() {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
-              << tname_ << " [left:] " << std::hex << left_ << " [right:] " << right_ << std::dec << std::endl;
+              << names[tname_] << " [left:] " << std::hex << left_ << " [right:] " << right_ << std::dec << std::endl;
     if(left_)
         left_ -> print();
     if(right_)
@@ -77,7 +77,7 @@ AST::ListNode::~ListNode() {
 #ifdef DEBUG
 void AST::ListNode::print() {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
-              << tname_ << std::hex << " [kids:]";
+              << names[tname_] << " [table_id:] " << id_ << std::hex << " [kids:]";
     for_each(kids_.begin(), kids_.end(), [](INode* node) {std::cout << " " << node;});
     std::cout << std::dec << std::endl;
     for_each(kids_.begin(), kids_.end(), [](INode* node) { if(node) node -> print();});
@@ -132,7 +132,7 @@ void AST::IfNode::SetKid(char side, AST::INode *val) {
 #ifdef DEBUG
 void AST::IfNode::print() {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
-              << tname_ << " [expression:] " << std::hex << expr_ << " [statement:] " << stmt_
+              << names[tname_] << " [expression:] " << std::hex << expr_ << " [statement:] " << stmt_
                 << " [else:] " << else_ << std::dec << std::endl;
     if(expr_)
         expr_ -> print();

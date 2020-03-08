@@ -1,5 +1,7 @@
+fibonacci = func(n) 
+
+{
 i = 0;
-n = ?;
 
 while(i < n) {
     i = i + 1;
@@ -7,10 +9,10 @@ while(i < n) {
     b = 1;
 
     if (i == 1)
-        print 0;
+        return 0;
 
     if (i == 2)
-        print 1;
+        return 1;
 
     if (i > 2) {
         j = 0;
@@ -20,6 +22,7 @@ while(i < n) {
             a = tmp;
             j = j + 1;
         }
-        print b;
+        return b;
     }
+}
 }

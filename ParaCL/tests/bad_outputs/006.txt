@@ -1,0 +1,1 @@
+	error at line: 6 : a isn't a name of variable 

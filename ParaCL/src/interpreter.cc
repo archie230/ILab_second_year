@@ -19,7 +19,6 @@ int main(int argc, const char* argv[]) {
             driver.root_ -> print();
         driver.symtbl_.print();
     #endif
-
         driver.interpretate(driver.root_);
     }
 

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 # running tests with correct input data
-CorDataRange=(001 002 003 004 005 006 007)
+CorDataRange=(001 002 003 004 005 006 007 008 009 010 011 012 013 014)
 CorDataPath=correct_data/
 CorInputPath=input/
 CorExpPath=expect/
 
-BadDataRange=(001 002 003 004 005)
+BadDataRange=(001 002 003 004 005 006)
 BadDataPath=bad_data/
 BadOutPath=bad_outputs/
 

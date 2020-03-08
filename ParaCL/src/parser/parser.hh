@@ -31,24 +31,33 @@
 // version 2.2 of Bison.
 
 /**
- ** \file frontend/src/parser/parser.hh
+ ** \file src/parser/parser.hh
  ** Define the yy::parser class.
  */
 
 // C++ LALR(1) parser skeleton written by Akim Demaille.
 
-#ifndef YY_YY_FRONTEND_SRC_PARSER_PARSER_HH_INCLUDED
-# define YY_YY_FRONTEND_SRC_PARSER_PARSER_HH_INCLUDED
+#ifndef YY_YY_SRC_PARSER_PARSER_HH_INCLUDED
+# define YY_YY_SRC_PARSER_PARSER_HH_INCLUDED
 // //                    "%code requires" blocks.
-#line 12 "frontend/src/parser/parser.y" // lalr1.cc:377
+#line 12 "src/parser/parser.y" // lalr1.cc:377
 
     #include "../AST.hpp"
     #include "../SymTbl.hpp"
     #include "../TokenNames.hpp"
 
-    #define ID driver -> cur_id_
-    #define TOP driver -> top_
-    #define SAVED driver -> saved_
+    #define ENV         driver -> env_
+    #define CUR_ID      driver -> cur_id_
+
+    #define FUNC		SymTbl::Table::DECL_TYPE::FUNC
+    #define VAR			SymTbl::Table::DECL_TYPE::VAR
+
+    #define GET_ID(node_ptr)	static_cast<AST::IdNode*>(node_ptr) -> get_id()
+
+    using IDec_t 	  = SymTbl::Table::IDec;
+    using VarDec_t	= SymTbl::Table::VarDec;
+    using FuncDec_t	= SymTbl::Table::FuncDec;
+
 
     // forward declaration for parser
     namespace yy {
@@ -68,7 +77,7 @@
             }                                                               \
         while (false)
 
-#line 72 "frontend/src/parser/parser.hh" // lalr1.cc:377
+#line 81 "src/parser/parser.hh" // lalr1.cc:377
 
 
 # include <cstdlib> // std::abort
@@ -140,7 +149,7 @@
 
 
 namespace yy {
-#line 144 "frontend/src/parser/parser.hh" // lalr1.cc:377
+#line 153 "src/parser/parser.hh" // lalr1.cc:377
 
 
 
@@ -193,7 +202,9 @@ namespace yy {
         TEXCLAM = 277,
         TPERCENT = 278,
         TELSE = 279,
-        TERR = 280
+        TRETURN = 280,
+        TFUNC = 281,
+        TERR = 282
       };
     };
 
@@ -363,7 +374,7 @@ namespace yy {
     // Tables.
   // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
   // STATE-NUM.
-  static const signed char yypact_[];
+  static const short int yypact_[];
 
   // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
   // Performed when YYTABLE does not specify something else to do.  Zero
@@ -402,7 +413,7 @@ namespace yy {
     static const char* const yytname_[];
 #if YYDEBUG
   // YYRLINE[YYN] -- Source line where rule number YYN was defined.
-  static const unsigned char yyrline_[];
+  static const unsigned short int yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
     virtual void yy_reduce_print_ (int r);
     /// Print the state stack on the debug stream.
@@ -501,12 +512,12 @@ namespace yy {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 139,     ///< Last index in yytable_.
-      yynnts_ = 19,  ///< Number of nonterminal symbols.
-      yyfinal_ = 43, ///< Termination state number.
+      yylast_ = 257,     ///< Last index in yytable_.
+      yynnts_ = 28,  ///< Number of nonterminal symbols.
+      yyfinal_ = 49, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 31  ///< Number of tokens.
+      yyntokens_ = 35  ///< Number of tokens.
     };
 
 
@@ -517,9 +528,9 @@ namespace yy {
 
 
 } // yy
-#line 521 "frontend/src/parser/parser.hh" // lalr1.cc:377
+#line 532 "src/parser/parser.hh" // lalr1.cc:377
 
 
 
 
-#endif // !YY_YY_FRONTEND_SRC_PARSER_PARSER_HH_INCLUDED
+#endif // !YY_YY_SRC_PARSER_PARSER_HH_INCLUDED

@@ -1,1 +1,2 @@
-	error at line: 2 : syntax error, unexpected ')', expecting ';'
+	error at line: 2 : forgot semicolon
+	error at line: 2 : syntax error, unexpected ')'
