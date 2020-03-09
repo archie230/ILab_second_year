@@ -161,9 +161,9 @@ matched_statement :
 | function_declaration 	      { $$ = $1; }
 | function_declaration ';'    { $$ = $1; }
 | TRETURN expression ';'      {
-																if (ENV.size() == 1)
-																	error(@1, "return is not inside function");
-																$$ = new TwoKidsNode(TokenName::T_RETURN, nullptr, $2);
+				if (ENV.size() == 1)
+					error(@1, "return is not inside function");
+				$$ = new TwoKidsNode(TokenName::T_RETURN, nullptr, $2);
                               }
 ;
 
