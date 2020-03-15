@@ -41,7 +41,7 @@ SymTbl::Table* SymTbl::find_tbl(SymTbl::tbl_ident id) {
 }
 
 SymTbl::~SymTbl() {
-    for(auto elem : env_)
+    for(auto& elem : env_)
         delete elem.second;
 }
 

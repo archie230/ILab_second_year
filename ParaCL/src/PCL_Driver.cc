@@ -19,7 +19,7 @@ yy::PCL_Driver::~PCL_Driver() {
 }
 
 yy::token_t yy::PCL_Driver::yylex(yy::PCL_Parser::semantic_type *yylval, yy::PCL_Parser::location_type *yylloc) {
-    token_t tt = static_cast<token_t>(plex_.yylex());
+    auto tt = static_cast<token_t>(plex_.yylex());
     *yylloc = plex_.lineno();
 
     while(tt == token_t::TERR) {
@@ -85,26 +85,26 @@ std::pair<bool, int> yy::PCL_Driver::interpretate_stmt(AST::INode *node) {
 
         case T_IF: {
             auto ifnode = static_cast<AST::IfNode*>(node);
-            if(ifnode -> GetKid('r')) {
+            if(ifnode -> GetElse()) {
                 // interpretated code
-                if (calc_expression(ifnode -> GetKid('l'))) {
-                    if( (ifnode -> GetKid('m')) && (ifnode -> GetKid('m') -> GetType() == T_SCOPE) ){
-                        auto [first, second] = calc_scope(ifnode -> GetKid('m'));
+                if (calc_expression(ifnode -> GetExpr())) {
+                    if( (ifnode -> GetStmt()) && (ifnode -> GetStmt() -> GetType() == T_SCOPE) ){
+                        auto [first, second] = calc_scope(ifnode -> GetStmt());
                         if(first)
                             return {true, second};
                     } else {
-                        auto [first, second] = interpretate_stmt(ifnode -> GetKid('m'));
+                        auto [first, second] = interpretate_stmt(ifnode -> GetStmt());
                         if(first)
                             return {true, second};
                     }
                 } else {
-                    if( (ifnode -> GetKid('r')) && (ifnode -> GetKid('r') -> GetType() == T_SCOPE) ){
-                        auto [first, second] = calc_scope(ifnode -> GetKid('r'));
+                    if( (ifnode -> GetElse()) && (ifnode -> GetElse() -> GetType() == T_SCOPE) ){
+                        auto [first, second] = calc_scope(ifnode -> GetElse());
                         if(first)
                             return {true, second};
                     } else {
                         if(ifnode) {
-                            auto [first, second] = interpretate_stmt(ifnode -> GetKid('r'));
+                            auto [first, second] = interpretate_stmt(ifnode -> GetElse());
                             if(first)
                                 return {true, second};
                         }
@@ -113,13 +113,13 @@ std::pair<bool, int> yy::PCL_Driver::interpretate_stmt(AST::INode *node) {
                 //
             } else {
                 // interpretated code
-                if (calc_expression(ifnode -> GetKid('l'))) {
-                    if( (ifnode -> GetKid('m')) && (ifnode -> GetKid('m') -> GetType() == T_SCOPE) ){
-                        auto [first, second] = calc_scope(ifnode -> GetKid('m'));
+                if (calc_expression(ifnode -> GetExpr())) {
+                    if( (ifnode -> GetStmt()) && (ifnode -> GetStmt() -> GetType() == T_SCOPE) ){
+                        auto [first, second] = calc_scope(ifnode -> GetStmt());
                         if(first)
                             return {true, second};
                     } else {
-                        auto [first, second] = interpretate_stmt(ifnode -> GetKid('m'));
+                        auto [first, second] = interpretate_stmt(ifnode -> GetStmt());
                         if(first)
                             return {true, second};
                     }
@@ -132,17 +132,15 @@ std::pair<bool, int> yy::PCL_Driver::interpretate_stmt(AST::INode *node) {
         case T_WHILE: {
             auto whilenode = static_cast<AST::TwoKidsNode*>(node);
             // interpretated code
-            while ( calc_expression(whilenode -> GetKid('l')) ) {
-                if( (whilenode -> GetKid('r')) && (whilenode -> GetKid('r') -> GetType() == T_SCOPE) ){
-                    auto [first, second] = calc_scope(whilenode -> GetKid('r'));
+            while ( calc_expression(whilenode -> GetLeftKid()) ) {
+                if( (whilenode -> GetRightKid()) && (whilenode -> GetRightKid() -> GetType() == T_SCOPE) ){
+                    auto [first, second] = calc_scope(whilenode -> GetRightKid());
                     if(first)
                         return {true, second};
                 } else {
-                    if(whilenode) {
-                        auto [first, second] = interpretate_stmt(whilenode -> GetKid('r'));
-                        if(first)
-                            return {true, second};
-                    }
+                    auto [first, second] = interpretate_stmt(whilenode -> GetRightKid());
+                    if(first)
+                        return {true, second};
                 }
             }
             //
@@ -152,14 +150,14 @@ std::pair<bool, int> yy::PCL_Driver::interpretate_stmt(AST::INode *node) {
         case T_OUTPUT: {
             auto printnode = static_cast<AST::TwoKidsNode*>(node);
             // interpretated code
-            std::cout << calc_expression(printnode -> GetKid('r')) << std::endl;
+            std::cout << calc_expression(printnode -> GetRightKid()) << std::endl;
             //
             return {false, 0};
         }
 
         case T_RETURN: {
             auto returnnode = static_cast<AST::TwoKidsNode*>(node);
-            return {true, calc_expression(returnnode -> GetKid('r'))};
+            return {true, calc_expression(returnnode -> GetRightKid())};
         }
 
         case T_FUNCDEC:
@@ -178,14 +176,15 @@ int yy::PCL_Driver::calc_expression(AST::INode* node) {
 
     switch (node -> GetType()) {
         case T_ASSIGN: {
-            AST::INode* left_kid = static_cast<AST::TwoKidsNode*>(node) -> GetKid('l');
+            AST::INode* left_kid = static_cast<AST::TwoKidsNode*>(node) -> GetLeftKid();
             assert(left_kid);
-            AST::INode* right_kid = static_cast<AST::TwoKidsNode*>(node) -> GetKid('r');
+            AST::INode* right_kid = static_cast<AST::TwoKidsNode*>(node) -> GetRightKid();
 
             auto lvalue = env_.front() -> find(GET_ID(left_kid));
             assert(lvalue);
             assert(lvalue -> type_ != FUNC);
             static_cast<VarDec_t*>(lvalue) -> value_ = calc_expression(right_kid);
+
             return static_cast<VarDec_t*>(lvalue) -> value_;
         }
 
@@ -269,9 +268,9 @@ std::pair<bool, int> yy::PCL_Driver::calc_scope(AST::INode *node) {
         scope_frame -> prev_ = env_.front();
     }
 
-    env_.push_front(scope_frame);
-
     try {
+    	env_.push_front(scope_frame);
+    	
         for(int i  = 0; i < scope_node -> size(); i++) {
             return_val = interpretate_stmt((*scope_node)[i]);
             if (return_val.first) {
@@ -297,8 +296,8 @@ int yy::PCL_Driver::calc_function(AST::INode *node) {
     assert(node && node -> GetType() == T_FUNCCALL);
 
     auto function_node  = static_cast<AST::TwoKidsNode*>(node);
-    auto expr_lst       = static_cast<AST::ListNode*>(function_node -> GetKid('r'));
-    auto func_decl      = static_cast<FuncDec_t*>( env_.front() -> find(GET_ID(function_node -> GetKid('l'))) );
+    auto expr_lst       = static_cast<AST::ListNode*>(function_node -> GetRightKid());
+    auto func_decl      = static_cast<FuncDec_t*>( env_.front() -> find(GET_ID(function_node -> GetLeftKid())) );
     auto& args          = func_decl -> arg_names_;
 
     assert(args.size() == (expr_lst ? expr_lst -> size() : 0));
@@ -331,6 +330,7 @@ int yy::PCL_Driver::calc_function(AST::INode *node) {
 
         --recursion_deepness_;
         return return_val.second;
+
     } catch(...) {
         delete function_frame;
         throw;
@@ -355,14 +355,15 @@ void yy::PCL_Driver::post_order_trav(AST::INode *node, std::stack<AST::INode*> &
         // Pop an item from s1 and push it to s2
         node = s1.top();
         s1.pop();
+
         s2.push(node);
 
         // Push left and right children
         // of removed item to s1
         if (has_kid(node, 'l'))
-            s1.push(static_cast<AST::TwoKidsNode*>(node) -> GetKid('l'));
+            s1.push(static_cast<AST::TwoKidsNode*>(node) -> GetLeftKid());
         if (has_kid(node, 'r'))
-            s1.push(static_cast<AST::TwoKidsNode*>(node) -> GetKid('r'));
+            s1.push(static_cast<AST::TwoKidsNode*>(node) -> GetRightKid());
     }
 }
 
@@ -371,6 +372,8 @@ void yy::PCL_Driver::post_order_trav(AST::INode *node, std::stack<AST::INode*> &
 // otherwise they throw runtime_error
 
 bool yy::PCL_Driver::has_kid(AST::INode* node, char side) {
+    assert(side == 'l' || side == 'r');
+
     switch(node -> GetType()) {
         case T_NUM     :
         case T_ID      :
@@ -394,7 +397,10 @@ bool yy::PCL_Driver::has_kid(AST::INode* node, char side) {
         case T_OUTPUT  :
         case T_PERCENT :
         case T_EXCLAM  :
-            return static_cast<AST::TwoKidsNode*>(node) -> GetKid(side) != nullptr;
+            if (side == 'l')
+                return static_cast<AST::TwoKidsNode*>(node) -> GetLeftKid() != nullptr;
+            else
+                return static_cast<AST::TwoKidsNode*>(node) -> GetRightKid() != nullptr;
 
         default: {
             std::stringstream ss("bad node type: ");
@@ -441,7 +447,7 @@ bool yy::PCL_Driver::is_unary_operator(AST::INode *node) {
     switch(node -> GetType()) {
         case T_ADD     :
         case T_SUB     :
-            if(static_cast<AST::TwoKidsNode*>(node) -> GetKid('l'))
+            if(static_cast<AST::TwoKidsNode*>(node) -> GetLeftKid())
                 return false;
         case T_EXCLAM  :
             return true;

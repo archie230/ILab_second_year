@@ -4,6 +4,7 @@
 %define api.location.type {uint32_t}
 %define api.value.type {AST::INode*}
 %define parser_class_name {PCL_Parser}
+
 %define parse.error verbose
 
 %skeleton "lalr1.cc"
@@ -22,7 +23,7 @@
 
     #define GET_ID(node_ptr)	static_cast<AST::IdNode*>(node_ptr) -> get_id()
 
-    using IDec_t 	= SymTbl::Table::IDec;
+    using IDec_t 	  = SymTbl::Table::IDec;
     using VarDec_t	= SymTbl::Table::VarDec;
     using FuncDec_t	= SymTbl::Table::FuncDec;
 
@@ -98,8 +99,8 @@
 translation_unit :
 	%empty                { driver -> root_ = nullptr; $$ = nullptr; }
 | statement_list        {
-				$$ = nullptr;
-				driver -> root_ = $1;
+													$$ = nullptr;
+													driver -> root_ = $1;
                         }
 ;
 
@@ -121,7 +122,7 @@ block :
 
                             $$ = $statement_list;
                             ENV.pop_front();
-			}
+											}
 ;
 
 statement_list :
@@ -145,15 +146,12 @@ matched_statement :
   expression ';'                { $$ = $1; }
 | error ';'                     { $$ = nullptr; }
 | expression
-
 {
  $$ = $1;
  if ($1 && $1 -> GetType() != T_SCOPE)
 		error(@1, "forgot semicolon");
 }
-
 | TIF '(' expression ')' matched_statement[body] TELSE matched_statement[else]
-
 {
 	$$ = new IfNode(TokenName::T_IF, $expression, $body, $else);
 }
@@ -164,13 +162,13 @@ matched_statement :
 | function_declaration 	      { $$ = $1; }
 | function_declaration ';'    { $$ = $1; }
 | TRETURN expression ';'      {
-				if (ENV.size() == 1)
-					error(@1, "return is not inside function");
-				$$ = new TwoKidsNode(TokenName::T_RETURN, nullptr, $2);
+																if (ENV.size() == 1)
+																	error(@1, "return is not inside function");
+																$$ = new TwoKidsNode(TokenName::T_RETURN, nullptr, $2);
                               }
 ;
 
-open_statement :
+open_statement :        
   TIF '(' expression ')' statement
 {
 	$$ = new IfNode(TokenName::T_IF, $expression, $statement);
@@ -266,12 +264,12 @@ arguments_list :
   TID				{
   				      $$ = new ListNode(TokenName::T_ARGLIST);
   				      static_cast<ListNode*>($$) -> push_kid($TID);
-				}
+						}
 
 | arguments_list ',' TID 	{
-				  static_cast<ListNode*>($1) -> push_kid($TID);
-				  $$ = $1;
-			        }
+													  static_cast<ListNode*>($1) -> push_kid($TID);
+													  $$ = $1;
+											    }
 ;
 
 name_form :
@@ -285,12 +283,12 @@ iteration_statement :
                                         	}
 
 | TWHILE '(' expression error statement 	{
-						    $$ = new TwoKidsNode(TokenName::T_WHILE, $expression, $statement);
+						                                        $$ = new TwoKidsNode(TokenName::T_WHILE, $expression, $statement);
                                        		}
 
 | TWHILE error expression ')' statement 	{
-						    $$ = new TwoKidsNode(TokenName::T_WHILE, $expression, $statement);
-						}
+						                                        $$ = new TwoKidsNode(TokenName::T_WHILE, $expression, $statement);
+																					}
 
 ;
 
@@ -346,7 +344,7 @@ additive_expression :
 ;
 
 multiplicative_expression :
-  unary_expression          { $$ = $1; }
+  unary_expression  					                          { $$ = $1; }
 | multiplicative_expression TMUL unary_expression     	{ $$ = new TwoKidsNode(TokenName::T_MUL, $1, $3); }
 | multiplicative_expression TDIV unary_expression     	{ $$ = new TwoKidsNode(TokenName::T_DIV, $1, $3); }
 | multiplicative_expression TPERCENT unary_expression 	{ $$ = new TwoKidsNode(TokenName::T_PERCENT, $1, $3); }
@@ -362,16 +360,16 @@ unary_expression :
 primary_expression :
   TID
 {
-	IDec_t* decl = nullptr;
+				IDec_t* decl = nullptr;
 
-	if(!(decl = ENV.front() -> find(GET_ID($TID)))) {
-		error(@1, "undeclarated variable " + GET_ID($TID));
-	} else {
-		if(decl -> type_ == FUNC)
-			error (@1, GET_ID($TID) + " isn't a name of variable ");
-	}
+				if(!(decl = ENV.front() -> find(GET_ID($TID)))) {
+					error(@1, "undeclarated variable " + GET_ID($TID));
+				} else {
+					if(decl -> type_ == FUNC)
+						error (@1, GET_ID($TID) + " isn't a name of variable ");
+				}
 
-    $$ = $TID;
+		    $$ = $TID;
 }
 | function_call 	{ $$ = $1;}
 | TNUM                  { $$ = $1; }

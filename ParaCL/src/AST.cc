@@ -44,28 +44,6 @@ void AST::TwoKidsNode::print() {
         right_ -> print();
 }
 #endif
-
-AST::INode *AST::TwoKidsNode::GetKid(char side) const {
-    switch(side) {
-        case 'l':
-            return left_;
-        case 'r':
-            return right_;
-        default:
-            return nullptr;
-    }
-}
-
-void AST::TwoKidsNode::SetKid(char side, AST::INode *val) {
-    switch(side) {
-        case 'l':
-            left_ = val;
-            break;
-        case 'r':
-            right_ = val;
-            break;
-    }
-}
 //
 
 // list node
@@ -85,14 +63,10 @@ void AST::ListNode::print() {
 #endif
 
 AST::INode *AST::ListNode::operator[](int idx) const{
-    if(idx >= kids_.size() || idx < 0)
-        return nullptr;
+    if(idx >= kids_.size())
+        throw std::out_of_range("idx greater than kids_ container size");
 
-    auto iter = kids_.begin();
-    for(int i = 0; i < idx; i++)
-        ++iter;
-
-    return *iter;
+    return kids_[idx];
 }
 //
 
@@ -100,33 +74,6 @@ AST::IfNode::~IfNode() {
     delete expr_;
     delete stmt_;
     delete else_;
-}
-
-AST::INode *AST::IfNode::GetKid(char side) const{
-    switch(side) {
-        case 'l':
-            return expr_;
-        case 'r':
-            return else_;
-        case 'm':
-            return stmt_;
-        default:
-            return nullptr;
-    }
-}
-
-void AST::IfNode::SetKid(char side, AST::INode *val) {
-    switch(side) {
-        case 'l':
-            expr_ = val;
-            break;
-        case 'r':
-            else_ = val;
-            break;
-        case 'm':
-            stmt_ = val;
-            break;
-    }
 }
 
 #ifdef DEBUG

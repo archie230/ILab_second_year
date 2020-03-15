@@ -3,8 +3,8 @@
 #include "TokenNames.hpp"
 #include <algorithm>
 #include <string>
+#include <utility>
 #include <vector>
-#include <list>
 #include <iostream>
 
 namespace AST {
@@ -53,6 +53,7 @@ const std::vector<std::string> names = {
         {}
 
         virtual ~INode() = default;
+
 #ifdef DEBUG
         virtual void print();
 #endif
@@ -70,16 +71,18 @@ const std::vector<std::string> names = {
 	class IdNode final : public INode {
 	    std::string name_;
 	public:
-        IdNode(TokenName tname, std::string&& name)
+        IdNode(TokenName tname, const std::string&  name)
                 :
                 INode(tname),
                 name_(name)
         {}
 
+        ~IdNode() override = default;
+
 #ifdef DEBUG
         void print() override;
 #endif
-        std::string& get_id() {
+        std::string get_id() const {
             return name_;
         }
 	};
@@ -93,6 +96,8 @@ const std::vector<std::string> names = {
                 INode(tname),
                 num_(num)
         {}
+
+        ~NumNode() override = default;
 
 #ifdef DEBUG
         void print() override;
@@ -122,18 +127,23 @@ const std::vector<std::string> names = {
                 right_(right)
         {}
 
-        ~TwoKidsNode();
+        ~TwoKidsNode() override;
 
 #ifdef DEBUG
         void print() override;
 #endif
-	    INode* GetKid(char side) const;
-	    void SetKid(char side, INode* val);
+	    INode* GetLeftKid() const { return left_; }
+
+	    INode* GetRightKid() const { return right_; }
+
+	    void SetLeftKid(INode* val) { left_ = val; }
+
+	    void SetRightKid(INode* val) { right_ = val; }
 	};
 
     // Node for sequence of instructions or expressions
     class ListNode final : public INode {
-        std::list<INode*> kids_;
+        std::vector<INode*> kids_;
         // if this node used as SCOPE then id_ == scope table identifier
         int id_ = 0;
     public:
@@ -142,7 +152,7 @@ const std::vector<std::string> names = {
                 INode(tname)
         {}
 
-        ~ListNode();
+        ~ListNode() override;
 
 #ifdef DEBUG
         void print() override;
@@ -184,9 +194,20 @@ const std::vector<std::string> names = {
         else_(_else)
         {}
 
-        ~IfNode();
-        INode* GetKid(char side) const;
-        void SetKid(char side, INode* val);
+        ~IfNode() override;
+
+        INode* GetExpr() const { return expr_; }
+
+        INode* GetStmt() const { return stmt_; }
+
+        INode* GetElse() const { return else_; }
+
+        void SetExpr(INode* val) { expr_ = val; }
+
+        void SetStmt(INode* val) { stmt_ = val; }
+
+        void SetElse(INode* val) { else_ = val; }
+
 #ifdef DEBUG
         void print() override;
 #endif

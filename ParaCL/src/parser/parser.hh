@@ -40,7 +40,7 @@
 #ifndef YY_YY_SRC_PARSER_PARSER_HH_INCLUDED
 # define YY_YY_SRC_PARSER_PARSER_HH_INCLUDED
 // //                    "%code requires" blocks.
-#line 12 "src/parser/parser.y" // lalr1.cc:377
+#line 13 "src/parser/parser.y" // lalr1.cc:377
 
     #include "../AST.hpp"
     #include "../SymTbl.hpp"
