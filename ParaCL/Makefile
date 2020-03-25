@@ -6,7 +6,7 @@ LEX_DIR=src/lexer/
 SRC_DIR=src/
 BIN_DIR=bin/
 
-OBJECTS=parser.o lexer.o driver.o ast.o symtbl.o interpreter.o
+OBJECTS=parser.o lexer.o Driver.o AST.o SymTbl.o Interpreter.o main.o
 BISONFLAGS=-t -v
 FLEXFLAGS=-d
 
@@ -19,7 +19,6 @@ debug: interpreter
 
 clean:
 	rm bin/*
-	rm -i bin
 
 interpreter: $(OBJECTS)
 	cd bin; $(CXX) $(OBJECTS) -o $@;
@@ -30,16 +29,19 @@ parser.o: $(PARS_DIR)parser.cc $(PARS_DIR)parser.hh $(PARS_DIR)stack.hh
 lexer.o: $(LEX_DIR)lexer.cc
 	$(CXX) $(CXXFLAGS) $< -c -o $(BIN_DIR)$@
 
-interpreter.o: $(SRC_DIR)interpreter.cc
+main.o: $(SRC_DIR)main.cc
 	$(CXX) $(CXXFLAGS) $< -c -o $(BIN_DIR)$@
 
-driver.o: $(SRC_DIR)PCL_Driver.cc $(SRC_DIR)PCL_Driver.hpp
+Driver.o: $(SRC_DIR)PCL_Driver.cc $(SRC_DIR)PCL_Driver.hpp
 	$(CXX) $(CXXFLAGS) $< -c -o $(BIN_DIR)$@
 
-ast.o: $(SRC_DIR)AST.cc $(SRC_DIR)AST.hpp
+AST.o: $(SRC_DIR)AST.cc $(SRC_DIR)AST.hpp
 	$(CXX) $(CXXFLAGS) $< -c -o $(BIN_DIR)$@
 
-symtbl.o: $(SRC_DIR)SymTbl.cc $(SRC_DIR)SymTbl.hpp
+SymTbl.o: $(SRC_DIR)SymTbl.cc $(SRC_DIR)SymTbl.hpp
+	$(CXX) $(CXXFLAGS) $< -c -o $(BIN_DIR)$@
+
+Interpreter.o: $(SRC_DIR)Interpreter.cc $(SRC_DIR)Interpreter.hpp
 	$(CXX) $(CXXFLAGS) $< -c -o $(BIN_DIR)$@
 
 $(LEX_DIR)lexer.cc: $(LEX_DIR)lexer.l

@@ -70,7 +70,7 @@ TEST 007 OK : answ = 0
 10946
 TEST 008 OK : answ = 5040  expected = 5040
 TEST 009 OK : answ = 42  expected = 42
-TEST 010 OK : answ = 15  expected = 15
+TEST 010 OK : answ = 12  expected = 12
 TEST 011 OK : answ = 15
 6  expected = 15
 6
@@ -88,3 +88,4 @@ TEST 003 OK
 TEST 004 OK
 TEST 005 OK
 TEST 006 OK
+TEST 007 OK
