@@ -28,7 +28,7 @@
     using FuncDec_t	= SymTbl::Table::FuncDec;
 
 
-    // forward declaration for parser
+    /* forward declaration for parser */
     namespace yy {
         struct PCL_Driver;
     }
@@ -87,7 +87,7 @@
 %destructor { delete $$; } <>
 
 
-// making grammar unambiguous
+/* making grammar unambiguous */
 %left TADD TSUB
 %left TMUL TDIV
 %left TOR  TAND
@@ -105,7 +105,7 @@ translation_unit :
 ;
 
 block :
-  '{'  '}'  			{ $$ = nullptr; } // empty block optimization
+  '{'  '}'  			{ $$ = nullptr; }
 
 | '{'
 	{
@@ -116,7 +116,7 @@ block :
  statement_list '}' 	{
                             if($statement_list) {
                                 $statement_list -> SetType(TokenName::T_SCOPE);
-                                // setting table id to find it in interpretation phase
+                                /* setting table id to find it in interpretation phase*/
                                 static_cast<ListNode*>($statement_list) -> SetTable_id(ENV.front() -> id_);
                             }
 
@@ -183,7 +183,7 @@ open_statement :
 function_declaration :
   TID TASSIGN TFUNC '(' arguments ')' name_form '{'
 {
-	// at interpretation phase there will be copy of this Table to locate var values
+	/* at interpretation phase there will be copy of this Table to locate var values*/
 	ENV.push_front( new SymTbl::Table(ENV.front(), CUR_ID++) );
 	driver -> symtbl_.add_tbl(ENV.front() -> id_, ENV.front());
 
@@ -193,7 +193,7 @@ function_declaration :
 	} else
 			error(@1, "variable " + GET_ID($TID) + " already exists");
 
-	if ($name_form) { // in case func(x) : name {...}
+	if ($name_form) { /* in case func(x) : name {...}*/
 		if (! (ENV[1] -> find(GET_ID($name_form))) ) {
 			ENV.back() -> insert(GET_ID($name_form),
 				new FuncDec_t {FUNC, @name_form, ENV.front() -> id_});
@@ -203,7 +203,7 @@ function_declaration :
 
 
 
-	if ($arguments) { // adding function arguments to it's scope
+	if ($arguments) { /* adding function arguments to it's scope*/
 		IDec_t* decl = nullptr;
 
 		auto local_decl  = static_cast<FuncDec_t*>(ENV[1] -> find(GET_ID($TID)));
@@ -230,7 +230,7 @@ function_declaration :
 {
 
 	if ($func_body) {
-	   $func_body -> SetType(TokenName::T_SCOPE);
+	   $func_body -> SetType(TokenName::T_FUNCTION_SCOPE);
 	   static_cast<ListNode*>($func_body) -> SetTable_id(ENV.front() -> id_);
 	}
 
@@ -243,8 +243,8 @@ function_declaration :
 
 	ENV.pop_front();
 
-	// there is no point in saving that, because we added all variables in symtable
-	// and saved their names
+	 /*there is no point in saving that, because we added all variables in symtable
+	 and saved their names*/
 	delete $arguments;
 
 	$$ = new TwoKidsNode(TokenName::T_FUNCDEC, $TID, $func_body);
@@ -299,11 +299,11 @@ expression :
 assignment_expression :
   logical_or_expression             { $$ = $1; }
 
-// chains like a = b = c aren't allowed
+/* chains like a = b = c aren't allowed*/
 | TID TASSIGN logical_or_expression {
                                         $$ = new TwoKidsNode(TokenName::T_ASSIGN, $1, $3);
                                         IDec_t* decl = nullptr;
-                                        // if there is no same identifier add it to symtbl
+                                        /* if there is no same identifier add it to symtbl*/
                                         if ( !(decl = (ENV.front() -> find(GET_ID($TID)))) ) {
 						                              VarDec_t* elem = new VarDec_t {VAR, @1, 0};
 																					ENV.front() -> insert(GET_ID($TID), elem);
@@ -387,20 +387,29 @@ function_call :
 					else {
 						if (decl && decl -> type_ == VAR)
 						    error(@1, GET_ID($TID) + " isn't a function name");
-					    int arg_num = $call_arguments ? static_cast<ListNode*>($3) -> size() : 0;
 
-              if (arg_num != (static_cast<FuncDec_t*>(decl) -> arg_names_).size())
+					  int arg_num = $call_arguments ? static_cast<ListNode*>($3) -> size() : 0;
+
+            if (arg_num != (static_cast<FuncDec_t*>(decl) -> arg_names_).size())
 		            error(@1, "in function call " + GET_ID($TID) +
-					             "(..) arguments number doesn't match with declaration");
+			             "(..) arguments number doesn't match with declaration");
 					}
 
+/*//					lhs of FUNCCALL node is list of exprs, like arg_name = expression
+					if ($call_arguments && driver -> err_counter_ == 0) {
+						ListNode& call_args = *static_cast<ListNode*>($call_arguments);
+						for(int i = 0; i < call_args.size(); i++)
+							call_args[i] = new TwoKidsNode(TokenName::T_ASSIGN,
+							 new IdNode(T_ID, static_cast<FuncDec_t*>(decl) -> arg_names_[i]), call_args[i]);
+					}*/
+
 					$$ = new TwoKidsNode(TokenName::T_FUNCCALL, $TID, $call_arguments);
-				}
+}
 ;
 
 call_arguments :
   %empty		{ $$ = nullptr; }
-| expression_list	{ $$ = $1; }
+| expression_list	{ $$ = $1;}
 ;
 
 expression_list :

@@ -28,7 +28,6 @@ struct SymTbl final {
 
             virtual ~IDec() = default;
 
-            [[nodiscard]]
             virtual IDec* copy() const = 0;
         };
 

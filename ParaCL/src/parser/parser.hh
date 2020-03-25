@@ -59,7 +59,7 @@
     using FuncDec_t	= SymTbl::Table::FuncDec;
 
 
-    // forward declaration for parser
+    /* forward declaration for parser */
     namespace yy {
         struct PCL_Driver;
     }

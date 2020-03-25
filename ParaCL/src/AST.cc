@@ -62,13 +62,6 @@ void AST::ListNode::print() {
 }
 #endif
 
-AST::INode *AST::ListNode::operator[](int idx) const{
-    if(idx >= kids_.size())
-        throw std::out_of_range("idx greater than kids_ container size");
-
-    return kids_[idx];
-}
-//
 
 AST::IfNode::~IfNode() {
     delete expr_;

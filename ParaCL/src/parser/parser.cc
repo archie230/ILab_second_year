@@ -1060,7 +1060,7 @@ namespace yy {
     {
                             if((yystack_[1].value)) {
                                 (yystack_[1].value) -> SetType(TokenName::T_SCOPE);
-                                // setting table id to find it in interpretation phase
+                                /* setting table id to find it in interpretation phase*/
                                 static_cast<ListNode*>((yystack_[1].value)) -> SetTable_id(ENV.front() -> id_);
                             }
 
@@ -1189,7 +1189,7 @@ namespace yy {
   case 23:
 #line 185 "src/parser/parser.y" // lalr1.cc:859
     {
-	// at interpretation phase there will be copy of this Table to locate var values
+	/* at interpretation phase there will be copy of this Table to locate var values*/
 	ENV.push_front( new SymTbl::Table(ENV.front(), CUR_ID++) );
 	driver -> symtbl_.add_tbl(ENV.front() -> id_, ENV.front());
 
@@ -1199,7 +1199,7 @@ namespace yy {
 	} else
 			error(yystack_[7].location, "variable " + GET_ID((yystack_[7].value)) + " already exists");
 
-	if ((yystack_[1].value)) { // in case func(x) : name {...}
+	if ((yystack_[1].value)) { /* in case func(x) : name {...}*/
 		if (! (ENV[1] -> find(GET_ID((yystack_[1].value)))) ) {
 			ENV.back() -> insert(GET_ID((yystack_[1].value)),
 				new FuncDec_t {FUNC, yystack_[1].location, ENV.front() -> id_});
@@ -1209,7 +1209,7 @@ namespace yy {
 
 
 
-	if ((yystack_[3].value)) { // adding function arguments to it's scope
+	if ((yystack_[3].value)) { /* adding function arguments to it's scope*/
 		IDec_t* decl = nullptr;
 
 		auto local_decl  = static_cast<FuncDec_t*>(ENV[1] -> find(GET_ID((yystack_[7].value))));
@@ -1240,7 +1240,7 @@ namespace yy {
     {
 
 	if ((yystack_[1].value)) {
-	   (yystack_[1].value) -> SetType(TokenName::T_SCOPE);
+	   (yystack_[1].value) -> SetType(TokenName::T_FUNCTION_SCOPE);
 	   static_cast<ListNode*>((yystack_[1].value)) -> SetTable_id(ENV.front() -> id_);
 	}
 
@@ -1253,8 +1253,8 @@ namespace yy {
 
 	ENV.pop_front();
 
-	// there is no point in saving that, because we added all variables in symtable
-	// and saved their names
+	 /*there is no point in saving that, because we added all variables in symtable
+	 and saved their names*/
 	delete (yystack_[6].value);
 
 	(yylhs.value) = new TwoKidsNode(TokenName::T_FUNCDEC, (yystack_[10].value), (yystack_[1].value));
@@ -1357,7 +1357,7 @@ namespace yy {
     {
                                         (yylhs.value) = new TwoKidsNode(TokenName::T_ASSIGN, (yystack_[2].value), (yystack_[0].value));
                                         IDec_t* decl = nullptr;
-                                        // if there is no same identifier add it to symtbl
+                                        /* if there is no same identifier add it to symtbl*/
                                         if ( !(decl = (ENV.front() -> find(GET_ID((yystack_[2].value))))) ) {
 						                              VarDec_t* elem = new VarDec_t {VAR, yystack_[2].location, 0};
 																					ENV.front() -> insert(GET_ID((yystack_[2].value)), elem);
@@ -1563,50 +1563,59 @@ namespace yy {
 					else {
 						if (decl && decl -> type_ == VAR)
 						    error(yystack_[3].location, GET_ID((yystack_[3].value)) + " isn't a function name");
-					    int arg_num = (yystack_[1].value) ? static_cast<ListNode*>((yystack_[1].value)) -> size() : 0;
 
-              if (arg_num != (static_cast<FuncDec_t*>(decl) -> arg_names_).size())
+					  int arg_num = (yystack_[1].value) ? static_cast<ListNode*>((yystack_[1].value)) -> size() : 0;
+
+            if (arg_num != (static_cast<FuncDec_t*>(decl) -> arg_names_).size())
 		            error(yystack_[3].location, "in function call " + GET_ID((yystack_[3].value)) +
-					             "(..) arguments number doesn't match with declaration");
+			             "(..) arguments number doesn't match with declaration");
 					}
 
+/*//					lhs of FUNCCALL node is list of exprs, like arg_name = expression
+					if ($call_arguments && driver -> err_counter_ == 0) {
+						ListNode& call_args = *static_cast<ListNode*>($call_arguments);
+						for(int i = 0; i < call_args.size(); i++)
+							call_args[i] = new TwoKidsNode(TokenName::T_ASSIGN,
+							 new IdNode(T_ID, static_cast<FuncDec_t*>(decl) -> arg_names_[i]), call_args[i]);
+					}*/
+
 					(yylhs.value) = new TwoKidsNode(TokenName::T_FUNCCALL, (yystack_[3].value), (yystack_[1].value));
-				}
-#line 1576 "src/parser/parser.cc" // lalr1.cc:859
+}
+#line 1585 "src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 69:
-#line 402 "src/parser/parser.y" // lalr1.cc:859
+#line 411 "src/parser/parser.y" // lalr1.cc:859
     { (yylhs.value) = nullptr; }
-#line 1582 "src/parser/parser.cc" // lalr1.cc:859
+#line 1591 "src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 70:
-#line 403 "src/parser/parser.y" // lalr1.cc:859
-    { (yylhs.value) = (yystack_[0].value); }
-#line 1588 "src/parser/parser.cc" // lalr1.cc:859
+#line 412 "src/parser/parser.y" // lalr1.cc:859
+    { (yylhs.value) = (yystack_[0].value);}
+#line 1597 "src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 71:
-#line 407 "src/parser/parser.y" // lalr1.cc:859
+#line 416 "src/parser/parser.y" // lalr1.cc:859
     {
                                 	(yylhs.value) = new ListNode(TokenName::T_EXPRLIST);
                                 	static_cast<ListNode*>((yylhs.value)) -> push_kid((yystack_[0].value));
                               	}
-#line 1597 "src/parser/parser.cc" // lalr1.cc:859
+#line 1606 "src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 72:
-#line 413 "src/parser/parser.y" // lalr1.cc:859
+#line 422 "src/parser/parser.y" // lalr1.cc:859
     {
                                 	static_cast<ListNode*>((yystack_[2].value)) -> push_kid((yystack_[0].value));
                                 	(yylhs.value) = (yystack_[2].value);
                               	}
-#line 1606 "src/parser/parser.cc" // lalr1.cc:859
+#line 1615 "src/parser/parser.cc" // lalr1.cc:859
     break;
 
 
-#line 1610 "src/parser/parser.cc" // lalr1.cc:859
+#line 1619 "src/parser/parser.cc" // lalr1.cc:859
             default:
               break;
             }
@@ -2055,8 +2064,8 @@ namespace yy {
      269,   276,   277,   281,   285,   289,   296,   300,   303,   317,
      318,   322,   323,   327,   328,   329,   333,   334,   335,   336,
      337,   341,   342,   343,   347,   348,   349,   350,   354,   355,
-     356,   357,   361,   374,   375,   376,   377,   378,   382,   402,
-     403,   407,   412
+     356,   357,   361,   374,   375,   376,   377,   378,   382,   411,
+     412,   416,   421
   };
 
   // Print the state stack on the debug stream.
@@ -2140,8 +2149,8 @@ namespace yy {
 
 
 } // yy
-#line 2144 "src/parser/parser.cc" // lalr1.cc:1167
-#line 419 "src/parser/parser.y" // lalr1.cc:1168
+#line 2153 "src/parser/parser.cc" // lalr1.cc:1167
+#line 428 "src/parser/parser.y" // lalr1.cc:1168
 
 namespace yy {
 PCL_Parser::token_type yylex(PCL_Parser::semantic_type* yylval, PCL_Parser::location_type* yylloc, PCL_Driver* driver)
