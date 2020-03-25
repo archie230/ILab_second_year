@@ -44,12 +44,7 @@ const std::vector<std::string> names = {
 "T_SCOPEEND" ,
 "T_FUNCEND"  ,
 "T_FUNCNAME",
-"T_RETURNPOINT",
-"T_WHILE_CALC_EXPR",
-"T_IF_CALC_EXPR",
-"T_OUTPUT_CALC_EXPR",
-"T_RETURN_CALC_EXPR",
-"T_ASSIGN_CALC_EXPR"
+"T_RETURNPOINT"
 };
 #endif
 
