@@ -1,4 +1,8 @@
-#pragma once
+
+301
+    auto& postfix_notation = POSTFIX_NOTATION;
+302
+    auto& accumulated_vals = ACCUMULATED_VALS;#pragma once
 
 enum TokenName {
     T_NUM      ,
@@ -36,10 +40,4 @@ enum TokenName {
     T_FUNCEND  , // end of function scope marker
     T_FUNCNAME ,
     T_RETURNPOINT,
-
-    T_WHILE_CALC_EXPR,
-    T_IF_CALC_EXPR,
-    T_OUTPUT_CALC_EXPR,
-    T_RETURN_CALC_EXPR,
-    T_ASSIGN_CALC_EXPR
 };
