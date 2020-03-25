@@ -1,8 +1,4 @@
-
-301
-    auto& postfix_notation = POSTFIX_NOTATION;
-302
-    auto& accumulated_vals = ACCUMULATED_VALS;#pragma once
+#pragma once
 
 enum TokenName {
     T_NUM      ,
