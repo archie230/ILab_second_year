@@ -27,7 +27,7 @@ namespace yy {
 
         // called function's ids T_FUNCNAME tokens
         std::deque<AST::INode*>             funccall_stack_;
-        std::deque<AST::INode*>::size_type  max_recursion_deepness;
+        std::deque<AST::INode*>::size_type  max_funccall_stack_sz;
 
         // frames:
         // "variable container"
@@ -41,6 +41,7 @@ namespace yy {
 
 #define ACCUMULATED_VALS expression_stack_.front().second
 #define POSTFIX_NOTATION expression_stack_.front().first
+#define MAX_FUNCCALL_STACK_SIZE 2500
 
     public:
 
@@ -53,7 +54,7 @@ namespace yy {
         int interpretate();
 
         void set_recursion_deepness(std::deque<AST::INode*>::size_type deepness)
-        { max_recursion_deepness = deepness; }
+        { max_funccall_stack_sz = deepness; }
 
     private:
 
@@ -62,11 +63,11 @@ namespace yy {
         void assign_function_arguments();
 
         void create_frame(SymTbl::tbl_ident id, AST::ListNode* listnode);
-        void delete_frame();
+        void delete_frame() noexcept;
 
         void postorder_traversing(AST::INode* node);
 
-        int get_value(AST::INode* node);
+        int get_value(AST::INode* node) const;
     };
 
 }

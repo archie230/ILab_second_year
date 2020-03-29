@@ -1,1 +1,1 @@
-caught exception. exception what: max recursion deepness reached!
+caught exception. exception what: max function call stack size reached!

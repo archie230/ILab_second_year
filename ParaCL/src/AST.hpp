@@ -61,7 +61,7 @@ const std::vector<std::string> names = {
         virtual ~INode() = default;
 
 #ifdef DEBUG
-        virtual void print();
+        virtual void print() const noexcept;
 #endif
         void SetType(TokenName tname) {
             tname_ = tname;
@@ -86,9 +86,9 @@ const std::vector<std::string> names = {
         ~IdNode() override = default;
 
 #ifdef DEBUG
-        void print() override;
+        void print() const noexcept override;
 #endif
-        std::string get_id() const {
+        std::string get_id() const noexcept {
             return name_;
         }
 	};
@@ -106,7 +106,7 @@ const std::vector<std::string> names = {
         ~NumNode() override = default;
 
 #ifdef DEBUG
-        void print() override;
+        void print() const noexcept override;
 #endif
         int GetNum() const {
             return num_;
@@ -136,15 +136,11 @@ const std::vector<std::string> names = {
         ~TwoKidsNode() override;
 
 #ifdef DEBUG
-        void print() override;
+        void print() const noexcept override;
 #endif
-	    INode* GetLeftKid() const { return left_; }
+	    INode* GetLeftKid() const noexcept { return left_; }
 
-	    INode* GetRightKid() const { return right_; }
-
-	    void SetLeftKid(INode* val) { left_ = val; }
-
-	    void SetRightKid(INode* val) { right_ = val; }
+	    INode* GetRightKid() const noexcept { return right_; }
 	};
 
     // Node for sequence of instructions or expressions
@@ -162,7 +158,7 @@ const std::vector<std::string> names = {
         ~ListNode() override;
 
 #ifdef DEBUG
-        void print() override;
+        void print() const noexcept override;
 #endif
         void push_kid(AST::INode *kid) {
             if(!kid)
@@ -182,7 +178,7 @@ const std::vector<std::string> names = {
             id_ = id;
         }
 
-        INode*& operator[] (int idx) {
+        INode* operator[] (int idx) {
             return kids_[idx];
         }
 
@@ -203,11 +199,11 @@ const std::vector<std::string> names = {
     public:
 
         IfNode(TokenName tname, AST::INode *expr, AST::INode *stmt, AST::INode *_else = nullptr)
-        :
-        INode(tname),
-        expr_(expr),
-        stmt_(stmt),
-        else_(_else)
+                :
+                INode(tname),
+                expr_(expr),
+                stmt_(stmt),
+                else_(_else)
         {}
 
         ~IfNode() override;
@@ -218,14 +214,8 @@ const std::vector<std::string> names = {
 
         INode* GetElse() const { return else_; }
 
-        void SetExpr(INode* val) { expr_ = val; }
-
-        void SetStmt(INode* val) { stmt_ = val; }
-
-        void SetElse(INode* val) { else_ = val; }
-
 #ifdef DEBUG
-        void print() override;
+        void print() const noexcept override;
 #endif
     };
 

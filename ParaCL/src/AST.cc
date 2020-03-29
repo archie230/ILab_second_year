@@ -1,7 +1,7 @@
 #include "AST.hpp"
 
 #ifdef DEBUG
-void AST::INode::print() {
+void AST::INode::print() const noexcept {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << names[tname_] << std::endl;
 }
@@ -10,7 +10,7 @@ void AST::INode::print() {
 
 
 #ifdef DEBUG
-void AST::IdNode::print() {
+void AST::IdNode::print() const noexcept {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << names[tname_] << " [name:] " << name_ << std::endl;
 }
@@ -19,7 +19,7 @@ void AST::IdNode::print() {
 //
 
 #ifdef DEBUG
-void AST::NumNode::print() {
+void AST::NumNode::print() const noexcept {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << names[tname_] << " [num]: " << num_ << std::endl;
 }
@@ -35,7 +35,7 @@ AST::TwoKidsNode::~TwoKidsNode() {
 }
 
 #ifdef DEBUG
-void AST::TwoKidsNode::print() {
+void AST::TwoKidsNode::print() const noexcept {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << names[tname_] << " [left:] " << std::hex << left_ << " [right:] " << right_ << std::dec << std::endl;
     if(left_)
@@ -53,7 +53,7 @@ AST::ListNode::~ListNode() {
 }
 
 #ifdef DEBUG
-void AST::ListNode::print() {
+void AST::ListNode::print() const noexcept {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << names[tname_] << " [table_id:] " << id_ << std::hex << " [kids:]";
     for_each(kids_.begin(), kids_.end(), [](INode* node) {std::cout << " " << node;});
@@ -70,7 +70,7 @@ AST::IfNode::~IfNode() {
 }
 
 #ifdef DEBUG
-void AST::IfNode::print() {
+void AST::IfNode::print() const noexcept {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << names[tname_] << " [expression:] " << std::hex << expr_ << " [statement:] " << stmt_
                 << " [else:] " << else_ << std::dec << std::endl;

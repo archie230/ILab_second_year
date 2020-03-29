@@ -1,15 +1,17 @@
 #include "Interpreter.hpp"
 #include <cassert>
 #include <sstream>
+#include <memory>
 
 yy::Interpreter::Interpreter(AST::INode* root, SymTbl& symtbl, SymTbl::Table* global_table)
     :
         root_(root),
         symtbl_(symtbl),
-        max_recursion_deepness(2500)
+        max_funccall_stack_sz(MAX_FUNCCALL_STACK_SIZE)
 {
-    // global frame
+    // global scope frame
     env_.push_front(global_table);
+    // creating global expression frame in-place
     expression_stack_.emplace_front();
 }
 
@@ -79,7 +81,10 @@ int yy::Interpreter::interpretate() {
                 auto scopenode = static_cast<AST::ListNode*>(node);
                 instructions_stack_.push_front(std::make_pair(false, new AST::INode(T_SCOPEEND)));
 
+                // creating new expression frame in-place
                 expression_stack_.emplace_front();
+
+                // creating new scope frame
                 create_frame(scopenode -> GetTable_id(), scopenode);
             }
                 break;
@@ -97,10 +102,9 @@ int yy::Interpreter::interpretate() {
             case T_STMLST:
             case T_EXPRLIST: {
                 auto listnode = static_cast<AST::ListNode *>(node);
-
-                std::for_each(listnode -> rbegin(), listnode -> rend(),
-                              [this](AST::INode *node) mutable
-                                    { instructions_stack_.push_front(std::make_pair(false, node)); });
+                auto fi = std::front_inserter(instructions_stack_);
+                std::transform(listnode -> rbegin(), listnode -> rend(), fi,
+                    [] (AST::INode* node) -> instruction_t { return {false, node}; });
             }
                 break;
 
@@ -122,17 +126,21 @@ int yy::Interpreter::interpretate() {
 
             case T_FUNCNAME:
                 funccall_stack_.push_front(node);
-                if(funccall_stack_.size() > max_recursion_deepness)
-                    throw std::runtime_error("max recursion deepness reached!");
+                if(funccall_stack_.size() > max_funccall_stack_sz)
+                    throw std::runtime_error("max function call stack size reached!");
                 break;
 
             case T_FUNCCALL: {
                 auto funccallnode = static_cast<AST::TwoKidsNode*>(node);
+                
                 auto func_decl = static_cast<FuncDec_t*>
                         (env_.front() -> find(GET_ID(funccallnode -> GetLeftKid())));
                 assert(func_decl);
-                auto funcscope_node = static_cast<AST::ListNode*>(func_decl -> function_body_);
+                
+                auto funcscope_node = func_decl -> function_body_;
+                assert(funcscope_node);
 
+                // creating new expression frame in-place
                 expression_stack_.emplace_front();
 
                 funccallnode -> GetLeftKid() -> SetType(T_FUNCNAME);
@@ -194,14 +202,20 @@ int yy::Interpreter::interpretate() {
                     auto retval = ACCUMULATED_VALS.front();
                     ACCUMULATED_VALS.pop_front();
 
-                    while (!instructions_stack_.empty())
-                    {
-                        auto [pop_bool, pop_node] = instructions_stack_.front();
-                        if (pop_node) {
-                            if (pop_node -> GetType() == marker)
-                                break;
 
-                            switch (pop_node -> GetType()) {
+                    auto marker_it = std::find_if(instructions_stack_.begin(), instructions_stack_.end(),
+                    [this, marker] (const instruction_t& instruction) mutable
+                    {
+                        auto [pop_bool, pop_node] = instruction;
+                        if (pop_node) {
+                            auto type = pop_node -> GetType();
+                            switch (type) {
+                                case T_FUNCEND:
+                                    delete_frame();
+                                    delete pop_node;
+                                    funccall_stack_.pop_front();
+                                    break;
+
                                 case T_SCOPEEND:
                                     delete_frame();
                                     delete pop_node;
@@ -211,18 +225,15 @@ int yy::Interpreter::interpretate() {
                                     delete pop_node;
                                     break;
                             }
+                            return type == marker;                            
                         }
-                        instructions_stack_.pop_front();
-                    }
+                        return false;
+                    });
 
-                    delete_frame();
+                    instructions_stack_.erase(instructions_stack_.begin(), std::next(marker_it));
 
-                    if (marker == T_FUNCEND)
-                        funccall_stack_.pop_front();
-
+                    assert(marker_it != instructions_stack_.end());
                     ACCUMULATED_VALS.push_front(retval);
-                    delete instructions_stack_.front().second;
-                    instructions_stack_.pop_front();
 
                 } else {
                     instructions_stack_.push_front(std::make_pair(true, retnode));
@@ -289,7 +300,8 @@ int yy::Interpreter::interpretate() {
     return 0;
 }
 
-static bool has_kid(AST::INode*, char);
+static bool has_left_kid(AST::INode*);
+static bool has_right_kid(AST::INode*);
 static bool is_operator(AST::INode*);
 static bool is_unary_operator(AST::INode*);
 static int calc_operator(AST::INode*, int, int);
@@ -297,6 +309,9 @@ static int calc_operator(AST::INode*, int);
 
 AST::INode* yy::Interpreter::calc_expression() {
     assert(!expression_stack_.empty());
+    
+    auto& postfix_notation = POSTFIX_NOTATION;
+    auto& accumulated_vals = ACCUMULATED_VALS;
 
     while(!POSTFIX_NOTATION.empty()) {
         if(is_operator(POSTFIX_NOTATION.front())) {
@@ -365,38 +380,28 @@ void yy::Interpreter::assign_function_arguments() {
 
 void yy::Interpreter::create_frame(SymTbl::tbl_ident id, AST::ListNode* scopenode) {
     SymTbl::Table* scope_frame = nullptr;
+    std::unique_ptr<SymTbl::Table> scope_frame_ptr;
 
     if (funccall_stack_.empty())
         scope_frame = symtbl_.find_tbl(id);
     else {
         // scope inside function call need new symtbl
         scope_frame = new
-                SymTbl::Table(*symtbl_.find_tbl(id)); // DON'T FORGET TO CLEAR MEMORY
+                SymTbl::Table(*symtbl_.find_tbl(id)); 
         scope_frame -> prev_ = env_.front();
+        scope_frame_ptr = std::unique_ptr<SymTbl::Table>(scope_frame);
     }
 
-    // creating new frame
-    try {
-        env_.push_front(scope_frame);
-    } catch (...) {
-        if (!funccall_stack_.empty())
-            delete scope_frame;
-        throw;
-    }
+    auto fi = std::front_inserter(instructions_stack_);
+    std::transform(scopenode -> rbegin(), scopenode -> rend(), fi, 
+    [] (AST::INode* node) -> instruction_t { return {false, node}; });
 
-    try {
-        std::for_each(scopenode -> rbegin(), scopenode -> rend(),
-          [this](AST::INode *node) mutable
-                { instructions_stack_.push_front(std::make_pair(false, node)); });
-    } catch (...) {
-        if(!funccall_stack_.empty())
-            delete env_.front();
-        env_.pop_front();
-        throw;
-    }
+    env_.push_front(scope_frame);
+
+    scope_frame_ptr.release();
 }
 
-void yy::Interpreter::delete_frame() {
+void yy::Interpreter::delete_frame() noexcept {
     if(!funccall_stack_.empty())
         delete env_.front();
     env_.pop_front();
@@ -423,14 +428,14 @@ void yy::Interpreter::postorder_traversing(AST::INode *node) {
 
         // Push left and right children
         // of removed item to s1
-        if (has_kid(node, 'l'))
+        if (has_left_kid(node))
             s1.push_front(static_cast<AST::TwoKidsNode *>(node)->GetLeftKid());
-        if (has_kid(node, 'r'))
+        if (has_right_kid(node))
             s1.push_front(static_cast<AST::TwoKidsNode *>(node)->GetRightKid());
     }
 }
 
-int yy::Interpreter::get_value(AST::INode* node) {
+int yy::Interpreter::get_value(AST::INode* node) const {
     switch (node->GetType()) {
         case T_NUM:
             return static_cast<AST::NumNode *>(node)->GetNum();
@@ -458,8 +463,8 @@ int yy::Interpreter::get_value(AST::INode* node) {
     }
 }
 
-static bool has_kid(AST::INode* node, char side) {
-    assert(side == 'l' || side == 'r');
+static bool has_left_kid(AST::INode* node) {
+    assert(node);
 
     switch(node -> GetType()) {
         case T_NUM     :
@@ -484,9 +489,42 @@ static bool has_kid(AST::INode* node, char side) {
         case T_OUTPUT  :
         case T_PERCENT :
         case T_EXCLAM  :
-            if (side == 'l')
                 return static_cast<AST::TwoKidsNode*>(node) -> GetLeftKid() != nullptr;
-            else
+
+        default: {
+            std::stringstream ss("bad node type: ");
+            ss << node -> GetType();
+            throw std::runtime_error(ss.str());
+        }
+    }
+}
+
+static bool has_right_kid(AST::INode* node) {
+    assert(node);
+
+    switch(node -> GetType()) {
+        case T_NUM     :
+        case T_ID      :
+        case T_INPUT   :
+        case T_FUNCCALL:
+        case T_SCOPE   :
+            return false;
+
+        case T_OR      :
+        case T_AND     :
+        case T_LESS    :
+        case T_GR      :
+        case T_LESS_EQ :
+        case T_GR_EQ   :
+        case T_EQUAL   :
+        case T_NEQUAL  :
+        case T_ADD     :
+        case T_SUB     :
+        case T_MUL     :
+        case T_DIV     :
+        case T_OUTPUT  :
+        case T_PERCENT :
+        case T_EXCLAM  :
                 return static_cast<AST::TwoKidsNode*>(node) -> GetRightKid() != nullptr;
 
         default: {
