@@ -20,7 +20,7 @@ struct SymTbl final {
             DECL_TYPE type_; // which declaration
             uint32_t  line_;
 
-            IDec(DECL_TYPE type, uint32_t line)
+            IDec(DECL_TYPE type, uint32_t line) noexcept
                 :
                 type_(type),
                 line_(line)
@@ -34,7 +34,7 @@ struct SymTbl final {
         struct VarDec final : public IDec {
             int value_;
 
-            VarDec(DECL_TYPE type, uint32_t line, int value)
+            VarDec(DECL_TYPE type, uint32_t line, int value) noexcept
                 :
                 IDec(type, line),
                 value_(value)
@@ -53,7 +53,7 @@ struct SymTbl final {
             std::deque<std::string> arg_names_;
             AST::INode* function_body_;
 
-            FuncDec(DECL_TYPE type, uint32_t line, tbl_ident tbl_id, AST::INode* function_body = nullptr )
+            FuncDec(DECL_TYPE type, uint32_t line, tbl_ident tbl_id, AST::INode* function_body = nullptr ) noexcept
                 :
                 IDec(type, line),
                 tbl_id_(tbl_id),
@@ -79,7 +79,7 @@ struct SymTbl final {
                 id_(id)
         {}
 
-        Table(const Table& other)
+        Table(const Table& other) noexcept
             :
                 tbl_(other.tbl_),
                 prev_(other.prev_),

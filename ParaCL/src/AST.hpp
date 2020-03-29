@@ -53,7 +53,7 @@ const std::vector<std::string> names = {
 	protected:
 	    TokenName tname_;
 	public:
-	    explicit INode(TokenName tname)
+	    explicit INode(TokenName tname) noexcept
                 :
                 tname_(tname)
         {}
@@ -63,11 +63,11 @@ const std::vector<std::string> names = {
 #ifdef DEBUG
         virtual void print() const noexcept;
 #endif
-        void SetType(TokenName tname) {
+        void SetType(TokenName tname) noexcept {
             tname_ = tname;
         }
 
-        TokenName GetType() const {
+        TokenName GetType() const noexcept {
             return tname_;
         }
 	};
@@ -77,7 +77,7 @@ const std::vector<std::string> names = {
 	class IdNode final : public INode {
 	    std::string name_;
 	public:
-        IdNode(TokenName tname, const std::string&  name)
+        IdNode(TokenName tname, const std::string&  name) noexcept
                 :
                 INode(tname),
                 name_(name)
@@ -97,7 +97,7 @@ const std::vector<std::string> names = {
 	class NumNode final : public INode {
         int num_;
     public:
-        NumNode(TokenName tname, int num)
+        NumNode(TokenName tname, int num) noexcept
                 :
                 INode(tname),
                 num_(num)
@@ -108,7 +108,7 @@ const std::vector<std::string> names = {
 #ifdef DEBUG
         void print() const noexcept override;
 #endif
-        int GetNum() const {
+        int GetNum() const noexcept {
             return num_;
         }
 	};
@@ -126,7 +126,7 @@ const std::vector<std::string> names = {
 	    INode* left_;
 	    INode* right_;
 	public:
-        TwoKidsNode(TokenName tname, AST::INode *left, AST::INode *right)
+        TwoKidsNode(TokenName tname, AST::INode *left, AST::INode *right) noexcept
                 :
                 INode(tname),
                 left_(left),
@@ -150,7 +150,7 @@ const std::vector<std::string> names = {
         // if this node used as SCOPE then id_ == scope table identifier
         int id_ = 0;
     public:
-        explicit ListNode(TokenName tname)
+        explicit ListNode(TokenName tname) noexcept
                 :
                 INode(tname)
         {}
@@ -166,15 +166,15 @@ const std::vector<std::string> names = {
             kids_.push_back(kid);
         }
 
-        int size() const {
+        int size() const noexcept {
             return kids_.size();
         }
 
-        int GetTable_id() const {
+        int GetTable_id() const noexcept {
             return id_;
         }
 
-        void SetTable_id(int id) {
+        void SetTable_id(int id) noexcept {
             id_ = id;
         }
 
@@ -198,7 +198,7 @@ const std::vector<std::string> names = {
         INode* else_;
     public:
 
-        IfNode(TokenName tname, AST::INode *expr, AST::INode *stmt, AST::INode *_else = nullptr)
+        IfNode(TokenName tname, AST::INode *expr, AST::INode *stmt, AST::INode *_else = nullptr) noexcept
                 :
                 INode(tname),
                 expr_(expr),
@@ -208,11 +208,11 @@ const std::vector<std::string> names = {
 
         ~IfNode() override;
 
-        INode* GetExpr() const { return expr_; }
+        INode* GetExpr() const noexcept { return expr_; }
 
-        INode* GetStmt() const { return stmt_; }
+        INode* GetStmt() const noexcept { return stmt_; }
 
-        INode* GetElse() const { return else_; }
+        INode* GetElse() const noexcept { return else_; }
 
 #ifdef DEBUG
         void print() const noexcept override;
