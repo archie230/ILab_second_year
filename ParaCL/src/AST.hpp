@@ -88,7 +88,7 @@ const std::vector<std::string> names = {
 #ifdef DEBUG
         void print() const noexcept override;
 #endif
-        std::string get_id() const noexcept {
+        std::string get_id() const {
             return name_;
         }
 	};
