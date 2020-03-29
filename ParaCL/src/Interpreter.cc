@@ -16,23 +16,26 @@ yy::Interpreter::Interpreter(AST::INode* root, SymTbl& symtbl, SymTbl::Table* gl
 }
 
 yy::Interpreter::~Interpreter() {
+    auto cur_tbl_it = env_.begin();
+    auto funccall_it = funccall_stack_.begin();
+
     std::for_each(instructions_stack_.begin(), instructions_stack_.end(),
-    [this] (instruction_t& pair) mutable
+    [&cur_tbl_it, &funccall_it, this] (instruction_t& pair) mutable
     {
         auto node = pair.second;
         switch (node -> GetType()) {
             case T_SCOPEEND:
                 delete node;
-                if (!funccall_stack_.empty())
-                    delete env_.front();
-                env_.pop_front();
+                if (funccall_it != funccall_stack_.end())
+                    delete *cur_tbl_it;
+                ++cur_tbl_it;
             break;
 
             case T_FUNCEND:
                 delete node;
-                funccall_stack_.pop_front();
-                delete env_.front();
-                env_.pop_front();
+                ++funccall_it;
+                delete *cur_tbl_it;
+                ++cur_tbl_it;
             break;
 
             case T_RETURNPOINT:
