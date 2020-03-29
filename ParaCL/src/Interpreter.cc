@@ -233,9 +233,9 @@ int yy::Interpreter::interpretate() {
                         return false;
                     });
 
+                    assert(marker_it != instructions_stack_.end());
                     instructions_stack_.erase(instructions_stack_.begin(), std::next(marker_it));
 
-                    assert(marker_it != instructions_stack_.end());
                     ACCUMULATED_VALS.push_front(retval);
 
                 } else {
