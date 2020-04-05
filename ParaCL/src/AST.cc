@@ -49,7 +49,8 @@ void AST::TwoKidsNode::print() const noexcept {
 // list node
 
 AST::ListNode::~ListNode() {
-    for_each(kids_.begin(), kids_.end(), [](INode* node) {delete node;});
+    std::transform(kids_.begin(), kids_.end(), kids_.begin(),
+            [](INode* node) -> INode* {delete node; return nullptr;});
 }
 
 #ifdef DEBUG

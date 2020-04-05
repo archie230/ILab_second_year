@@ -10,38 +10,36 @@ yy::Interpreter::Interpreter(AST::INode* root, SymTbl& symtbl, SymTbl::Table* gl
         max_funccall_stack_sz(MAX_FUNCCALL_STACK_SIZE)
 {
     // global scope frame
-    env_.push_front(global_table);
+    env_.emplace_front(false, global_table);
     // creating global expression frame in-place
     expression_stack_.emplace_front();
 }
 
 yy::Interpreter::~Interpreter() {
-    auto cur_tbl_it = env_.begin();
-    auto funccall_it = funccall_stack_.begin();
-
-    std::for_each(instructions_stack_.begin(), instructions_stack_.end(),
-    [&cur_tbl_it, &funccall_it, this] (instruction_t& pair) mutable
+    std::transform(instructions_stack_.begin(), instructions_stack_.end(), instructions_stack_.begin(),
+            [] (const instruction_t& pair) -> instruction_t
     {
         auto node = pair.second;
-        switch (node -> GetType()) {
-            case T_SCOPEEND:
-                delete node;
-                if (funccall_it != funccall_stack_.end())
-                    delete *cur_tbl_it;
-                ++cur_tbl_it;
-            break;
-
-            case T_FUNCEND:
-                delete node;
-                ++funccall_it;
-                delete *cur_tbl_it;
-                ++cur_tbl_it;
-            break;
-
-            case T_RETURNPOINT:
-                delete node;
-            break;
+        if (node) {
+            switch (node->GetType()) {
+                case T_SCOPEEND:
+                    [[fallthrough]];
+                case T_FUNCEND:
+                    [[fallthrough]];
+                case T_RETURNPOINT:
+                    delete node;
+                    break;
+            }
         }
+        return {false, nullptr};
+    });
+
+    std::transform(env_.begin(), env_.end(), env_.begin(),
+            [] (scope_t& pair) -> scope_t
+    {
+        if (pair.first)
+            delete pair.second;
+        return {false, nullptr};
     });
 }
 
@@ -49,7 +47,7 @@ int yy::Interpreter::interpretate() {
     if (!root_)
         return 0;
 
-    instructions_stack_.push_front(std::make_pair(false, root_));
+    instructions_stack_.emplace_front(false, root_);
 
     while (!instructions_stack_.empty()) {
         auto [calculated, node] = instructions_stack_.front();
@@ -80,209 +78,60 @@ int yy::Interpreter::interpretate() {
 
         switch (node -> GetType()) {
 
-            case T_SCOPE: { 
-                auto scopenode = static_cast<AST::ListNode*>(node);
-                instructions_stack_.push_front(std::make_pair(false, new AST::INode(T_SCOPEEND)));
-
-                // creating new expression frame in-place
-                expression_stack_.emplace_front();
-
-                // creating new scope frame
-                create_frame(scopenode -> GetTable_id(), scopenode);
-            }
+            case T_SCOPE: 
+                interpretate_T_SCOPE(node);
                 break;
 
-            case T_FUNCTION_SCOPE: {
-                assert(!funccall_stack_.empty());
-                auto funcscopenode = static_cast<AST::ListNode*>(node);
-
-                instructions_stack_.push_front(std::make_pair(false, new AST::INode(T_FUNCEND)));
-                create_frame(funcscopenode -> GetTable_id(), funcscopenode);
-                assign_function_arguments();
-            }
+            case T_FUNCTION_SCOPE: 
+                interpretate_T_FUNCTION_SCOPE(node);
                 break;
 
             case T_STMLST:
-            case T_EXPRLIST: {
-                auto listnode = static_cast<AST::ListNode *>(node);
-                auto fi = std::front_inserter(instructions_stack_);
-                std::transform(listnode -> rbegin(), listnode -> rend(), fi,
-                    [] (AST::INode* node) -> instruction_t { return {false, node}; });
-            }
+                [[fallthrough]];
+            case T_EXPRLIST: 
+                interpretate_T_EXPRLIST(node);
                 break;
 
-            case T_SCOPEEND: {
-                auto retval = ACCUMULATED_VALS.empty() ? 0 : ACCUMULATED_VALS.front();
-                delete_frame();
-                ACCUMULATED_VALS.push_front(retval);
-                delete node;
-            }
+            case T_SCOPEEND: 
+                interpretate_T_SCOPEEND(node);
                 break;
 
-            case T_FUNCEND: {
-                auto retval = ACCUMULATED_VALS.empty() ? 0 : ACCUMULATED_VALS.front();
-                delete_frame();
-                ACCUMULATED_VALS.push_front(retval);
+            case T_FUNCEND:
+                interpretate_T_SCOPEEND(node);
                 funccall_stack_.pop_front();
-                delete node;
-            }
+                break;
+
 
             case T_FUNCNAME:
-                funccall_stack_.push_front(node);
-                if(funccall_stack_.size() > max_funccall_stack_sz)
-                    throw std::runtime_error("max function call stack size reached!");
+                interpretate_T_FUNCNAME(node);
                 break;
 
-            case T_FUNCCALL: {
-                auto funccallnode = static_cast<AST::TwoKidsNode*>(node);
-                
-                auto func_decl = static_cast<FuncDec_t*>
-                        (env_.front() -> find(GET_ID(funccallnode -> GetLeftKid())));
-                assert(func_decl);
-                
-                auto funcscope_node = func_decl -> function_body_;
-                assert(funcscope_node);
-
-                // creating new expression frame in-place
-                expression_stack_.emplace_front();
-
-                funccallnode -> GetLeftKid() -> SetType(T_FUNCNAME);
-
-                instructions_stack_.push_front(std::make_pair(false, funcscope_node)); // T_FUNCTION_SCOPE
-                instructions_stack_.push_front(std::make_pair(false, funccallnode -> GetLeftKid())); // T_FUNCNAME
-                if (funccallnode -> GetRightKid())
-                    instructions_stack_.push_front(std::make_pair(false, funccallnode -> GetRightKid())); // expression list
-            }
+            case T_FUNCCALL:
+                interpretate_T_FUNCCALL(node);
                 break;
 
-            case T_IF: {
-                auto ifnode = static_cast<AST::IfNode*>(node);
-
-                if (calculated) {
-                    assert(!ACCUMULATED_VALS.empty());
-                    auto expr = ACCUMULATED_VALS.front();
-                    ACCUMULATED_VALS.pop_front();
-
-                    if (expr)
-                        instructions_stack_.push_front(std::make_pair(false, ifnode -> GetStmt()));
-                    else
-                        if (ifnode -> GetElse())
-                            instructions_stack_.push_front(std::make_pair(false, ifnode -> GetElse()));
-                } else {
-                    instructions_stack_.push_front(std::make_pair(true, ifnode));
-                    instructions_stack_.push_front(std::make_pair(false, ifnode->GetExpr()));
-                }
-            }
+            case T_IF:
+                interpretate_T_IF(calculated, node);
                 break;
 
-            case T_WHILE: {
-                auto whilenode = static_cast<AST::TwoKidsNode*>(node);
-
-                if (calculated) {
-                    assert(!ACCUMULATED_VALS.empty());
-                    auto expr = ACCUMULATED_VALS.front();
-                    ACCUMULATED_VALS.pop_front();
-
-                    if (expr) {
-                        instructions_stack_.push_front(std::make_pair(false, whilenode));
-                        instructions_stack_.push_front(std::make_pair(false, whilenode -> GetRightKid()));
-                    }
-
-                } else {
-                    instructions_stack_.push_front(std::make_pair(true, whilenode));
-                    instructions_stack_.push_front(std::make_pair(false, whilenode->GetLeftKid()));
-                }
-            }
+            case T_WHILE:
+                interpretate_T_WHILE(calculated, node);
                 break;
 
-            case T_RETURN: {
-                auto retnode = static_cast<AST::TwoKidsNode*>(node);
-
-                if (calculated) {
-                    assert(!ACCUMULATED_VALS.empty());
-                    auto marker = funccall_stack_.empty() ? T_SCOPEEND : T_FUNCEND;
-
-                    auto retval = ACCUMULATED_VALS.front();
-                    ACCUMULATED_VALS.pop_front();
-
-
-                    auto marker_it = std::find_if(instructions_stack_.begin(), instructions_stack_.end(),
-                    [this, marker] (const instruction_t& instruction) mutable
-                    {
-                        auto [pop_bool, pop_node] = instruction;
-                        if (pop_node) {
-                            auto type = pop_node -> GetType();
-                            switch (type) {
-                                case T_FUNCEND:
-                                    delete_frame();
-                                    delete pop_node;
-                                    funccall_stack_.pop_front();
-                                    break;
-
-                                case T_SCOPEEND:
-                                    delete_frame();
-                                    delete pop_node;
-                                    break;
-
-                                case T_RETURNPOINT:
-                                    delete pop_node;
-                                    break;
-                            }
-                            return type == marker;                            
-                        }
-                        return false;
-                    });
-
-                    assert(marker_it != instructions_stack_.end());
-                    instructions_stack_.erase(instructions_stack_.begin(), std::next(marker_it));
-
-                    ACCUMULATED_VALS.push_front(retval);
-
-                } else {
-                    instructions_stack_.push_front(std::make_pair(true, retnode));
-                    instructions_stack_.push_front(std::make_pair(false, retnode->GetRightKid()));
-                }
-            }
+            case T_RETURN:
+                interpretate_T_RETURN(calculated, node);
                 break;
 
-            case T_OUTPUT: {
-                auto outputnode = static_cast<AST::TwoKidsNode *>(node);
-
-                if (calculated) {
-                    assert(!ACCUMULATED_VALS.empty());
-                    std::cout << ACCUMULATED_VALS.front() << std::endl;
-                } else {
-                    instructions_stack_.push_front(std::make_pair(true, outputnode));
-                    instructions_stack_.push_front(std::make_pair(false, outputnode->GetRightKid()));
-                }
-            }
+            case T_OUTPUT:
+                interpretate_T_OUTPUT(calculated, node);
                 break;
 
-            case T_ASSIGN: {
-                auto assign = static_cast<AST::TwoKidsNode *>(node);
-
-                if (calculated) {
-                    assert(!ACCUMULATED_VALS.empty());
-                    auto lvalue = env_.front()->find(GET_ID(assign->GetLeftKid()));
-                    assert(lvalue);
-
-                    static_cast<VarDec_t *>(lvalue)->value_ = ACCUMULATED_VALS.front();
-                } else {
-                    instructions_stack_.push_front(std::make_pair(true, assign));
-                    instructions_stack_.push_front(std::make_pair(false, assign->GetRightKid()));
-                }
-            }
+            case T_ASSIGN:
+                interpretate_T_ASSIGN(calculated, node);
                 break;
 
-            case T_RETURNPOINT: {
-                auto call = calc_expression();
-                if(call) {
-                    // function call or scope in expression
-                    instructions_stack_.push_front(std::make_pair(false, new AST::INode(T_RETURNPOINT)));
-                    instructions_stack_.push_front(std::make_pair(false, call));
-                } else
-                    delete node;
-            }
+            case T_RETURNPOINT:
+                interpretate_T_RETURNPOINT(node);
                 break;
 
             case T_FUNCDEC:
@@ -293,8 +142,8 @@ int yy::Interpreter::interpretate() {
                 auto call = calc_expression();
                 if (call) {
                     // function call or scope in expression
-                    instructions_stack_.push_front(std::make_pair(false, new AST::INode(T_RETURNPOINT)));
-                    instructions_stack_.push_front(std::make_pair(false, call));
+                    instructions_stack_.emplace_front(false, new AST::INode(T_RETURNPOINT));
+                    instructions_stack_.emplace_front(false, call);
                 }
             }
                 break;
@@ -355,7 +204,7 @@ AST::INode* yy::Interpreter::calc_expression() {
 void yy::Interpreter::assign_function_arguments() {
     auto func_decl  =
     static_cast<FuncDec_t*>
-        (env_.front() -> find(GET_ID(funccall_stack_.front())));
+        (env_.front().second -> find(GET_ID(funccall_stack_.front())));
     assert(func_decl);
 
     auto& args = func_decl -> arg_names_;
@@ -367,7 +216,7 @@ void yy::Interpreter::assign_function_arguments() {
 #endif
 
     for(const auto& arg : args) {
-        auto var = static_cast<VarDec_t*>(env_.front() -> find(arg));
+        auto var = static_cast<VarDec_t*>(env_.front().second -> find(arg));
         assert(var);
         var -> value_ = ACCUMULATED_VALS.front();
         ACCUMULATED_VALS.pop_front();
@@ -382,6 +231,7 @@ void yy::Interpreter::assign_function_arguments() {
 }
 
 void yy::Interpreter::create_frame(SymTbl::tbl_ident id, AST::ListNode* scopenode) {
+    bool allocated = false;
     SymTbl::Table* scope_frame = nullptr;
     std::unique_ptr<SymTbl::Table> scope_frame_ptr;
 
@@ -390,8 +240,9 @@ void yy::Interpreter::create_frame(SymTbl::tbl_ident id, AST::ListNode* scopenod
     else {
         // scope inside function call need new symtbl
         scope_frame = new
-                SymTbl::Table(*symtbl_.find_tbl(id)); 
-        scope_frame -> prev_ = env_.front();
+                SymTbl::Table(*symtbl_.find_tbl(id));
+        allocated = true;
+        scope_frame -> prev_ = env_.front().second;
         scope_frame_ptr = std::unique_ptr<SymTbl::Table>(scope_frame);
     }
 
@@ -399,14 +250,14 @@ void yy::Interpreter::create_frame(SymTbl::tbl_ident id, AST::ListNode* scopenod
     std::transform(scopenode -> rbegin(), scopenode -> rend(), fi, 
     [] (AST::INode* node) -> instruction_t { return {false, node}; });
 
-    env_.push_front(scope_frame);
+    env_.emplace_front(allocated, scope_frame);
 
     scope_frame_ptr.release();
 }
 
 void yy::Interpreter::delete_frame() noexcept {
-    if(!funccall_stack_.empty())
-        delete env_.front();
+    if(env_.front().first)
+        delete env_.front().second;
     env_.pop_front();
     expression_stack_.pop_front();
 }
@@ -444,7 +295,7 @@ int yy::Interpreter::get_value(AST::INode* node) const {
             return static_cast<AST::NumNode *>(node)->GetNum();
 
         case T_ID: {
-            auto decl = static_cast<VarDec_t *>(env_.front()->find(GET_ID(node)));
+            auto decl = static_cast<VarDec_t *>(env_.front().second->find(GET_ID(node)));
             if (!decl)
                 throw std::runtime_error("can't find id in get_value func");
             return decl->value_;
@@ -466,75 +317,218 @@ int yy::Interpreter::get_value(AST::INode* node) const {
     }
 }
 
+void yy::Interpreter::interpretate_T_SCOPE(AST::INode* node) {
+    auto scopenode = static_cast<AST::ListNode*>(node);
+    instructions_stack_.emplace_front(false, new AST::INode(T_SCOPEEND));
+
+    // creating new expression frame in-place
+    expression_stack_.emplace_front();
+
+    // creating new scope frame
+    create_frame(scopenode -> GetTable_id(), scopenode);
+}
+
+void yy::Interpreter::interpretate_T_FUNCTION_SCOPE(AST::INode* node) {
+    assert(!funccall_stack_.empty());
+    auto funcscopenode = static_cast<AST::ListNode*>(node);
+
+    instructions_stack_.emplace_front(false, new AST::INode(T_FUNCEND));
+
+    // expression frame already created at T_FUNCCALL
+
+    create_frame(funcscopenode -> GetTable_id(), funcscopenode);
+
+    assign_function_arguments();
+}
+
+void yy::Interpreter::interpretate_T_EXPRLIST(AST::INode* node) {
+    auto listnode = static_cast<AST::ListNode *>(node);
+    auto fi = std::front_inserter(instructions_stack_);
+    std::transform(listnode -> rbegin(), listnode -> rend(), fi,
+                   [] (AST::INode* node) -> instruction_t { return {false, node}; });
+}
+
+void yy::Interpreter::interpretate_T_SCOPEEND(AST::INode* node) {
+    auto retval = ACCUMULATED_VALS.empty() ? 0 : ACCUMULATED_VALS.front();
+    delete_frame();
+    ACCUMULATED_VALS.push_front(retval);
+    delete node;
+}
+
+void yy::Interpreter::interpretate_T_FUNCNAME(AST::INode* node) {
+    funccall_stack_.push_front(node);
+    if(funccall_stack_.size() > max_funccall_stack_sz)
+        throw std::runtime_error("max function call stack size reached!");
+}
+
+void yy::Interpreter::interpretate_T_FUNCCALL(AST::INode* node) {
+    auto funccallnode = static_cast<AST::TwoKidsNode*>(node);
+
+    auto func_decl = static_cast<FuncDec_t*>
+    (env_.front().second -> find(GET_ID(funccallnode -> GetLeftKid())));
+    assert(func_decl);
+
+    auto funcscope_node = func_decl -> function_body_;
+    assert(funcscope_node);
+
+    // creating new expression frame in-place
+    expression_stack_.emplace_front();
+
+    funccallnode -> GetLeftKid() -> SetType(T_FUNCNAME);
+
+    instructions_stack_.emplace_front(false, funcscope_node); // T_FUNCTION_SCOPE
+    instructions_stack_.emplace_front(false, funccallnode -> GetLeftKid()); // T_FUNCNAME
+    if (funccallnode -> GetRightKid())
+        instructions_stack_.emplace_front(false, funccallnode -> GetRightKid()); // expression list
+}
+
+void yy::Interpreter::interpretate_T_IF(bool calculated, AST::INode* node) {
+    auto ifnode = static_cast<AST::IfNode*>(node);
+
+    if (calculated) {
+        assert(!ACCUMULATED_VALS.empty());
+        auto expr = ACCUMULATED_VALS.front();
+        ACCUMULATED_VALS.pop_front();
+
+        if (expr)
+            instructions_stack_.emplace_front(false, ifnode -> GetStmt());
+        else
+        if (ifnode -> GetElse())
+            instructions_stack_.emplace_front(false, ifnode -> GetElse());
+    } else {
+        instructions_stack_.emplace_front(true, ifnode);
+        instructions_stack_.emplace_front(false, ifnode->GetExpr());
+    }
+}
+
+void yy::Interpreter::interpretate_T_WHILE(bool calculated, AST::INode* node) {
+    auto whilenode = static_cast<AST::TwoKidsNode*>(node);
+
+    if (calculated) {
+        assert(!ACCUMULATED_VALS.empty());
+        auto expr = ACCUMULATED_VALS.front();
+        ACCUMULATED_VALS.pop_front();
+
+        if (expr) {
+            instructions_stack_.emplace_front(false, whilenode);
+            instructions_stack_.emplace_front(false, whilenode -> GetRightKid());
+        }
+
+    } else {
+        instructions_stack_.emplace_front(true, whilenode);
+        instructions_stack_.emplace_front(false, whilenode->GetLeftKid());
+    }
+}
+
+void yy::Interpreter::interpretate_T_RETURN(bool calculated, AST::INode* node) {
+    auto retnode = static_cast<AST::TwoKidsNode*>(node);
+
+    if (calculated) {
+        assert(!ACCUMULATED_VALS.empty());
+        auto marker = funccall_stack_.empty() ? T_SCOPEEND : T_FUNCEND;
+
+        auto retval = ACCUMULATED_VALS.front();
+        ACCUMULATED_VALS.pop_front();
+
+
+        auto marker_it = std::find_if(instructions_stack_.begin(), instructions_stack_.end(),
+              [this, marker] (const instruction_t& instruction) mutable
+              {
+                  auto [pop_bool, pop_node] = instruction;
+                  if (pop_node) {
+                      auto type = pop_node -> GetType();
+                      switch (type) {
+                          case T_FUNCEND:
+                              delete_frame();
+                              delete pop_node;
+                              funccall_stack_.pop_front();
+                              break;
+
+                          case T_SCOPEEND:
+                              delete_frame();
+                              delete pop_node;
+                              break;
+
+                          case T_RETURNPOINT:
+                              delete pop_node;
+                              break;
+                      }
+                      return type == marker;
+                  }
+                  return false;
+              });
+
+        assert(marker_it != instructions_stack_.end());
+        instructions_stack_.erase(instructions_stack_.begin(), std::next(marker_it));
+
+        ACCUMULATED_VALS.push_front(retval);
+
+    } else {
+        instructions_stack_.emplace_front(true, retnode);
+        instructions_stack_.emplace_front(false, retnode->GetRightKid());
+    }
+}
+
+void yy::Interpreter::interpretate_T_OUTPUT(bool calculated, AST::INode* node) {
+    auto outputnode = static_cast<AST::TwoKidsNode *>(node);
+
+    if (calculated) {
+        assert(!ACCUMULATED_VALS.empty());
+        std::cout << ACCUMULATED_VALS.front() << std::endl;
+    } else {
+        instructions_stack_.emplace_front(true, outputnode);
+        instructions_stack_.emplace_front(false, outputnode->GetRightKid());
+    }
+}
+
+void yy::Interpreter::interpretate_T_ASSIGN(bool calculated, AST::INode* node) {
+    auto assign = static_cast<AST::TwoKidsNode *>(node);
+
+    if (calculated) {
+        assert(!ACCUMULATED_VALS.empty());
+        auto lvalue = env_.front().second->find(GET_ID(assign->GetLeftKid()));
+        assert(lvalue);
+
+        static_cast<VarDec_t *>(lvalue)->value_ = ACCUMULATED_VALS.front();
+    } else {
+        instructions_stack_.emplace_front(true, assign);
+        instructions_stack_.emplace_front(false, assign->GetRightKid());
+    }
+}
+
+void yy::Interpreter::interpretate_T_RETURNPOINT(AST::INode* node) {
+    auto call = calc_expression();
+    if(call) {
+        // function call or scope in expression
+        instructions_stack_.emplace_front(false, new AST::INode(T_RETURNPOINT));
+        instructions_stack_.emplace_front(false, call);
+    } else
+        delete node;
+}
+
 static bool has_left_kid(AST::INode* node) {
     assert(node);
 
-    switch(node -> GetType()) {
-        case T_NUM     :
-        case T_ID      :
-        case T_INPUT   :
-        case T_FUNCCALL:
-        case T_SCOPE   :
-            return false;
-
-        case T_OR      :
-        case T_AND     :
-        case T_LESS    :
-        case T_GR      :
-        case T_LESS_EQ :
-        case T_GR_EQ   :
-        case T_EQUAL   :
-        case T_NEQUAL  :
-        case T_ADD     :
-        case T_SUB     :
-        case T_MUL     :
-        case T_DIV     :
-        case T_OUTPUT  :
-        case T_PERCENT :
-        case T_EXCLAM  :
-                return static_cast<AST::TwoKidsNode*>(node) -> GetLeftKid() != nullptr;
-
-        default: {
-            std::stringstream ss("bad node type: ");
-            ss << node -> GetType();
-            throw std::runtime_error(ss.str());
-        }
+    if (is_operator(node)) {
+        return static_cast<AST::TwoKidsNode*>(node) -> GetLeftKid() != nullptr;
+    } else {
+        // keep in mind that print is statement
+        if (node -> GetType() == T_OUTPUT)
+            return static_cast<AST::TwoKidsNode*>(node) -> GetLeftKid() != nullptr;
+        return false;
     }
 }
 
 static bool has_right_kid(AST::INode* node) {
     assert(node);
 
-    switch(node -> GetType()) {
-        case T_NUM     :
-        case T_ID      :
-        case T_INPUT   :
-        case T_FUNCCALL:
-        case T_SCOPE   :
-            return false;
-
-        case T_OR      :
-        case T_AND     :
-        case T_LESS    :
-        case T_GR      :
-        case T_LESS_EQ :
-        case T_GR_EQ   :
-        case T_EQUAL   :
-        case T_NEQUAL  :
-        case T_ADD     :
-        case T_SUB     :
-        case T_MUL     :
-        case T_DIV     :
-        case T_OUTPUT  :
-        case T_PERCENT :
-        case T_EXCLAM  :
-                return static_cast<AST::TwoKidsNode*>(node) -> GetRightKid() != nullptr;
-
-        default: {
-            std::stringstream ss("bad node type: ");
-            ss << node -> GetType();
-            throw std::runtime_error(ss.str());
-        }
+    if (is_operator(node)) {
+        return static_cast<AST::TwoKidsNode*>(node) -> GetRightKid() != nullptr;
+    } else {
+        // keep in mind that print is statement
+        if (node -> GetType() == T_OUTPUT)
+            return static_cast<AST::TwoKidsNode*>(node) -> GetRightKid() != nullptr;
+        return false;
     }
 }
 
@@ -572,38 +566,20 @@ static bool is_operator(AST::INode* node) {
 }
 
 bool is_unary_operator(AST::INode* node) {
+    if (!is_operator(node))
+        return false;
+
     switch(node -> GetType()) {
         case T_ADD     :
+            [[fallthrough]];
         case T_SUB     :
             if (static_cast<AST::TwoKidsNode*>(node) -> GetLeftKid())
                 return false;
         case T_EXCLAM  :
             return true;
-
-        case T_MUL     :
-        case T_DIV     :
-        case T_PERCENT :
-        case T_NUM     :
-        case T_ID      :
-        case T_INPUT   :
-        case T_OR      :
-        case T_AND     :
-        case T_LESS    :
-        case T_GR      :
-        case T_LESS_EQ :
-        case T_GR_EQ   :
-        case T_EQUAL   :
-        case T_NEQUAL  :
-        case T_FUNCCALL:
-        case T_SCOPE   :
-            return false;
-
-        default: {
-            std::stringstream ss;
-            ss << "bad node type: " << node -> GetType();
-            throw std::runtime_error(ss.str());
-        }
     }
+
+    return false;
 }
 
 int calc_operator(AST::INode * opertr, int lhs, int rhs) {

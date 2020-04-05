@@ -41,8 +41,11 @@ SymTbl::Table* SymTbl::find_tbl(SymTbl::tbl_ident id) {
 }
 
 SymTbl::~SymTbl() {
-    for(auto& elem : env_)
-        delete elem.second;
+    std::for_each(env_.begin(), env_.end(),
+            [] (const std::pair<const tbl_ident, Table*>& table)
+            {
+                delete table.second;
+            });
 }
 
 #ifdef DEBUG

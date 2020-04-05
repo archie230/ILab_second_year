@@ -20,8 +20,11 @@ debug: interpreter
 clean:
 	rm bin/*
 
-interpreter: $(OBJECTS)
+interpreter: makebindir $(OBJECTS)
 	cd bin; $(CXX) $(OBJECTS) -o $@;
+
+makebindir:
+	mkdir -p bin
 
 parser.o: $(PARS_DIR)parser.cc $(PARS_DIR)parser.hh $(PARS_DIR)stack.hh
 	$(CXX) $(CXXFLAGS) $< -c -o $(BIN_DIR)$@

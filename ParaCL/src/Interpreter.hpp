@@ -18,6 +18,9 @@ namespace yy {
         // for example if (expr) {...} with calculated expr
         // first == false if expression is not calculated
         using instruction_t      = std::pair<bool, AST::INode*>;
+        // first == true if scope is not symtbl_ invariant
+        // i.e. was created as copy of existing scope
+        using scope_t            = std::pair<bool, SymTbl::Table*>;
     private:
         // Intermidiate Representation
         AST::INode*                     root_;
@@ -31,7 +34,7 @@ namespace yy {
 
         // frames:
         // "variable container"
-        std::deque<SymTbl::Table*>      env_;
+        std::deque<scope_t>      env_;
         // stack of stacks to calculate expressions
         std::deque<expression_frame_t>  expression_stack_;
         //
@@ -59,15 +62,24 @@ namespace yy {
     private:
 
         AST::INode* calc_expression();
-
         void assign_function_arguments();
-
         void create_frame(SymTbl::tbl_ident id, AST::ListNode* listnode);
         void delete_frame() noexcept;
-
         void postorder_traversing(AST::INode* node);
-
         int get_value(AST::INode* node) const;
+
+        void interpretate_T_SCOPE(AST::INode*);
+        void interpretate_T_FUNCTION_SCOPE(AST::INode*);
+        void interpretate_T_EXPRLIST(AST::INode*);
+        void interpretate_T_SCOPEEND(AST::INode*);
+        void interpretate_T_FUNCNAME(AST::INode*);
+        void interpretate_T_FUNCCALL(AST::INode*);
+        void interpretate_T_IF(bool, AST::INode*);
+        void interpretate_T_WHILE(bool, AST::INode*);
+        void interpretate_T_RETURN(bool, AST::INode*);
+        void interpretate_T_OUTPUT(bool, AST::INode*);
+        void interpretate_T_ASSIGN(bool, AST::INode*);
+        void interpretate_T_RETURNPOINT(AST::INode*);
     };
 
 }
