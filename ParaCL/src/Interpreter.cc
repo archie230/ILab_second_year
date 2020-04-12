@@ -161,10 +161,7 @@ static int calc_operator(AST::INode*, int);
 
 AST::INode* yy::Interpreter::calc_expression() {
     assert(!expression_stack_.empty());
-    
-    auto& postfix_notation = POSTFIX_NOTATION;
-    auto& accumulated_vals = ACCUMULATED_VALS;
-
+   
     while(!POSTFIX_NOTATION.empty()) {
         if(is_operator(POSTFIX_NOTATION.front())) {
             auto opertr = POSTFIX_NOTATION.front();
