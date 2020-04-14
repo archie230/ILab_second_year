@@ -1,257 +1,358 @@
 #pragma once
 
-#include <iostream>
-#include <cerrno>
-#include <cmath>
 #include <cassert>
+#include <iostream>
+#include <cmath>
 
 namespace cxx_containers {
     /**
-     *
+     * C++17 required
      * @tparam T should be able to float point arithmetic
      */
 
-    const float TOLERANCE = 5e-3;
+	template <typename T, typename ... Ts> 
+	void construct (T *p, Ts&& ... values) {
+		new (p) T (std::forward<Ts>(values)...);
+	}
 
-    template<typename T>
-    static bool nearly_equal(const T& a, const T& b){
-        return fabs(a - b) <= TOLERANCE;
-    }
+	template <class T> 
+	void destroy(T* p) {
+		p->~T();
+	}
 
-    template<typename T>
-    class Matrix final {
-        T*  buf_        = nullptr;    // ptr to buf
-        T** row_ptrs_   = nullptr;    // row pointers
-        int rows_       = 0;
-        int cols_       = 0;
+	template <typename FwdIter> 
+	void destroy (FwdIter first, FwdIter last) {
+		while (first++ != last)
+	 		destroy (&*first);
+	}
 
+    template <typename FwdIt>
+    using value_type = typename std::iterator_traits<FwdIt>::value_type ;
+
+    template <typename T>
+    class MatrixBuf final {
     public:
-        Matrix() = default;
-
-        Matrix(int rows, int cols)
-            :
-                rows_       (rows),
-                cols_       (cols),
-                buf_        (nullptr),
-                row_ptrs_   (nullptr)
+        using size_type = size_t;
+        using elem_type = T;
+    private:
+        T* buf_;
+        size_type size_;
+    public:
+        explicit MatrixBuf(size_type size)
+                :
+                buf_((size == 0) ?
+                     nullptr : static_cast<T*>(::operator new (sizeof(T)*size))),
+                size_(size)
         {
-            if((rows_ == 0) || (cols_ == 0) || (rows_ < 0) || (cols_ < 0)) {
-                rows_ = cols_ = 0;
-                return;
+            for (size_type i = 0; i < size_; ++i) {
+                try {
+                    construct(buf_ + i);
+                } catch (...) {
+                    destroy(buf_, buf_+i);
+                    ::operator delete(buf_);
+                    buf_ = nullptr;
+                    size_ = 0;
+                    throw;
+                }
             }
-
-            buf_        = new T [rows_ * cols_]{};
-            row_ptrs_   = new T* [rows_];
-
-            assert(buf_ && row_ptrs_);
-
-            for(int i = 0; i < rows; i++)
-                row_ptrs_[i] = buf_ + i * cols_;
         }
 
-        Matrix(const T* buf, int rows, int cols)
+        MatrixBuf(size_type size, const T& arg)
             :
-                Matrix(rows, cols)
+                buf_((size == 0) ?
+                    nullptr : static_cast<T*>(::operator new (sizeof(T)*size))),
+                size_(size)
         {
-            if(!buf)
-                return;
-            for(int i = 0; i < rows_*cols_; i++)
-                buf_[i] = buf[i];
+        	for (size_type i = 0; i < size_; ++i) {
+        		try {
+        			construct(buf_ + i, arg);
+    			} catch (...) {
+                    destroy(buf_, buf_+i);
+                    ::operator delete(buf_);
+                    buf_ = nullptr;
+                    size_ = 0;
+                    throw;
+                }
+        	}
         }
 
-        Matrix(const Matrix& other)
+        template <typename FwdIt,
+                typename = std::_RequireInputIter<FwdIt>>
+        MatrixBuf(FwdIt first, FwdIt last)
             :
-                Matrix(other.rows_, other.cols_)
+                buf_((std::distance(first, last) == 0) ?
+                    nullptr : static_cast<T*>(::operator new (sizeof(T)*std::distance(first, last)))),
+                size_(std::distance(first, last))
         {
-            if(!buf_)
-                return;
-
-            for(int i = 0; i < rows_; i++)
-                for(int j = 0; j < cols_; j++)
-                    row_ptrs_[i][j] = other.row_ptrs_[i][j];
+            for (size_type i = 0; i < size_; ++i) {
+                try {
+                    construct(buf_ + i, *(first++));
+                } catch (...) {
+                    destroy(buf_, buf_+i);
+                    ::operator delete(buf_);
+                    buf_ = nullptr;
+                    size_ = 0;
+                    throw;
+                }
+            }
         }
 
-        Matrix(Matrix&& other) noexcept
+        ~MatrixBuf() noexcept {
+            destroy(buf_, buf_ + size_);
+            ::operator delete(buf_);
+        }
+
+        MatrixBuf(const MatrixBuf& other)
+            :
+                buf_((other.size_ == 0) ?
+                    nullptr : static_cast<T*>(::operator new (sizeof(T)*other.size_))),
+                size_(other.size_)
+        {
+            for (size_type i  = 0; i < size_; ++i) {
+                try {
+                    construct(buf_+i, other.buf_[i]);
+                } catch (...) {
+                    destroy(buf_, buf_+i);
+                    ::operator delete(buf_);
+                    buf_ = nullptr;
+                    size_ = 0;
+                    throw;
+                }
+            }
+        }
+
+        MatrixBuf& operator= (const MatrixBuf& other) {
+            MatrixBuf tmp(other);
+            std::swap(buf_, tmp.buf_);
+            std::swap(size_, tmp.size_);
+
+            return *this;
+        }
+
+        MatrixBuf(MatrixBuf&& other) noexcept
             :
                 buf_(other.buf_),
-                row_ptrs_(other.row_ptrs_),
-                rows_(other.rows_),
-                cols_(other.cols_)
+                size_(other.size_)
         {
-            other.buf_ = nullptr, other.row_ptrs_ = nullptr;
-            other.rows_ = other.cols_ = 0;
+            other.buf_ = nullptr;
+            other.size_ = 0;
         }
 
-        ~Matrix() {
-            delete [] buf_;
-            delete [] row_ptrs_;
-        }
+        MatrixBuf& operator= (MatrixBuf&& other) noexcept {
+            if (this != &other) {
+                destroy(buf_, buf_ + size_);
+                ::operator delete(buf_);
+                buf_ = nullptr;
+                size_ = 0;
 
-        Matrix& operator= (const Matrix& other) {
-            if(this == &other)
-                return *this;
+                std::swap(buf_, other.buf_);
+                std::swap(size_, other.size_);
+            }
 
-            resize(other.rows_, other.cols_);
-
-            for(int i = 0; i < rows_; i++)
-                for(int j = 0; j < cols_; j++)
-                    row_ptrs_[i][j] = other.row_ptrs_[i][j];
-                
             return *this;
         }
 
-        Matrix& operator= (Matrix&& other) noexcept {
-            if(this == &other)
-                return *this;
+        void resize(size_type size) {
+            if (size == size_)
+                return;
 
-            delete [] buf_;
-            delete [] row_ptrs_;
+            MatrixBuf tmp(size);
 
-            buf_        = other.buf_;
-            row_ptrs_   = other.row_ptrs_;
-            rows_       = other.rows_;
-            cols_       = other.cols_;
+            std::swap(size_, tmp.size_);
+            std::swap(buf_, tmp.buf_);
+        }
 
-            other.buf_ = nullptr, other.row_ptrs_ = nullptr;
-            other.rows_ = other.cols_ = 0;
+        size_type size() const noexcept {
+            return size_;
+        }
 
-            return *this;
+        T& operator [] (int id) noexcept {
+            return buf_[id];
+        }
+
+        const T& operator [] (int id) const noexcept {
+            return buf_[id];
+        }
+    };
+
+    template <typename FwdIt,
+            typename = std::_RequireInputIter<FwdIt>>
+	MatrixBuf(FwdIt, FwdIt) -> MatrixBuf<value_type<FwdIt>>;
+
+
+    template <typename T>
+    struct SimpleTraits {
+        static bool eq(const T& lhs, const T& rhs) {
+            return abs(lhs - rhs) <= 5e-3;
+        }
+    };
+
+    template <typename T,
+            typename arithmetic_traits = SimpleTraits<T>>
+    class Matrix final {
+    public:
+        using size_type = typename MatrixBuf<T>::size_type;
+    private:
+        size_type rows_, cols_;
+        MatrixBuf<T> buf_;
+
+    public:
+        Matrix()
+            :
+                rows_(0),
+                cols_(0),
+                MatrixBuf<T>(0)
+        {}
+
+        /**
+         *
+         * @param size  size.first - rows number
+         *              size.second - columns number
+         */
+        explicit Matrix(const std::pair<size_type, size_type>& size)
+                :
+                rows_(0),
+                cols_(0),
+                buf_(size.first * size.second)
+        {
+            auto rows = size.first, cols = size.second;
+            if (!((rows!=0 && cols!=0) || (rows==0 && cols==0))) {
+                throw std::runtime_error
+                ("bad matrix parameters: it isn't possible to create [rows, 0] or [0, cols] matrix");
+            }
+            rows_ = rows;
+            cols_ = cols;
+        }
+
+        Matrix(const std::pair<size_type, size_type>& size, const T& arg)
+            :
+                rows_(0),
+                cols_(0),
+                buf_(size.first * size.second, arg)
+        {
+            auto rows = size.first, cols = size.second;
+            if (!((rows!=0 && cols!=0) || (rows==0 && cols==0))) {
+                throw std::runtime_error
+                ("bad matrix parameters: it isn't possible to create [rows, 0] or [0, cols] matrix");
+            }
+            rows_ = rows;
+            cols_ = cols;
+        }
+
+        template <typename FwdIt, typename = std::_RequireInputIter<FwdIt>>
+        Matrix(FwdIt first, FwdIt last, const std::pair<size_type, size_type>& size)
+            :
+                rows_(0),
+                cols_(0),
+                buf_(first, last)
+        {
+            auto rows = size.first, cols = size.second;
+            if (buf_.size() != rows*cols) {
+                resize(0, 0);
+                throw std::runtime_error("distance doesn't match with matrix parameters");
+            }
+
+            rows_ = rows;
+            cols_ = cols;
+        }
+
+        void resize(size_type rows, size_type cols) {
+            if (!((rows!=0 && cols!=0) || (rows==0 && cols==0)))
+                throw std::runtime_error
+                ("bad matrix parameters: it isn't possible to resize matrix to [rows, 0] or [0, cols]");
+
+            buf_.resize(rows*cols);
+
+            rows_ = rows;
+            cols_ = cols;
         }
 
         Matrix& operator*= (const Matrix& other) {
-            if(other.rows_ != cols_) {
-                std::cerr << "size doesn't match" << std::endl;
-                errno = EINVAL;
-                return *this;
-            }
+            if (other.rows_ != cols_)
+                throw std::runtime_error("in matrix operator *= size doesn't match");
 
-            Matrix tmp(*this);
+            auto rhs_tmp = other.transpose();
+            auto AX = rows_, AY = cols_, BY = other.cols_;
+            Matrix tmp({AX, BY});
 
-            resize(rows_, other.cols_);
+            // cache friendly loop
 
-            if(!row_ptrs_)
-                return *this;
+            for (size_type i = 0; i < AX; i++)
+                for (size_type j = 0; j < BY; j++) {
+                    tmp[i][j] = 0;
+                    for (size_type k = 0; k < AY; k++) {
+                        tmp[i][j] +=
+                                (*this)[i][k] * rhs_tmp[j][k];
 
-            transpose_multiplication(tmp.buf_, other.buf_, buf_, rows_, tmp.cols_, cols_);
+                    }
+                }
+
+            std::swap(tmp, *this);
 
             return *this;
         }
 
-        Matrix& operator-= (const Matrix& other) {
-            if((rows_ != other.rows_) || (cols_ != other.cols_)) {
-                errno = EINVAL;
-                std::cerr << "size doesn't match" << std::endl;
-                return *this;
-            }
+        Matrix transpose() const {
+            Matrix transp({cols_, rows_});
+            for (size_type i = 0; i < transp.rows_; ++i)
+                for (size_type j = 0; j < transp.cols_; ++j)
+                    transp[i][j] = (*this)[j][i];
+            return transp;
+        }
 
-            for(int i = 0; i < rows_; i++)
-                for(int j = 0; j < cols_; j++)
-                    row_ptrs_[i][j] -= other.row_ptrs_[i][j];
+        Matrix& operator-= (const Matrix& other) {
+            if ((rows_ != other.rows_) || (cols_ != other.cols_))
+                throw std::runtime_error("in matrix operator -= size doesn't match");
+
+            Matrix tmp(*this);
+
+            for (size_type i = 0; i < tmp.buf_.size(); i++)
+                tmp.buf_[i] -= other.buf_[i];
+
+        	std::swap(tmp, *this);
 
             return *this;
         }
 
         Matrix& operator+= (const Matrix& other) {
-            if((rows_ != other.rows_) || (cols_ != other.cols_)) {
-                errno = EINVAL;
-                std::cerr << "size doesn't match" << std::endl;
-                return *this;
-            }
+            if ((rows_ != other.rows_) || (cols_ != other.cols_))
+                throw std::runtime_error("in matrix operator += size doesn't match");
 
-            for(int i = 0; i < rows_; i++)
-                for(int j = 0; j < cols_; j++)
-                    row_ptrs_[i][j] += other.row_ptrs_[i][j];
+        	Matrix tmp(*this);
+
+            for (size_type i = 0; i < buf_.size(); i++)
+                tmp.buf_[i] += other.buf_[i];
+
+            std::swap(tmp, *this);
 
             return *this;
         }
 
-        bool equal(const Matrix& other) const {
-            if((rows_ != other.rows_) || (cols_ != other.cols_))
+        bool equal(const Matrix& other) const noexcept {
+            if ((rows_ != other.rows_) || (cols_ != other.cols_))
                 return false;
 
-            for(int i = 0; i < rows_; i++)
-                for(int j = 0; j < cols_; j++) {
-                    if(!nearly_equal<T>(row_ptrs_[i][j],  other.row_ptrs_[i][j]))
-                        return false;
-                }
+            for (size_type i = 0; i < buf_.size(); i++)
+                if (!arithmetic_traits::eq(buf_[i],  other.buf_[i]))
+                    return false;
 
             return true;
         }
 
-        const T* operator[] (int i) const {
-            return row_ptrs_[i];
+        const T* operator[] (int i) const noexcept {
+            return &buf_[i*cols_];
         };
 
-        void set_zero() {
-            if(!row_ptrs_)
-                return;
+        T* operator[] (int i) noexcept {
+            return &buf_[i*cols_];
+        };
 
-            for(int i = 0; i < rows_; i++)
-                for(int j = 0; j < cols_; j++)
-                    row_ptrs_[i][j] = 0;
-        }
+        void switch_rows(size_t first_row, size_t second_row) {
+            if ( (first_row >= rows_) || (second_row >= rows_) )
+                throw std::out_of_range("bad rows");
 
-        void set(const T& elem, int m, int n) {
-            if ((m >= rows_) || (n >= cols_) || (m < 0) || (n < 0))
-                return;
-            row_ptrs_[m][n] = elem;
-        }
-
-        void switch_rows(int row1, int row2) {
-            if((row1 < 0) || (row2 < 0) || (row1 >= rows_) || (row2 >= rows_))
-                return;
-
-            T* tmp = row_ptrs_[row1];
-            row_ptrs_[row1] = row_ptrs_[row2];
-            row_ptrs_[row2] = tmp;
-        }
-
-        // if our matrix is NxN there is a matrix pair
-        // *this = L*U, L - lower triangle matrix, U - upper triangle matrix
-        // if *this matrix determinant equals zero then L and U are both NxN zero matrix
-        // if all main minors aren't invertable : return L = 0 and U = 0
-        std::pair<Matrix<float>, Matrix<float>> LU_decomposition() const {
-            if(rows_ != cols_) {
-                errno = EINVAL;
-                return {};
-            }
-
-            Matrix<float> L(rows_, rows_);
-            Matrix<float> U(rows_, rows_);
-
-            int i = 0, j = 0, k = 0;
-            for (i = 0; i < rows_; i++) {
-                for (j = 0; j < rows_; j++) {
-                    if (j < i)
-                        L.row_ptrs_[j][i] = 0;
-                    else {
-                        L.row_ptrs_[j][i] = row_ptrs_[j][i];
-                        for (k = 0; k < i; k++) {
-                            L.row_ptrs_[j][i] = L.row_ptrs_[j][i] - L.row_ptrs_[j][k] * U.row_ptrs_[k][i];
-                        }
-                    }
-                }
-                for (j = 0; j < rows_; j++) {
-                    if (j < i)
-                        U.row_ptrs_[i][j] = 0;
-                    else if (j == i)
-                        U.row_ptrs_[i][j] = 1;
-                    else {
-                        if(nearly_equal<T>(L.row_ptrs_[i][i], 0)) {
-                            L.set_zero();
-                            U.set_zero();
-                            return {L, U};
-                        }
-
-                        U.row_ptrs_[i][j] = row_ptrs_[i][j] / L.row_ptrs_[i][i];
-                        for (k = 0; k < i; k++) {
-                            U.row_ptrs_[i][j] = U.row_ptrs_[i][j]
-                                    - ((L.row_ptrs_[i][k] * U.row_ptrs_[k][j]) / L.row_ptrs_[i][i]);
-                        }
-                    }
-                }
-            }
-            return {L, U};
+            for (size_type i = 0; i < cols_; ++i)
+                std::swap((*this)[first_row][i], (*this)[second_row][i]);
         }
 
         /**
@@ -259,160 +360,99 @@ namespace cxx_containers {
          * @return sign of new determinant or -2 in case of err
          */
         int gaussian_elimination() {
-            if(cols_ != rows_)
-                return -2;
-            if((rows_ == 0) || (rows_ == 1))
+            if (cols_ != rows_)
+                throw std::runtime_error("can't eliminate non square matrix");
+
+            if ( (rows_ == 0) || (rows_ == 1) )
                 return 1;
 
             int sign = 1, switch_row = -1;
-            float multiplier = 1;
+            double multiplier = 1;
 
-            for(int i = 0; i < rows_; i++) {
-                if(nearly_equal<T>(row_ptrs_[i][i], 0)) {
-                    for(int j = i + 1; j < rows_; j++)
-                        if(!nearly_equal<T>(row_ptrs_[j][i], 0)) {
+            for (size_type i = 0; i < rows_; i++) {
+                if (arithmetic_traits::eq((*this)[i][i], 0)) {
+
+                    for (size_type j = i + 1; j < rows_; j++)
+                        if (!arithmetic_traits::eq((*this)[j][i], 0)) {
                             switch_row = j;
                             break;
                         }
 
-                    if(switch_row != -1) {
+                    if (switch_row != -1) {
                         switch_rows(i, switch_row);
                         sign *= -1;
                         switch_row = -1;
-                    }
-                    else
+                    } else
                         continue;
+
                 }
-                for(int j = i + 1; j < rows_; j++) {
-                    multiplier = row_ptrs_[j][i] / row_ptrs_ [i][i];
-                    for(int k = i; k < rows_; k++)
-                        row_ptrs_[j][k] -= multiplier * row_ptrs_[i][k];
+                for (size_type j = i + 1; j < rows_; j++) {
+                    multiplier = (*this)[j][i] / (*this)[i][i];
+                    for (size_type k = i; k < rows_; k++)
+                        (*this)[j][k] -= multiplier * (*this)[i][k];
                 }
             }
             return sign;
         }
 
-        float determinant() const {
-            if(cols_ != rows_) {
-                errno = EPERM;
-                return -1;
-            }
+        double determinant() const {
+            if (cols_ != rows_)
+                throw std::runtime_error("can't find determinant of non square matrix");
 
-            if(cols_ == 0)
+            if (cols_ == 0)
                 return 0;
 
-            if(cols_ == 1)
-                return row_ptrs_[0][0];
+            if (cols_ == 1)
+                return buf_[0];
 
-            if(rows_ == 2)
-                return row_ptrs_[0][0] * row_ptrs_[1][1] - row_ptrs_[1][0] * row_ptrs_[0][1];
+            if (cols_ == 2)
+                return buf_[0] * buf_[3] - buf_[1] * buf_[2];
 
             Matrix tmp(*this);
-            int sign = tmp.gaussian_elimination();
-            float determinant = 1;
 
-            for(int i = 0; i < rows_; i++)
-                determinant *= tmp.row_ptrs_[i][i];
+            auto sign = tmp.gaussian_elimination();
+            double determinant = 1;
+
+            for (size_type i = 0; i < tmp.cols_; ++i)
+                determinant *= tmp[i][i];
 
             return sign * determinant;
         }
 
         std::ostream& dump(std::ostream& os) const {
-            for(int i = 0; i < rows_; i++) {
-                for(int j = 0; j < cols_; j++)
-                    os << row_ptrs_[i][j] << " ";
+            for (size_type i = 0; i < rows_; i++) {
+                for (size_type j = 0; j < cols_; j++)
+                    os << (*this)[i][j] << " ";
                 os << std::endl;
             }
             return os;
         }
 
         std::istream& scan(std::istream& is) {
-            int rows = 0, cols = 0;
+            size_type rows = 0, cols = 0;
             is >> rows >> cols;
-            if( (rows < 0) || (cols < 0) || ((rows == 0) && (cols != 0))
-                                || ((rows != 0) && (cols == 0)) ) {
-                std::cerr << "bad matrix parameters!" << std::endl;
-                return is;
-            }
+
+            if (!is.good())
+                throw std::runtime_error("bad input!");
 
             resize(rows, cols);
 
-            for(int i = 0; i < rows_; i++) {
-                for(int j = 0; j < cols_; j++)
-                    is >> row_ptrs_[i][j];
+            for (size_type i = 0; i < rows_; i++) {
+                for (size_type j = 0; j < cols_; j++)
+                    is >> (*this)[i][j];
             }
             return is;
         }
 
-        std::pair<int, int> size() const {
+        std::pair<size_type, size_type> size() const noexcept {
             return {rows_, cols_};
         }
-
-    private:
-        void resize(int rows, int cols) {
-            if ((rows < 0) || (cols < 0))
-                return;
-
-            if ((rows == 0) && (cols == 0)) {
-                delete[] buf_;
-                delete[] row_ptrs_;
-                row_ptrs_ = nullptr;
-                buf_ = nullptr;
-                rows_ = cols_ = 0;
-                return;
-            }
-
-            if ((rows == 0) || (cols == 0))
-                return;
-
-            if ((rows * cols) != (rows_ * cols_)) {
-                delete[] buf_;
-                delete[] row_ptrs_;
-
-                buf_ = new T[rows * cols]{};
-                row_ptrs_ = new T *[rows];
-
-                assert(buf_ && row_ptrs_);
-
-                for (int i = 0; i < rows; i++)
-                    row_ptrs_[i] = buf_ + i * cols;
-                rows_ = rows;
-                cols_ = cols;
-            } else {
-                if (rows == rows_)
-                    return;
-                else {
-                    delete[] row_ptrs_;
-                    for (int i = 0; i < rows; i++)
-                        row_ptrs_[i] = buf_ + i * cols;
-                    rows_ = rows;
-                    cols_ = cols;
-                }
-            }
-        }
-
-        // cache friendly multiplication
-        void transpose_multiplication(const T* A, const T* B, T* C, int AX, int AY, int BY) {
-            if(!(A && B && C) || AX < 0 || AY < 0 || BY < 0)
-                return;
-
-            T* tmp = new T [AY * BY];
-            assert(tmp);
-
-            for(int i = 0; i < AY; i++)
-                for(int j = 0; j < BY; j++)
-                    tmp[j * AY + i]  = B[i * BY + j];
-
-            for(int i = 0; i < AX; i++)
-                for(int j = 0; j < BY; j++) {
-                    C[i * BY + j] = 0;
-                    for(int k = 0; k < AY; k++)
-                        C[i * BY + j] += A[i * AY + k] * tmp[j * AY + k];
-                }
-
-            delete [] tmp;
-        }
     };
+
+    template <typename FwdIt,
+            typename = std::_RequireInputIter<FwdIt>>
+    Matrix(FwdIt first, FwdIt last, typename Matrix<value_type<FwdIt>>::size_type cols,
+            typename Matrix<value_type<FwdIt>>::size_type rows) -> Matrix<value_type<FwdIt>>;
 
     template <typename T>
     std::ostream& operator<< (std::ostream& os, const Matrix<T>& matrix) {

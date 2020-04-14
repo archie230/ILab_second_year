@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 #include <fstream>
 #include <unistd.h>
+#include <vector>
 
 using namespace cxx_containers;
 
@@ -10,25 +11,48 @@ const char* square_matrix               = "../unit_tests/test_data/square_matrix
 const char* square_matrixs_determinants = "../unit_tests/test_data/square_matrixs_determinants";
 const char* eliminated                  = "../unit_tests/test_data/eliminated";
 
-TEST(matrix, LU_decomposition) {
-    std::ifstream fstr_input(inv_square_matrix);
-    if(!fstr_input) {
-        std::cerr << "can't open " << inv_square_matrix << std::endl;
-        return;
-    }
 
-    Matrix<float> matrix(3, 3);
+using size_type = MatrixBuf<int>::size_type ;
 
-    int matrix_num = 0;
-    fstr_input >> matrix_num;
+TEST(matrixBuf, ctors) {
+    MatrixBuf<int> buf(21, 1);
+    for (size_type i = 0; i < buf.size(); ++i)
+        ASSERT_EQ(buf[i], 1);
 
-    for(int i = 0; i < matrix_num; i++) {
-        fstr_input >> matrix;
-        std::pair<Matrix<float>, Matrix<float>> LU = matrix.LU_decomposition();
-        ASSERT_EQ(matrix, LU.first * LU.second);
-    }
+    auto other = buf;
+    for (size_type i = 0; i < buf.size(); ++i)
+        ASSERT_EQ(buf[i], other[i]);
 
-    fstr_input.close();
+    buf.resize(2);
+
+    other = std::move(buf);
+    ASSERT_EQ(buf.size(), 0);
+    ASSERT_EQ(other.size(), 2);
+}
+
+TEST(matrix, memory_managment) {
+    Matrix<int> m1({3, 7}, 1);
+    for (size_type i = 0; i < m1.size().first; ++i)
+        for (size_type j = 0; j < m1.size().second; ++j)
+            ASSERT_EQ(m1[i][j], 1);
+
+    auto m2 = m1;
+    ASSERT_EQ(m2, m1);
+    std::swap(m2, m1);
+    ASSERT_EQ(m2, m1);
+}
+
+TEST(matrix, range_ctor) {
+    std::vector<int> v = {1, 2, 3 ,4};
+    Matrix<int> mx1({2, 2});
+
+    mx1[0][0] = 1;
+    mx1[0][1] = 2;
+    mx1[1][0] = 3;
+    mx1[1][1] = 4;
+
+    Matrix<int> mx2(v.begin(), v.end(), {2, 2});
+    ASSERT_EQ(mx1, mx2);
 }
 
 TEST(matrix, determinant) {
@@ -43,21 +67,19 @@ TEST(matrix, determinant) {
         return;
     }
 
-    Matrix<float> matrix(4, 4);
+    Matrix<float> matrix({4, 4});
 
     int matrix_num = 0;
-    float answ = 0;
+    double answ = 0;
     fstr_input >> matrix_num;
 
     for(int i = 0; i < matrix_num; i++) {
         fstr_input >> matrix;
         fstr_determinants >> answ;
-        float determinant = matrix.determinant();
-        ASSERT_EQ(determinant, answ);
+        auto determinant = matrix.determinant();
+        ASSERT_TRUE(SimpleTraits<double>::eq(determinant, answ));
     }
 
-    fstr_input.close();
-    fstr_determinants.close();
 }
 
 TEST(matrix, gaussian_elimination) {
@@ -72,8 +94,8 @@ TEST(matrix, gaussian_elimination) {
         return;
     }
 
-    Matrix<float> matrix(4, 4);
-    Matrix<float> matrix_eliminated(4, 4);
+    Matrix<float> matrix({4, 4});
+    Matrix<float> matrix_eliminated({4, 4});
 
     int matrix_num = 0;
     fstr_input >> matrix_num;
@@ -85,8 +107,38 @@ TEST(matrix, gaussian_elimination) {
         ASSERT_EQ(matrix, matrix_eliminated);
     }
 
-    fstr_input.close();
-    fstr_eliminated.close();
+}
+
+TEST (matrix, multiplication) {
+    std::array<int, 6> a = {1, 2, 3, 4, 5, 6};
+    std::array<int, 2> b = {1, 2};
+    std::array<int, 3> answ = {5, 11, 17};
+
+    Matrix<int> ma(a.begin(), a.end(), {3, 2});
+    Matrix<int> mb(b.begin(), b.end(), {2, 1});
+    Matrix<int> mansw(answ.begin(), answ.end(), {answ.size(), 1});
+
+    ASSERT_EQ(ma * mb, mansw);
+
+
+    std::array<int, 4> a1 = {3, 2, 0, -1};
+    std::array<int, 4> b1 = {-1, 1, 0, 2};
+    std::array<int, 16> answ1 = {-3,3,0,6,-2,2,0,4,0,0,0,0,1,-1,0,-2};
+    Matrix<int> ma1(a1.begin(), a1.end(), {a1.size(), 1});
+    Matrix<int> mb1(b1.begin(), b1.end(), {1, b1.size()});
+    Matrix<int> mansw1(answ1.begin(), answ1.end(), {4, 4});
+
+    ASSERT_EQ(ma1*mb1, mansw1);
+}
+
+TEST(matrix, transp) {
+    std::array<int, 6> a = {1, 2, 3, 4, 5, 6};
+    Matrix<int> ma(a.begin(), a.end(), {3, 2});
+    auto transposed = ma.transpose();
+
+    for (size_type i = 0; i < ma.size().first; ++i)
+        for (size_type j = 0; j < ma.size().second; ++j)
+                ASSERT_EQ(transposed[j][i], ma[i][j]);
 }
 
 int main(int argc, char* argv[]) {

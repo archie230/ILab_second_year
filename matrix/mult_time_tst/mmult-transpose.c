@@ -18,13 +18,13 @@ void matrix_mult_transpose(const int *A, const int *B, int *C, int AX, int AY, i
             tmp[j * AY + i]  = B[i * BY + j];
 
     for(int i = 0; i < AX; i++)
-    for(int j = 0; j < BY; j++) {
-      C[i * BY + j] = 0;
-      // Multiply and accumulate the values
-      // in the current row of A and column of B
-      for(int k = 0; k < AY; k++)
-        C[i * BY + j] += A[i * AY + k] * tmp[j * AY + k];
-    }
+        for(int j = 0; j < BY; j++) {
+            C[i * BY + j] = 0;
+            // Multiply and accumulate the values
+            // in the current row of A and column of B
+            for(int k = 0; k < AY; k++)
+                C[i * BY + j] += A[i * AY + k] * tmp[j * AY + k];
+        }
 
     free(tmp);
 }
@@ -45,7 +45,7 @@ void smoketest() {
 void matrix_rand_init(int *arr, int sz) {
     srand(time(NULL));
     for (int i = 0; i < sz; ++i)
-    arr[i] = (rand() % 20) - 10;
+        arr[i] = (rand() % 20) - 10;
 }
 
 int
