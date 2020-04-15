@@ -4,6 +4,10 @@
 
 make
 
+## Run:
+
+./bin/interpreter filename.cl
+
 ## Grammar:
 
 ### Variables
