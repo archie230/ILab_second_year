@@ -204,27 +204,7 @@ namespace cxx_containers {
                 buf_(0)
         {}
 
-        /**
-         *
-         * @param size  size.first - rows number
-         *              size.second - columns number
-         */
-        explicit Matrix(const std::pair<size_type, size_type>& size)
-                :
-                rows_(0),
-                cols_(0),
-                buf_(size.first * size.second)
-        {
-            auto rows = size.first, cols = size.second;
-            if (!((rows!=0 && cols!=0) || (rows==0 && cols==0))) {
-                throw std::runtime_error
-                ("bad matrix parameters: it isn't possible to create [rows, 0] or [0, cols] matrix");
-            }
-            rows_ = rows;
-            cols_ = cols;
-        }
-
-        Matrix(const std::pair<size_type, size_type>& size, const T& arg)
+        explicit Matrix(const std::pair<size_type, size_type>& size, const T& arg = 0)
             :
                 rows_(0),
                 cols_(0),
@@ -261,10 +241,11 @@ namespace cxx_containers {
                 throw std::runtime_error
                 ("bad matrix parameters: it isn't possible to resize matrix to [rows, 0] or [0, cols]");
 
-            buf_.resize(rows*cols);
+            Matrix tmp({rows, cols});
 
-            rows_ = rows;
-            cols_ = cols;
+            for (size_type i = 0; i < std::min(rows_, tmp.rows_); ++i)
+                for (size_type j = 0; j < std::min(cols_, tmp.cols_); ++j)
+                    tmp[i][j] = (*this)[i][j];
         }
 
         Matrix& operator*= (const Matrix& other) {
@@ -446,6 +427,14 @@ namespace cxx_containers {
 
         std::pair<size_type, size_type> size() const noexcept {
             return {rows_, cols_};
+        }
+
+        size_type rows() const noexcept {
+            return rows_;
+        }
+
+        size_type cols() const noexcept {
+            return cols_;
         }
     };
 
