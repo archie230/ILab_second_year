@@ -201,7 +201,7 @@ namespace cxx_containers {
             :
                 rows_(0),
                 cols_(0),
-                MatrixBuf<T>(0)
+                buf_(0)
         {}
 
         /**
