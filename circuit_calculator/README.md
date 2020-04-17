@@ -3,8 +3,8 @@ Simple electrical circuit calculation program
 
 ### Install:
 ```
-git clone 
-cd circuit_calculator
+git clone https://github.com/archie230/ILab_second_year.git
+cd path/to/dir/ILab_second_year/circuit_calculator
 make
 ```
 ### Run:
