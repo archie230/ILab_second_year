@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="circuit_calculator" targetName="circuit_calculator" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8f90f3ea-1212-4567-845f-1352a44af041" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ProjectId" id="1aAyFQgY4JGV898SXoXmAldrfO9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Google Test.matrix.transp">
+    <configuration name="matrix.transp" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" temporary="true" PASS_PARENT_ENVS_2="true" TEST_CLASS="matrix" TEST_METHOD="transp" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="circuit_calculator" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="circuit_calculator" TARGET_NAME="circuit_calculator" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="circuit_calculator" RUN_TARGET_NAME="circuit_calculator">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.circuit_calculator" />
+      <item itemvalue="Google Test.matrix.transp" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Google Test.matrix.transp" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f90f3ea-1212-4567-845f-1352a44af041" name="Default Changelist" comment="" />
+      <created>1586192588901</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586192588901</updated>
+      <workItem from="1586192590403" duration="12415000" />
+      <workItem from="1586243789555" duration="11949000" />
+      <workItem from="1586261156560" duration="760000" />
+      <workItem from="1586771074067" duration="13298000" />
+      <workItem from="1586788215419" duration="7127000" />
+      <workItem from="1586852871044" duration="12213000" />
+      <workItem from="1586872107547" duration="14000" />
+      <workItem from="1586968761207" duration="13938000" />
+      <workItem from="1587023153882" duration="38693000" />
+      <workItem from="1587080350841" duration="1000" />
+      <workItem from="1587121433802" duration="597000" />
+      <workItem from="1587122726936" duration="5576000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="418" y="184" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586205114065">
+      <screen x="0" y="20" width="1920" height="1015" />
+    </state>
+    <state x="418" y="184" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.20.1920.1015@0.20.1920.1015" timestamp="1586205114065" />
+    <state x="154" y="331" width="641" height="387" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1587130071252">
+      <screen x="0" y="20" width="1920" height="1015" />
+    </state>
+    <state x="154" y="331" width="641" height="387" key="#com.intellij.fileTypes.FileTypeChooser/0.20.1920.1015@0.20.1920.1015" timestamp="1587130071252" />
+    <state x="693" y="275" width="524" height="499" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1587046396374">
+      <screen x="0" y="20" width="1920" height="1015" />
+    </state>
+    <state x="693" y="275" width="524" height="499" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.20.1920.1015@0.20.1920.1015" timestamp="1587046396374" />
+    <state x="743" y="284" width="424" height="480" key="FileChooserDialogImpl" timestamp="1586872119421">
+      <screen x="0" y="20" width="1920" height="1015" />
+    </state>
+    <state x="743" y="284" width="424" height="480" key="FileChooserDialogImpl/0.20.1920.1015@0.20.1920.1015" timestamp="1586872119421" />
+    <state x="100" y="120" width="749" height="810" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1587025117739">
+      <screen x="0" y="20" width="1920" height="1015" />
+    </state>
+    <state x="100" y="120" width="749" height="810" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.20.1920.1015@0.20.1920.1015" timestamp="1587025117739" />
+    <state x="1045" y="65" width="581" height="970" key="dock-window-1" timestamp="1586775711960">
+      <screen x="0" y="20" width="1920" height="1015" />
+    </state>
+    <state x="1045" y="65" width="581" height="970" key="dock-window-1/0.20.1920.1015@0.20.1920.1015" timestamp="1586775711960" />
+    <state x="623" y="241" width="672" height="678" key="search.everywhere.popup" timestamp="1587024733512">
+      <screen x="0" y="20" width="1920" height="1015" />
+    </state>
+    <state x="623" y="241" width="672" height="678" key="search.everywhere.popup/0.20.1920.1015@0.20.1920.1015" timestamp="1587024733512" />
+  </component>
+</project>

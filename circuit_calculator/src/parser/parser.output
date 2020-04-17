@@ -1,0 +1,138 @@
+Terminals unused in grammar
+
+   TERR
+
+
+Grammar
+
+    0 $accept: input $end
+
+    1 input: edge
+    2      | edge input
+
+    3 edge: TVERTEX TEDGE TVERTEX ',' TRESISTANCE ';'
+    4     | TVERTEX TEDGE TVERTEX ',' TRESISTANCE ';' TVOLTAGE
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+',' (44) 3 4
+';' (59) 3 4
+error (256)
+TVERTEX (258) 3 4
+TVOLTAGE (259) 4
+TRESISTANCE (260) 3 4
+TEDGE (261) 3 4
+TERR (262)
+
+
+Nonterminals, with rules where they appear
+
+$accept (10)
+    on left: 0
+input (11)
+    on left: 1 2, on right: 0 2
+edge (12)
+    on left: 3 4, on right: 1 2
+
+
+State 0
+
+    0 $accept: . input $end
+
+    TVERTEX  shift, and go to state 1
+
+    input  go to state 2
+    edge   go to state 3
+
+
+State 1
+
+    3 edge: TVERTEX . TEDGE TVERTEX ',' TRESISTANCE ';'
+    4     | TVERTEX . TEDGE TVERTEX ',' TRESISTANCE ';' TVOLTAGE
+
+    TEDGE  shift, and go to state 4
+
+
+State 2
+
+    0 $accept: input . $end
+
+    $end  shift, and go to state 5
+
+
+State 3
+
+    1 input: edge .
+    2      | edge . input
+
+    TVERTEX  shift, and go to state 1
+
+    $default  reduce using rule 1 (input)
+
+    input  go to state 6
+    edge   go to state 3
+
+
+State 4
+
+    3 edge: TVERTEX TEDGE . TVERTEX ',' TRESISTANCE ';'
+    4     | TVERTEX TEDGE . TVERTEX ',' TRESISTANCE ';' TVOLTAGE
+
+    TVERTEX  shift, and go to state 7
+
+
+State 5
+
+    0 $accept: input $end .
+
+    $default  accept
+
+
+State 6
+
+    2 input: edge input .
+
+    $default  reduce using rule 2 (input)
+
+
+State 7
+
+    3 edge: TVERTEX TEDGE TVERTEX . ',' TRESISTANCE ';'
+    4     | TVERTEX TEDGE TVERTEX . ',' TRESISTANCE ';' TVOLTAGE
+
+    ','  shift, and go to state 8
+
+
+State 8
+
+    3 edge: TVERTEX TEDGE TVERTEX ',' . TRESISTANCE ';'
+    4     | TVERTEX TEDGE TVERTEX ',' . TRESISTANCE ';' TVOLTAGE
+
+    TRESISTANCE  shift, and go to state 9
+
+
+State 9
+
+    3 edge: TVERTEX TEDGE TVERTEX ',' TRESISTANCE . ';'
+    4     | TVERTEX TEDGE TVERTEX ',' TRESISTANCE . ';' TVOLTAGE
+
+    ';'  shift, and go to state 10
+
+
+State 10
+
+    3 edge: TVERTEX TEDGE TVERTEX ',' TRESISTANCE ';' .
+    4     | TVERTEX TEDGE TVERTEX ',' TRESISTANCE ';' . TVOLTAGE
+
+    TVOLTAGE  shift, and go to state 11
+
+    $default  reduce using rule 3 (edge)
+
+
+State 11
+
+    4 edge: TVERTEX TEDGE TVERTEX ',' TRESISTANCE ';' TVOLTAGE .
+
+    $default  reduce using rule 4 (edge)
