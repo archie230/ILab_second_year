@@ -14,7 +14,7 @@ DOUBLE          [-+]?([0-9]*\.?[0-9]+|[0-9]+\.)
 %%
 
 {SKIP}
-[,;]                    {return static_cast<token_t>(yytext[0]);}
+(","|";")               {return static_cast<token_t>(yytext[0]);}
 {VERTEXNUM}             {return token_t::TVERTEX;               }
 {DOUBLE}                {return token_t::TRESISTANCE;           }
 "--"                    {return token_t::TEDGE;                 }

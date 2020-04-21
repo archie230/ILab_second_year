@@ -1,5 +1,4 @@
 CXXFLAGS=-g -std=c++17 -pedantic-errors
-LDFLAGS=-I /usr/local/boost_1_68_0
 CXX=g++
 
 SRC_DIR=src/

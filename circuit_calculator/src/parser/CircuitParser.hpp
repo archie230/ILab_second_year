@@ -32,8 +32,9 @@ namespace Circuit {
         {
             yy::GraphParser parser(*this);
             if (parser.parse() != 0)
-                throw std::runtime_error("");
+                throw std::runtime_error("parser.parse() != 0");
 
+            // graph vertexes should create a sequnce 1 2 3 ...
             int i = 1;
             auto it = std::find_if(adjacency_list.begin(), adjacency_list.end(),
                     [i] (auto& elem) mutable
@@ -42,7 +43,7 @@ namespace Circuit {
                     });
 
             if (it != adjacency_list.end())
-                throw std::runtime_error("");
+                throw std::runtime_error("it != adjacency_list.end()");
         }
 
         token_t yylex(yy::GraphParser::semantic_type* yylval) {
@@ -68,7 +69,17 @@ namespace Circuit {
         void add_edge (int lhs_vert, int rhs_vert, double R, double V = 0.0) {
             // loops aren't allowed
             if (lhs_vert == rhs_vert || lhs_vert < 0)
-                throw std::logic_error("");
+                throw std::logic_error("lhs_vert == rhs_vert || lhs_vert < 0");
+
+            auto find_edge = [this] (int lhs_vert, int rhs_vert) {
+                auto it = adjacency_list.find(lhs_vert); 
+                if (it != adjacency_list.end()) 
+                    if (it -> second.find(rhs_vert) != it -> second.end())
+                        throw std::logic_error("edge already exists");
+            };
+
+            find_edge(lhs_vert, rhs_vert);
+            find_edge(rhs_vert, lhs_vert);
 
             adjacency_list[lhs_vert][rhs_vert] = {R, V};
             adjacency_list[rhs_vert];

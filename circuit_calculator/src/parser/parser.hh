@@ -40,7 +40,7 @@
 #ifndef YY_YY_SRC_PARSER_PARSER_HH_INCLUDED
 # define YY_YY_SRC_PARSER_PARSER_HH_INCLUDED
 // //                    "%code requires" blocks.
-#line 11 "src/parser/parser.y" // lalr1.cc:377
+#line 13 "src/parser/parser.y" // lalr1.cc:377
 
     namespace Circuit {
         class Parser;
@@ -345,10 +345,13 @@ namespace yy {
   static const unsigned char yyr2_[];
 
 
-#if YYDEBUG
+    /// Convert the symbol name \a n to a form suitable for a diagnostic.
+    static std::string yytnamerr_ (const char *n);
+
+
     /// For a symbol, its name in clear.
     static const char* const yytname_[];
-
+#if YYDEBUG
   // YYRLINE[YYN] -- Source line where rule number YYN was defined.
   static const unsigned char yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
@@ -449,7 +452,7 @@ namespace yy {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 9,     ///< Last index in yytable_.
+      yylast_ = 13,     ///< Last index in yytable_.
       yynnts_ = 3,  ///< Number of nonterminal symbols.
       yyfinal_ = 5, ///< Termination state number.
       yyterror_ = 1,
@@ -465,7 +468,7 @@ namespace yy {
 
 
 } // yy
-#line 469 "src/parser/parser.hh" // lalr1.cc:377
+#line 472 "src/parser/parser.hh" // lalr1.cc:377
 
 
 

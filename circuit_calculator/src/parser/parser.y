@@ -4,6 +4,8 @@
 %define api.value.type {double}
 %define parser_class_name {GraphParser}
 
+%define parse.error verbose
+
 %skeleton "lalr1.cc"
 
 %param {Circuit::Parser& driver}
@@ -38,13 +40,22 @@ input :
 ;
 
 edge :
-	TVERTEX[lhs] TEDGE TVERTEX[rhs] ',' TRESISTANCE ';'
+  TVERTEX[lhs] TEDGE TVERTEX[rhs] ',' TRESISTANCE ';'
 {
 	driver.add_edge($lhs, $rhs, $TRESISTANCE);
 }
 | TVERTEX[lhs] TEDGE TVERTEX[rhs] ',' TRESISTANCE ';' TVOLTAGE
 {
 	driver.add_edge($lhs, $rhs, $TRESISTANCE, $TVOLTAGE);
+}
+// in case if have int resistance it would match as TVERTEX
+|  TVERTEX[lhs] TEDGE TVERTEX[rhs] ',' TVERTEX[resistance] ';'
+{
+	driver.add_edge($lhs, $rhs, $resistance);
+}
+| TVERTEX[lhs] TEDGE TVERTEX[rhs] ',' TVERTEX[resistance] ';' TVOLTAGE
+{
+	driver.add_edge($lhs, $rhs, $resistance, $TVOLTAGE);
 }
 ;
 
@@ -56,5 +67,6 @@ namespace yy {
 				  return driver.yylex(yylval);
 				}
 
-				void yy::GraphParser::error(const std::string& msg) {}
+				void yy::GraphParser::error(const std::string& msg) 
+				{ std::cout << msg << std::endl; }
 }

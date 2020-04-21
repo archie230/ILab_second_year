@@ -45,6 +45,7 @@ namespace Circuit {
         }
 
         Matrix<double> KirchhoffEquations(std::vector<Matrix<double>>& Loops) const {
+
             // Kirchhoff Equations matrix
             Matrix<double> KEmatrix({Loops.size(), Loops.size()});
             // Voltage matrix (KE rhs)
@@ -57,8 +58,6 @@ namespace Circuit {
                     else
                         KEmatrix[i][j] = CycleAddition(Loops[i], Loops[j]);
                 }
-
-            assert(KEmatrix.determinant() != 0);
 
             return cxx_containers::SolveSystem(KEmatrix, V);
         }
@@ -73,23 +72,25 @@ namespace Circuit {
         {}
 
         void solve_circuit() {
+            Matrix<double> currents({adjacency.rows(), adjacency.cols()}, 0);
+            
             auto Loops = create_independ_cycles_set(adjacency);
-
             for (auto& Loop : Loops)
                 set_cycle_orientation(Loop);
 
-            auto LoopsCurrents = KirchhoffEquations(Loops);
-            assert(LoopsCurrents.rows() == Loops.size());
+            if (Loops.size() != 0) { // if loops size == 0 that means there are no currents in circuit
+                auto LoopsCurrents = KirchhoffEquations(Loops);
+                assert(LoopsCurrents.rows() == Loops.size());
 
-            Matrix<double> currents({adjacency.rows(), adjacency.cols()}, 0);
 
-            for (size_t i = 0; i < currents.rows(); ++i)
-                for (size_t j = i+1; j < currents.cols(); ++j) {
-                    for (size_t k = 0; k < LoopsCurrents.rows(); ++k) 
-                        currents[i][j] += LoopsCurrents[k][0] *
-                              ((Loops[k][i][j] == 0) ? (-1 * Loops[k][j][i]) : Loops[k][i][j]);
-                    currents[j][i] = -1 * currents[i][j];
-                }
+                for (size_t i = 0; i < currents.rows(); ++i)
+                    for (size_t j = i+1; j < currents.cols(); ++j) {
+                        for (size_t k = 0; k < LoopsCurrents.rows(); ++k) 
+                            currents[i][j] += LoopsCurrents[k][0] *
+                                  ((Loops[k][i][j] == 0) ? (-1 * Loops[k][j][i]) : Loops[k][i][j]);
+                        currents[j][i] = -1 * currents[i][j];
+                    }
+            }
 
             parser.parse_output(std::cout, currents);
         }

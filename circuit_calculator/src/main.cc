@@ -21,7 +21,14 @@ int main(int argc, char** argv) {
     try {
         Calculator calculator{&input};
         calculator.solve_circuit();
-    } catch (...) {
+    }
+
+    catch (std::exception& exc) {
+        std::cerr << "Check input correctness //" << "what: " << exc.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    catch (...) {
         std::cerr << "Check input correctness" << std::endl;
         return EXIT_FAILURE;
     }

@@ -49,7 +49,7 @@
 
 #line 51 "src/parser/parser.cc" // lalr1.cc:412
 // Unqualified %code blocks.
-#line 17 "src/parser/parser.y" // lalr1.cc:413
+#line 19 "src/parser/parser.y" // lalr1.cc:413
 
     #include "CircuitParser.hpp"
 
@@ -126,6 +126,44 @@
 
 namespace yy {
 #line 129 "src/parser/parser.cc" // lalr1.cc:479
+
+  /* Return YYSTR after stripping away unnecessary quotes and
+     backslashes, so that it's suitable for yyerror.  The heuristic is
+     that double-quoting is unnecessary unless the string contains an
+     apostrophe, a comma, or backslash (other than backslash-backslash).
+     YYSTR is taken from yytname.  */
+  std::string
+  GraphParser::yytnamerr_ (const char *yystr)
+  {
+    if (*yystr == '"')
+      {
+        std::string yyr = "";
+        char const *yyp = yystr;
+
+        for (;;)
+          switch (*++yyp)
+            {
+            case '\'':
+            case ',':
+              goto do_not_strip_quotes;
+
+            case '\\':
+              if (*++yyp != '\\')
+                goto do_not_strip_quotes;
+              // Fall through.
+            default:
+              yyr += *yyp;
+              break;
+
+            case '"':
+              return yyr;
+            }
+      do_not_strip_quotes: ;
+      }
+
+    return yystr;
+  }
+
 
   /// Build a parser object.
   GraphParser::GraphParser (Circuit::Parser& driver_yyarg)
@@ -550,23 +588,39 @@ namespace yy {
           switch (yyn)
             {
   case 4:
-#line 42 "src/parser/parser.y" // lalr1.cc:859
+#line 44 "src/parser/parser.y" // lalr1.cc:859
     {
 	driver.add_edge((yystack_[5].value), (yystack_[3].value), (yystack_[1].value));
 }
-#line 558 "src/parser/parser.cc" // lalr1.cc:859
+#line 596 "src/parser/parser.cc" // lalr1.cc:859
     break;
 
   case 5:
-#line 46 "src/parser/parser.y" // lalr1.cc:859
+#line 48 "src/parser/parser.y" // lalr1.cc:859
     {
 	driver.add_edge((yystack_[6].value), (yystack_[4].value), (yystack_[2].value), (yystack_[0].value));
 }
-#line 566 "src/parser/parser.cc" // lalr1.cc:859
+#line 604 "src/parser/parser.cc" // lalr1.cc:859
+    break;
+
+  case 6:
+#line 53 "src/parser/parser.y" // lalr1.cc:859
+    {
+	driver.add_edge((yystack_[5].value), (yystack_[3].value), (yystack_[1].value));
+}
+#line 612 "src/parser/parser.cc" // lalr1.cc:859
+    break;
+
+  case 7:
+#line 57 "src/parser/parser.y" // lalr1.cc:859
+    {
+	driver.add_edge((yystack_[6].value), (yystack_[4].value), (yystack_[2].value), (yystack_[0].value));
+}
+#line 620 "src/parser/parser.cc" // lalr1.cc:859
     break;
 
 
-#line 570 "src/parser/parser.cc" // lalr1.cc:859
+#line 624 "src/parser/parser.cc" // lalr1.cc:859
             default:
               break;
             }
@@ -721,34 +775,123 @@ namespace yy {
 
   // Generate an error message.
   std::string
-  GraphParser::yysyntax_error_ (state_type, const symbol_type&) const
+  GraphParser::yysyntax_error_ (state_type yystate, const symbol_type& yyla) const
   {
-    return YY_("syntax error");
+    // Number of reported tokens (one for the "unexpected", one per
+    // "expected").
+    size_t yycount = 0;
+    // Its maximum.
+    enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };
+    // Arguments of yyformat.
+    char const *yyarg[YYERROR_VERBOSE_ARGS_MAXIMUM];
+
+    /* There are many possibilities here to consider:
+       - If this state is a consistent state with a default action, then
+         the only way this function was invoked is if the default action
+         is an error action.  In that case, don't check for expected
+         tokens because there are none.
+       - The only way there can be no lookahead present (in yyla) is
+         if this state is a consistent state with a default action.
+         Thus, detecting the absence of a lookahead is sufficient to
+         determine that there is no unexpected or expected token to
+         report.  In that case, just report a simple "syntax error".
+       - Don't assume there isn't a lookahead just because this state is
+         a consistent state with a default action.  There might have
+         been a previous inconsistent state, consistent state with a
+         non-default action, or user semantic action that manipulated
+         yyla.  (However, yyla is currently not documented for users.)
+       - Of course, the expected token list depends on states to have
+         correct lookahead information, and it depends on the parser not
+         to perform extra reductions after fetching a lookahead from the
+         scanner and before detecting a syntax error.  Thus, state
+         merging (from LALR or IELR) and default reductions corrupt the
+         expected token list.  However, the list is correct for
+         canonical LR with one exception: it will still contain any
+         token that will not be accepted due to an error action in a
+         later state.
+    */
+    if (!yyla.empty ())
+      {
+        int yytoken = yyla.type_get ();
+        yyarg[yycount++] = yytname_[yytoken];
+        int yyn = yypact_[yystate];
+        if (!yy_pact_value_is_default_ (yyn))
+          {
+            /* Start YYX at -YYN if negative to avoid negative indexes in
+               YYCHECK.  In other words, skip the first -YYN actions for
+               this state because they are default actions.  */
+            int yyxbegin = yyn < 0 ? -yyn : 0;
+            // Stay within bounds of both yycheck and yytname.
+            int yychecklim = yylast_ - yyn + 1;
+            int yyxend = yychecklim < yyntokens_ ? yychecklim : yyntokens_;
+            for (int yyx = yyxbegin; yyx < yyxend; ++yyx)
+              if (yycheck_[yyx + yyn] == yyx && yyx != yyterror_
+                  && !yy_table_value_is_error_ (yytable_[yyx + yyn]))
+                {
+                  if (yycount == YYERROR_VERBOSE_ARGS_MAXIMUM)
+                    {
+                      yycount = 1;
+                      break;
+                    }
+                  else
+                    yyarg[yycount++] = yytname_[yyx];
+                }
+          }
+      }
+
+    char const* yyformat = YY_NULLPTR;
+    switch (yycount)
+      {
+#define YYCASE_(N, S)                         \
+        case N:                               \
+          yyformat = S;                       \
+        break
+        YYCASE_(0, YY_("syntax error"));
+        YYCASE_(1, YY_("syntax error, unexpected %s"));
+        YYCASE_(2, YY_("syntax error, unexpected %s, expecting %s"));
+        YYCASE_(3, YY_("syntax error, unexpected %s, expecting %s or %s"));
+        YYCASE_(4, YY_("syntax error, unexpected %s, expecting %s or %s or %s"));
+        YYCASE_(5, YY_("syntax error, unexpected %s, expecting %s or %s or %s or %s"));
+#undef YYCASE_
+      }
+
+    std::string yyres;
+    // Argument number.
+    size_t yyi = 0;
+    for (char const* yyp = yyformat; *yyp; ++yyp)
+      if (yyp[0] == '%' && yyp[1] == 's' && yyi < yycount)
+        {
+          yyres += yytnamerr_ (yyarg[yyi++]);
+          ++yyp;
+        }
+      else
+        yyres += *yyp;
+    return yyres;
   }
 
 
-  const signed char GraphParser::yypact_ninf_ = -6;
+  const signed char GraphParser::yypact_ninf_ = -4;
 
   const signed char GraphParser::yytable_ninf_ = -1;
 
   const signed char
   GraphParser::yypact_[] =
   {
-      -3,    -5,     2,    -3,     0,    -6,    -6,    -4,     1,    -2,
-       4,    -6
+      -2,    -1,     3,    -2,     1,    -4,    -4,     0,    -3,     2,
+       4,     5,     6,    -4,    -4
   };
 
   const unsigned char
   GraphParser::yydefact_[] =
   {
        0,     0,     0,     2,     0,     1,     3,     0,     0,     0,
-       4,     5
+       0,     6,     4,     7,     5
   };
 
   const signed char
   GraphParser::yypgoto_[] =
   {
-      -6,     6,    -6
+      -4,     9,    -4
   };
 
   const signed char
@@ -760,36 +903,38 @@ namespace yy {
   const unsigned char
   GraphParser::yytable_[] =
   {
-       1,     4,     5,     7,     8,     0,     9,    10,    11,     6
+       9,     1,    10,     5,     7,     4,     0,     0,     8,    13,
+      14,    11,     6,    12
   };
 
   const signed char
   GraphParser::yycheck_[] =
   {
-       3,     6,     0,     3,     8,    -1,     5,     9,     4,     3
+       3,     3,     5,     0,     3,     6,    -1,    -1,     8,     4,
+       4,     9,     3,     9
   };
 
   const unsigned char
   GraphParser::yystos_[] =
   {
-       0,     3,    11,    12,     6,     0,    11,     3,     8,     5,
-       9,     4
+       0,     3,    11,    12,     6,     0,    11,     3,     8,     3,
+       5,     9,     9,     4,     4
   };
 
   const unsigned char
   GraphParser::yyr1_[] =
   {
-       0,    10,    11,    11,    12,    12
+       0,    10,    11,    11,    12,    12,    12,    12
   };
 
   const unsigned char
   GraphParser::yyr2_[] =
   {
-       0,     2,     1,     2,     6,     7
+       0,     2,     1,     2,     6,     7,     6,     7
   };
 
 
-#if YYDEBUG
+
   // YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
   // First, the terminals, then, starting at \a yyntokens_, nonterminals.
   const char*
@@ -799,11 +944,11 @@ namespace yy {
   "TEDGE", "TERR", "','", "';'", "$accept", "input", "edge", YY_NULLPTR
   };
 
-
+#if YYDEBUG
   const unsigned char
   GraphParser::yyrline_[] =
   {
-       0,    36,    36,    37,    41,    45
+       0,    38,    38,    39,    43,    47,    52,    56
   };
 
   // Print the state stack on the debug stream.
@@ -885,8 +1030,8 @@ namespace yy {
 
 
 } // yy
-#line 889 "src/parser/parser.cc" // lalr1.cc:1167
-#line 51 "src/parser/parser.y" // lalr1.cc:1168
+#line 1034 "src/parser/parser.cc" // lalr1.cc:1167
+#line 62 "src/parser/parser.y" // lalr1.cc:1168
 
 namespace yy {
 				GraphParser::token_type
@@ -895,5 +1040,6 @@ namespace yy {
 				  return driver.yylex(yylval);
 				}
 
-				void yy::GraphParser::error(const std::string& msg) {}
+				void yy::GraphParser::error(const std::string& msg) 
+				{ std::cout << msg << std::endl; }
 }
