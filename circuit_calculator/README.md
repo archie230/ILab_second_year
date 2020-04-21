@@ -22,7 +22,7 @@ Here p1, p2 are nodes, r is resistance, e is source emf (optional)
 
 notes:
 
-'''
+```
 nodes must create range from 1 to n
 n - number of nodes
 
@@ -31,7 +31,7 @@ it isn't possible to redefine edge like:
 p1 -- p2, r;
 then 
 p2 -- p1, r;
-'''
+```
 
 ### Output format:
 list of currents between vertices
