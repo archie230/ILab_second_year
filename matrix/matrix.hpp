@@ -287,8 +287,6 @@ namespace cxx_containers {
 
         // if our matrix is NxN there is a matrix pair
         // *this = L*U, L - lower triangle matrix, U - upper triangle matrix
-        // if *this matrix determinant equals zero then L and U are both NxN zero matrix
-        // if all main minors aren't invertable : return L = 0 and U = 0
         std::pair<Matrix, Matrix> LU_decomposition() const {
             if(rows_ != cols_) {
                 throw std::runtime_error("can't decompose non square matrix");
@@ -500,9 +498,9 @@ namespace cxx_containers {
             throw std::logic_error("bad input parameters");
 
         auto [L,U] = A.LU_decomposition();
-        Matrix<T> x({L.rows(), 1}), z({L.rows(), 1});
-
-        int n = L.rows();
+        auto n = L.rows();
+        
+        Matrix<T> x({n, 1}), z({n, 1});
 
         for(int i = 0; i < n; ++i) {
             T sum = 0;
