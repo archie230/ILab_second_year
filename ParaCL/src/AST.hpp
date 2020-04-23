@@ -156,7 +156,7 @@ const std::vector<std::string> names = {
 
     // Node for sequence of instructions or expressions
     class ListNode final : public INode {
-        using container_t = std::deque<INode*>;
+        using container_t = std::vector<INode*>;
         container_t kids_;
         // if this node used as SCOPE then id_ == scope table identifier
         int id_ = 0;
