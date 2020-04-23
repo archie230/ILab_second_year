@@ -12,7 +12,8 @@ BadOutPath=bad_outputs/
 
 ERR_COUNTER=0
 
-echo "=====CORRECT DATA TESTS=====" > test_log
+echo -e "\t[CORRECT DATA TESTS SET]" > test_log
+
 for i in ${CorDataRange[@]}
 do
     echo "running $i test"
@@ -22,12 +23,17 @@ do
        STATUS="FAILED"
        ERR_COUNTER+=1
     else
-       STATUS="OK"
+      STATUS="OK"
     fi
-    echo "TEST ${i} $STATUS : answ = $ANSW  expected = $EXPECT" >> test_log
+
+    echo "[TEST ${i} $STATUS]: " >> test_log
+    echo "answ:" >> test_log
+    echo $ANSW >> test_log
+    echo "expected:" >> test_log
+    echo "$EXPECT" >> test_log
 done
 
-echo "=====BAD DATA TESTS=====" >> test_log
+echo "[BAD DATA TESTS SET]" >> test_log
 
 for i in ${BadDataRange[@]}
 do
@@ -41,12 +47,17 @@ do
        STATUS="OK"
    fi
 
-   echo "TEST ${i} $STATUS" >> test_log
+   echo "[TEST ${i} $STATUS]: " >> test_log
 done
 
 if [[ $ERR_COUNTER == 0 ]]; then
   echo "ALL TESTS PASSED"
 else
   echo "$ERR_COUNTER TESTS FAILED"
-  echo "CHECK test_log"
+fi
+
+read -n 1 -p "Show test_log ? [y/n]" Show
+
+if [[ $Show == "y" ]]; then
+  cat test_log
 fi

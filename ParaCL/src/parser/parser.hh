@@ -52,12 +52,9 @@
     #define FUNC		SymTbl::Table::DECL_TYPE::FUNC
     #define VAR			SymTbl::Table::DECL_TYPE::VAR
 
-    #define GET_ID(node_ptr)	static_cast<AST::IdNode*>(node_ptr) -> get_id()
-
     using IDec_t 	  = SymTbl::Table::IDec;
     using VarDec_t	= SymTbl::Table::VarDec;
     using FuncDec_t	= SymTbl::Table::FuncDec;
-
 
     /* forward declaration for parser */
     namespace yy {
@@ -77,7 +74,7 @@
             }                                                               \
         while (false)
 
-#line 81 "src/parser/parser.hh" // lalr1.cc:377
+#line 78 "src/parser/parser.hh" // lalr1.cc:377
 
 
 # include <cstdlib> // std::abort
@@ -149,7 +146,7 @@
 
 
 namespace yy {
-#line 153 "src/parser/parser.hh" // lalr1.cc:377
+#line 150 "src/parser/parser.hh" // lalr1.cc:377
 
 
 
@@ -528,7 +525,7 @@ namespace yy {
 
 
 } // yy
-#line 532 "src/parser/parser.hh" // lalr1.cc:377
+#line 529 "src/parser/parser.hh" // lalr1.cc:377
 
 
 

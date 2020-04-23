@@ -1,31 +1,30 @@
-=====CORRECT DATA TESTS=====
-TEST 001 OK : answ = 1  expected = 1
-TEST 002 OK : answ = 5
-4  expected = 5
+	[CORRECT DATA TESTS SET]
+[TEST 001 OK]: 
+answ:
+1
+expected:
+1
+[TEST 002 OK]: 
+answ:
+5 4
+expected:
+5
 4
-TEST 003 OK : answ = 2  expected = 2
-TEST 004 OK : answ = 123321  expected = 123321
-TEST 005 OK : answ = 0
-1
-1
+[TEST 003 OK]: 
+answ:
 2
-3
-5
-8
-13
-21
-34  expected = 0
-1
-1
+expected:
 2
-3
-5
-8
-13
-21
-34
-TEST 006 OK : answ = 25  expected = 25
-TEST 007 OK : answ = 0
+[TEST 004 OK]: 
+answ:
+123321
+expected:
+123321
+[TEST 005 OK]: 
+answ:
+0 1 1 2 3 5 8 13 21 34
+expected:
+0
 1
 1
 2
@@ -35,18 +34,16 @@ TEST 007 OK : answ = 0
 13
 21
 34
-55
-89
-144
-233
-377
-610
-987
-1597
-2584
-4181
-6765
-10946  expected = 0
+[TEST 006 OK]: 
+answ:
+25
+expected:
+25
+[TEST 007 OK]: 
+answ:
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946
+expected:
+0
 1
 1
 2
@@ -68,24 +65,49 @@ TEST 007 OK : answ = 0
 4181
 6765
 10946
-TEST 008 OK : answ = 5040  expected = 5040
-TEST 009 OK : answ = 42  expected = 42
-TEST 010 OK : answ = 12  expected = 12
-TEST 011 OK : answ = 15
-6  expected = 15
+[TEST 008 OK]: 
+answ:
+5040
+expected:
+5040
+[TEST 009 OK]: 
+answ:
+42
+expected:
+42
+[TEST 010 OK]: 
+answ:
+12
+expected:
+12
+[TEST 011 OK]: 
+answ:
+15 6
+expected:
+15
 6
-TEST 012 OK : answ = 500  expected = 500
-TEST 013 OK : answ = 0
+[TEST 012 OK]: 
+answ:
+500
+expected:
+500
+[TEST 013 OK]: 
+answ:
+0 0 0
+expected:
 0
-0  expected = 0
 0
 0
-TEST 014 OK : answ = 56  expected = 56
-=====BAD DATA TESTS=====
-TEST 001 OK
-TEST 002 OK
-TEST 003 OK
-TEST 004 OK
-TEST 005 OK
-TEST 006 OK
-TEST 007 OK
+[TEST 014 OK]: 
+answ:
+56
+expected:
+56
+[BAD DATA TESTS SET]
+[TEST 001 OK]: 
+[TEST 002 OK]: 
+[TEST 003 OK]: 
+[TEST 004 OK]: 
+[TEST 005 OK]: 
+[TEST 006 OK]: 
+[TEST 007 OK]: 

@@ -17,8 +17,11 @@ all: interpreter
 debug: CXXFLAGS += -DDEBUG
 debug: interpreter
 
+run_tests:
+	cd tests; ./run_tests.sh
+
 clean:
-	rm bin/*
+	rm -r bin
 
 interpreter: makebindir $(OBJECTS)
 	cd bin; $(CXX) $(OBJECTS) -o $@;

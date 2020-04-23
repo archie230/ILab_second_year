@@ -1,15 +1,15 @@
-==4558== Memcheck, a memory error detector
-==4558== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==4558== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
-==4558== Command: ./../bin/interpreter bad_data/004.cl
-==4558== Parent PID: 4491
-==4558== 
-==4558== 
-==4558== HEAP SUMMARY:
-==4558==     in use at exit: 0 bytes in 0 blocks
-==4558==   total heap usage: 26 allocs, 26 frees, 104,888 bytes allocated
-==4558== 
-==4558== All heap blocks were freed -- no leaks are possible
-==4558== 
-==4558== For counts of detected and suppressed errors, rerun with: -v
-==4558== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==459== Memcheck, a memory error detector
+==459== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==459== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==459== Command: ./../bin/interpreter bad_data/004.cl
+==459== Parent PID: 407
+==459== 
+==459== 
+==459== HEAP SUMMARY:
+==459==     in use at exit: 0 bytes in 0 blocks
+==459==   total heap usage: 26 allocs, 26 frees, 104,968 bytes allocated
+==459== 
+==459== All heap blocks were freed -- no leaks are possible
+==459== 
+==459== For counts of detected and suppressed errors, rerun with: -v
+==459== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

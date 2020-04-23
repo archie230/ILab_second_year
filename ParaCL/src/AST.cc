@@ -1,7 +1,7 @@
 #include "AST.hpp"
 
 #ifdef DEBUG
-void AST::INode::print() const noexcept {
+void AST::INode::print() const {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << names[tname_] << std::endl;
 }
@@ -10,7 +10,7 @@ void AST::INode::print() const noexcept {
 
 
 #ifdef DEBUG
-void AST::IdNode::print() const noexcept {
+void AST::IdNode::print() const {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << names[tname_] << " [name:] " << name_ << std::endl;
 }
@@ -19,7 +19,7 @@ void AST::IdNode::print() const noexcept {
 //
 
 #ifdef DEBUG
-void AST::NumNode::print() const noexcept {
+void AST::NumNode::print() const {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << names[tname_] << " [num]: " << num_ << std::endl;
 }
@@ -35,7 +35,7 @@ AST::TwoKidsNode::~TwoKidsNode() {
 }
 
 #ifdef DEBUG
-void AST::TwoKidsNode::print() const noexcept {
+void AST::TwoKidsNode::print() const {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << names[tname_] << " [left:] " << std::hex << left_ << " [right:] " << right_ << std::dec << std::endl;
     if(left_)
@@ -49,12 +49,12 @@ void AST::TwoKidsNode::print() const noexcept {
 // list node
 
 AST::ListNode::~ListNode() {
-    std::transform(kids_.begin(), kids_.end(), kids_.begin(),
-            [](INode* node) -> INode* {delete node; return nullptr;});
+    std::for_each(kids_.begin(), kids_.end(),
+            [](INode* node) {delete node;});
 }
 
 #ifdef DEBUG
-void AST::ListNode::print() const noexcept {
+void AST::ListNode::print() const {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << names[tname_] << " [table_id:] " << id_ << std::hex << " [kids:]";
     for_each(kids_.begin(), kids_.end(), [](INode* node) {std::cout << " " << node;});
@@ -71,7 +71,7 @@ AST::IfNode::~IfNode() {
 }
 
 #ifdef DEBUG
-void AST::IfNode::print() const noexcept {
+void AST::IfNode::print() const {
     std::cout << "  [this:] " << std::hex << this << std::dec << " [token:] "
               << names[tname_] << " [expression:] " << std::hex << expr_ << " [statement:] " << stmt_
                 << " [else:] " << else_ << std::dec << std::endl;

@@ -21,12 +21,9 @@
     #define FUNC		SymTbl::Table::DECL_TYPE::FUNC
     #define VAR			SymTbl::Table::DECL_TYPE::VAR
 
-    #define GET_ID(node_ptr)	static_cast<AST::IdNode*>(node_ptr) -> get_id()
-
     using IDec_t 	  = SymTbl::Table::IDec;
     using VarDec_t	= SymTbl::Table::VarDec;
     using FuncDec_t	= SymTbl::Table::FuncDec;
-
 
     /* forward declaration for parser */
     namespace yy {
@@ -115,12 +112,12 @@ block :
 
  statement_list '}' 	{
                             if($statement_list) {
-                                $statement_list -> SetType(TokenName::T_SCOPE);
-                                /* setting table id to find it in interpretation phase*/
-                                static_cast<ListNode*>($statement_list) -> SetTable_id(ENV.front() -> id_);
-                            }
+                                auto donor = static_cast<ListNode*>($statement_list);
+                                $$ = new ListNode(TokenName::T_SCOPE, std::move(*donor), ENV.front() -> id_);
+																delete $statement_list;
+                            } else
+                                $$ = nullptr;
 
-                            $$ = $statement_list;
                             ENV.pop_front();
 											}
 ;
@@ -187,18 +184,18 @@ function_declaration :
 	ENV.push_front( new SymTbl::Table(ENV.front(), CUR_ID++) );
 	driver -> symtbl_.add_tbl(ENV.front() -> id_, ENV.front());
 
-	if (! (ENV[1] -> find(GET_ID($TID))) ) {
-    ENV[1] -> insert(GET_ID($TID),
+	if (! (ENV[1] -> find(GetName($TID))) ) {
+    ENV[1] -> insert(GetName($TID),
       new FuncDec_t {FUNC, @TID, ENV.front() -> id_});
 	} else
-			error(@1, "variable " + GET_ID($TID) + " already exists");
+			error(@1, "variable " + GetName($TID) + " already exists");
 
 	if ($name_form) { /* in case func(x) : name {...}*/
-		if (! (ENV[1] -> find(GET_ID($name_form))) ) {
-			ENV.back() -> insert(GET_ID($name_form),
+		if (! (ENV[1] -> find(GetName($name_form))) ) {
+			ENV.back() -> insert(GetName($name_form),
 				new FuncDec_t {FUNC, @name_form, ENV.front() -> id_});
 		} else
-				error(@name_form, "variable " + GET_ID($name_form) + " already exists");
+				error(@name_form, "variable " + GetName($name_form) + " already exists");
 	}
 
 
@@ -206,22 +203,22 @@ function_declaration :
 	if ($arguments) { /* adding function arguments to it's scope*/
 		IDec_t* decl = nullptr;
 
-		auto local_decl  = static_cast<FuncDec_t*>(ENV[1] -> find(GET_ID($TID)));
-		auto global_decl = $name_form ? static_cast<FuncDec_t*>(ENV[1] -> find(GET_ID($name_form))) : nullptr;
+		auto local_decl  = static_cast<FuncDec_t*>(ENV[1] -> find(GetName($TID)));
+		auto global_decl = $name_form ? static_cast<FuncDec_t*>(ENV[1] -> find(GetName($name_form))) : nullptr;
 
 		for(int i = 0; i < static_cast<ListNode*>($arguments) -> size(); i++)
 		    try {
 
 					decl = new VarDec_t {VAR, @arguments, 0};
-					ENV.front() -> insert(GET_ID((*static_cast<ListNode*>($arguments))[i]), decl);
+					ENV.front() -> insert(GetName((*static_cast<ListNode*>($arguments))[i]), decl);
 
-					(local_decl -> arg_names_).push_back(GET_ID((*static_cast<ListNode*>($arguments))[i]));
+					(local_decl -> arg_names_).push_back(GetName((*static_cast<ListNode*>($arguments))[i]));
 					if(global_decl)
-						(global_decl -> arg_names_).push_back(GET_ID((*static_cast<ListNode*>($arguments))[i]));
+						(global_decl -> arg_names_).push_back(GetName((*static_cast<ListNode*>($arguments))[i]));
 
 		    } catch(...) {
 					delete decl;
-					error(@1, "variable " + GET_ID((*static_cast<ListNode*>($arguments))[i]) + " already exists");
+					error(@1, "variable " + GetName((*static_cast<ListNode*>($arguments))[i]) + " already exists");
 		    }
 	}
 
@@ -230,14 +227,16 @@ function_declaration :
 {
 
 	if ($func_body) {
-	   $func_body -> SetType(TokenName::T_FUNCTION_SCOPE);
-	   static_cast<ListNode*>($func_body) -> SetTable_id(ENV.front() -> id_);
+		auto donor = static_cast<ListNode*>($func_body);
+		auto tmp = new ListNode(TokenName::T_FUNCTION_SCOPE, std::move(*donor), ENV.front() -> id_);
+		delete $func_body;
+		$func_body = tmp;
 	}
 
-	static_cast<FuncDec_t*>(ENV[1] -> find(GET_ID($TID))) -> function_body_ = $func_body;
+	static_cast<FuncDec_t*>(ENV[1] -> find(GetName($TID))) -> function_body_ = $func_body;
 
 	if ($name_form) {
-		static_cast<FuncDec_t*>(ENV[1] -> find(GET_ID($name_form))) -> function_body_ = $func_body;
+		static_cast<FuncDec_t*>(ENV[1] -> find(GetName($name_form))) -> function_body_ = $func_body;
 		delete $name_form;
 	}
 
@@ -304,12 +303,12 @@ assignment_expression :
                                         $$ = new TwoKidsNode(TokenName::T_ASSIGN, $1, $3);
                                         IDec_t* decl = nullptr;
                                         /* if there is no same identifier add it to symtbl*/
-                                        if ( !(decl = (ENV.front() -> find(GET_ID($TID)))) ) {
+                                        if ( !(decl = (ENV.front() -> find(GetName($TID)))) ) {
 						                              VarDec_t* elem = new VarDec_t {VAR, @1, 0};
-																					ENV.front() -> insert(GET_ID($TID), elem);
+																					ENV.front() -> insert(GetName($TID), elem);
                                         } else
-                                          if (ENV.front() -> find(GET_ID($TID)) -> type_ == FUNC)
-                                              error(@1, "can't assign smth to function name to " + GET_ID($TID));
+                                          if (ENV.front() -> find(GetName($TID)) -> type_ == FUNC)
+                                              error(@1, "can't assign smth to function name to " + GetName($TID));
                                     }
 ;
 
@@ -362,11 +361,11 @@ primary_expression :
 {
 				IDec_t* decl = nullptr;
 
-				if(!(decl = ENV.front() -> find(GET_ID($TID)))) {
-					error(@1, "undeclarated variable " + GET_ID($TID));
+				if(!(decl = ENV.front() -> find(GetName($TID)))) {
+					error(@1, "undeclarated variable " + GetName($TID));
 				} else {
 					if(decl -> type_ == FUNC)
-						error (@1, GET_ID($TID) + " isn't a name of variable ");
+						error (@1, GetName($TID) + " isn't a name of variable ");
 				}
 
 		    $$ = $TID;
@@ -382,16 +381,16 @@ function_call :
   TID '(' call_arguments ')' 	{
 					IDec_t* decl = nullptr;
 
-					if ( !(decl = ENV.front() -> find(GET_ID($TID))) )
-						error(@1, "undeclarated function " + GET_ID($TID));
+					if ( !(decl = ENV.front() -> find(GetName($TID))) )
+						error(@1, "undeclarated function " + GetName($TID));
 					else {
 						if (decl && decl -> type_ == VAR)
-						    error(@1, GET_ID($TID) + " isn't a function name");
+						    error(@1, GetName($TID) + " isn't a function name");
 
 					  int arg_num = $call_arguments ? static_cast<ListNode*>($3) -> size() : 0;
 
             if (arg_num != (static_cast<FuncDec_t*>(decl) -> arg_names_).size())
-		            error(@1, "in function call " + GET_ID($TID) +
+		            error(@1, "in function call " + GetName($TID) +
 			             "(..) arguments number doesn't match with declaration");
 					}
 

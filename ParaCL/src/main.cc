@@ -26,7 +26,7 @@ int main(int argc, const char* argv[]) {
 #endif
             if (driver.err_counter_ == 0) {
                 assert(driver.env_.size() == 1);
-                yy::Interpreter interpreter(driver.root_, driver.symtbl_, driver.env_[0]);
+                yy::Interpreter interpreter(driver.root_, driver.symtbl_, driver.env_[0], 2500);
                 interpreter.interpretate();
             }
         }

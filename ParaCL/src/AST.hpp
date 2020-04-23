@@ -7,6 +7,7 @@
 #include <vector>
 #include <iostream>
 #include <deque>
+#include <cassert>
 
 namespace AST {
 
@@ -58,18 +59,18 @@ const std::vector<std::string> names = {
                 tname_(tname)
         {}
 
-        virtual ~INode() = default;
+        INode(const INode&) = delete;
+	    INode& operator= (const INode&) = delete;
+
+	    TokenName GetType() const noexcept {
+	        return tname_;
+	    }
+
+	    virtual ~INode() = default;
 
 #ifdef DEBUG
-        virtual void print() const noexcept;
+        virtual void print() const;
 #endif
-        void SetType(TokenName tname) noexcept {
-            tname_ = tname;
-        }
-
-        TokenName GetType() const noexcept {
-            return tname_;
-        }
 	};
 
 	// id node, using only in expression and statements
@@ -77,21 +78,27 @@ const std::vector<std::string> names = {
 	class IdNode final : public INode {
 	    std::string name_;
 	public:
-        IdNode(TokenName tname, const std::string&  name) noexcept
+        IdNode(TokenName tname, std::string name) noexcept
                 :
                 INode(tname),
-                name_(name)
+                name_(std::move(name))
         {}
 
-        ~IdNode() override = default;
+        IdNode(const IdNode&) = delete;
+        IdNode& operator= (const IdNode) = delete;
 
 #ifdef DEBUG
-        void print() const noexcept override;
+        void print() const override;
 #endif
-        std::string get_id() const {
+        [[nodiscard]]
+        std::string GetName() const {
             return name_;
         }
 	};
+
+    inline std::string GetName (INode* node) {
+        return static_cast<IdNode*>(node) -> GetName();
+    }
 
 	// integer literal node
 	class NumNode final : public INode {
@@ -103,10 +110,11 @@ const std::vector<std::string> names = {
                 num_(num)
         {}
 
-        ~NumNode() override = default;
+        NumNode(const NumNode&) = delete;
+        NumNode& operator= (const NumNode) = delete;
 
 #ifdef DEBUG
-        void print() const noexcept override;
+        void print() const override;
 #endif
         int GetNum() const noexcept {
             return num_;
@@ -133,10 +141,13 @@ const std::vector<std::string> names = {
                 right_(right)
         {}
 
-        ~TwoKidsNode() override;
+        TwoKidsNode(const TwoKidsNode&) = delete;
+        TwoKidsNode& operator= (const TwoKidsNode) = delete;
+
+        ~TwoKidsNode();
 
 #ifdef DEBUG
-        void print() const noexcept override;
+        void print() const override;
 #endif
 	    INode* GetLeftKid() const noexcept { return left_; }
 
@@ -155,14 +166,32 @@ const std::vector<std::string> names = {
                 INode(tname)
         {}
 
-        ~ListNode() override;
+        /**
+         * this constructor is used by parser
+         * to create T_SCOPE and T_FUNCTION_SCOPE nodes from T_STMTLIST
+         * @param tname
+         * @param donor
+         * @param id
+         */
+        ListNode(TokenName tname, ListNode&& donor, int id) noexcept
+            :
+                INode(tname),
+                kids_(std::move(donor.kids_)),
+                id_(id)
+        {}
+
+        ListNode(const ListNode&) = delete;
+        ListNode& operator= (const ListNode) = delete;
+
+        ~ListNode();
 
 #ifdef DEBUG
-        void print() const noexcept override;
+        void print() const override;
 #endif
         void push_kid(AST::INode *kid) {
-            if(!kid)
-                return;
+
+            if (!kid)
+                throw std::logic_error("nullptr in push_kid function");
             kids_.push_back(kid);
         }
 
@@ -174,10 +203,6 @@ const std::vector<std::string> names = {
             return id_;
         }
 
-        void SetTable_id(int id) noexcept {
-            id_ = id;
-        }
-
         INode* operator[] (int idx) {
             return kids_[idx];
         }
@@ -187,7 +212,6 @@ const std::vector<std::string> names = {
 
         container_t::reverse_iterator rbegin() { return kids_.rbegin(); }
         container_t::reverse_iterator rend()   { return kids_.rend(); }
-
     };
 
 // If statement node
@@ -206,7 +230,10 @@ const std::vector<std::string> names = {
                 else_(_else)
         {}
 
-        ~IfNode() override;
+        IfNode(const IfNode&) = delete;
+        IfNode& operator= (const IfNode) = delete;
+
+        ~IfNode();
 
         INode* GetExpr() const noexcept { return expr_; }
 
@@ -215,8 +242,7 @@ const std::vector<std::string> names = {
         INode* GetElse() const noexcept { return else_; }
 
 #ifdef DEBUG
-        void print() const noexcept override;
+        void print() const override;
 #endif
     };
-
 }

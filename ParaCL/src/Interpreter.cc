@@ -3,11 +3,11 @@
 #include <sstream>
 #include <memory>
 
-yy::Interpreter::Interpreter(AST::INode* root, SymTbl& symtbl, SymTbl::Table* global_table)
+yy::Interpreter::Interpreter(AST::INode* root, SymTbl& symtbl, SymTbl::Table* global_table, size_t max_funccall_stack_sz)
     :
         root_(root),
         symtbl_(symtbl),
-        max_funccall_stack_sz(MAX_FUNCCALL_STACK_SIZE)
+        max_funccall_stack_sz_(max_funccall_stack_sz)
 {
     // global scope frame
     env_.emplace_front(false, global_table);
@@ -22,6 +22,8 @@ yy::Interpreter::~Interpreter() {
         auto node = pair.second;
         if (node) {
             switch (node->GetType()) {
+                case T_FUNCNAME:
+                    [[fallthrough]];
                 case T_SCOPEEND:
                     [[fallthrough]];
                 case T_FUNCEND:
@@ -72,7 +74,7 @@ int yy::Interpreter::interpretate() {
 #endif
 
         if (!node) {
-            ACCUMULATED_VALS.push_front(0);
+            accumulated_vals().push_front(0);
             continue;
         }
 
@@ -98,7 +100,7 @@ int yy::Interpreter::interpretate() {
 
             case T_FUNCEND:
                 interpretate_T_SCOPEEND(node);
-                funccall_stack_.pop_front();
+                funccall_stack_.pop();
                 break;
 
 
@@ -161,37 +163,37 @@ static int calc_operator(AST::INode*, int);
 
 AST::INode* yy::Interpreter::calc_expression() {
     assert(!expression_stack_.empty());
-   
-    while(!POSTFIX_NOTATION.empty()) {
-        if(is_operator(POSTFIX_NOTATION.front())) {
-            auto opertr = POSTFIX_NOTATION.front();
-            POSTFIX_NOTATION.pop_front();
 
-            assert(!ACCUMULATED_VALS.empty());
-            auto rhs = ACCUMULATED_VALS.front();
-            ACCUMULATED_VALS.pop_front();
+    while(!postfix_notation().empty()) {
+        if(is_operator(postfix_notation().front())) {
+            auto opertr = postfix_notation().front();
+            postfix_notation().pop_front();
+
+            assert(!accumulated_vals().empty());
+            auto rhs = accumulated_vals().front();
+            accumulated_vals().pop_front();
 
             if(is_unary_operator(opertr))
-                ACCUMULATED_VALS.push_front(calc_operator(opertr, rhs));
+                accumulated_vals().push_front(calc_operator(opertr, rhs));
             else {
-                assert(!ACCUMULATED_VALS.empty());
-                auto lhs = ACCUMULATED_VALS.front();
-                ACCUMULATED_VALS.pop_front();
+                assert(!accumulated_vals().empty());
+                auto lhs = accumulated_vals().front();
+                accumulated_vals().pop_front();
 
-                ACCUMULATED_VALS.push_front(calc_operator(opertr, lhs, rhs));
+                accumulated_vals().push_front(calc_operator(opertr, lhs, rhs));
             }
         } else {
-            switch(POSTFIX_NOTATION.front() -> GetType()) {
+            switch(postfix_notation().front() -> GetType()) {
                 case T_SCOPE:
                 case T_FUNCCALL: {
-                    auto scp = POSTFIX_NOTATION.front();
-                    POSTFIX_NOTATION.pop_front();
+                    auto scp = postfix_notation().front();
+                    postfix_notation().pop_front();
                     return scp;
                 }
                 default:
-                    ACCUMULATED_VALS.push_front(get_value(POSTFIX_NOTATION.front()));
+                    accumulated_vals().push_front(get_value(postfix_notation().front()));
             }
-            POSTFIX_NOTATION.pop_front();
+            postfix_notation().pop_front();
         }
     }
 
@@ -201,12 +203,12 @@ AST::INode* yy::Interpreter::calc_expression() {
 void yy::Interpreter::assign_function_arguments() {
     auto func_decl  =
     static_cast<FuncDec_t*>
-        (env_.front().second -> find(GET_ID(funccall_stack_.front())));
+        (env_.front().second -> find(funccall_stack_.top()));
     assert(func_decl);
 
     auto& args = func_decl -> arg_names_;
 
-    assert(ACCUMULATED_VALS.size() >= args.size());
+    assert(accumulated_vals().size() >= args.size());
 
 #ifdef DEBUG
     std::cout << "function args:";
@@ -215,8 +217,8 @@ void yy::Interpreter::assign_function_arguments() {
     for(const auto& arg : args) {
         auto var = static_cast<VarDec_t*>(env_.front().second -> find(arg));
         assert(var);
-        var -> value_ = ACCUMULATED_VALS.front();
-        ACCUMULATED_VALS.pop_front();
+        var -> value_ = accumulated_vals().front();
+        accumulated_vals().pop_front();
 
 #ifdef DEBUG
         std::cout << " " << var -> value_;
@@ -275,7 +277,7 @@ void yy::Interpreter::postorder_traversing(AST::INode *node) {
         node = s1.front();
         s1.pop_front();
 
-        POSTFIX_NOTATION.push_front(node);
+        postfix_notation().push_front(node);
 
         // Push left and right children
         // of removed item to s1
@@ -292,14 +294,14 @@ int yy::Interpreter::get_value(AST::INode* node) const {
             return static_cast<AST::NumNode *>(node)->GetNum();
 
         case T_ID: {
-            auto decl = static_cast<VarDec_t *>(env_.front().second->find(GET_ID(node)));
+            auto decl = static_cast<VarDec_t *>(env_.front().second->find(AST::GetName(node)));
             if (!decl)
                 throw std::runtime_error("can't find id in get_value func");
             return decl->value_;
         }
 
         case T_INPUT: {
-            int input = -230;
+            int input = -230; // just symbolic litheral
             std::cin >> input;
             if (!std::cin)
                 throw std::runtime_error("bad input");
@@ -346,15 +348,16 @@ void yy::Interpreter::interpretate_T_EXPRLIST(AST::INode* node) {
 }
 
 void yy::Interpreter::interpretate_T_SCOPEEND(AST::INode* node) {
-    auto retval = ACCUMULATED_VALS.empty() ? 0 : ACCUMULATED_VALS.front();
+    auto retval = accumulated_vals().empty() ? 0 : accumulated_vals().front();
     delete_frame();
-    ACCUMULATED_VALS.push_front(retval);
+    accumulated_vals().push_front(retval);
     delete node;
 }
 
 void yy::Interpreter::interpretate_T_FUNCNAME(AST::INode* node) {
-    funccall_stack_.push_front(node);
-    if(funccall_stack_.size() > max_funccall_stack_sz)
+    funccall_stack_.push(AST::GetName(node));
+    delete node;
+    if(funccall_stack_.size() > max_funccall_stack_sz_)
         throw std::runtime_error("max function call stack size reached!");
 }
 
@@ -362,7 +365,7 @@ void yy::Interpreter::interpretate_T_FUNCCALL(AST::INode* node) {
     auto funccallnode = static_cast<AST::TwoKidsNode*>(node);
 
     auto func_decl = static_cast<FuncDec_t*>
-    (env_.front().second -> find(GET_ID(funccallnode -> GetLeftKid())));
+    (env_.front().second -> find(AST::GetName(funccallnode -> GetLeftKid())));
     assert(func_decl);
 
     auto funcscope_node = func_decl -> function_body_;
@@ -371,10 +374,11 @@ void yy::Interpreter::interpretate_T_FUNCCALL(AST::INode* node) {
     // creating new expression frame in-place
     expression_stack_.emplace_front();
 
-    funccallnode -> GetLeftKid() -> SetType(T_FUNCNAME);
+    auto funcname = new AST::IdNode(T_FUNCNAME,
+                                        AST::GetName(funccallnode -> GetLeftKid()));
 
     instructions_stack_.emplace_front(false, funcscope_node); // T_FUNCTION_SCOPE
-    instructions_stack_.emplace_front(false, funccallnode -> GetLeftKid()); // T_FUNCNAME
+    instructions_stack_.emplace_front(false, funcname); // T_FUNCNAME
     if (funccallnode -> GetRightKid())
         instructions_stack_.emplace_front(false, funccallnode -> GetRightKid()); // expression list
 }
@@ -383,9 +387,9 @@ void yy::Interpreter::interpretate_T_IF(bool calculated, AST::INode* node) {
     auto ifnode = static_cast<AST::IfNode*>(node);
 
     if (calculated) {
-        assert(!ACCUMULATED_VALS.empty());
-        auto expr = ACCUMULATED_VALS.front();
-        ACCUMULATED_VALS.pop_front();
+        assert(!accumulated_vals().empty());
+        auto expr = accumulated_vals().front();
+        accumulated_vals().pop_front();
 
         if (expr)
             instructions_stack_.emplace_front(false, ifnode -> GetStmt());
@@ -402,9 +406,9 @@ void yy::Interpreter::interpretate_T_WHILE(bool calculated, AST::INode* node) {
     auto whilenode = static_cast<AST::TwoKidsNode*>(node);
 
     if (calculated) {
-        assert(!ACCUMULATED_VALS.empty());
-        auto expr = ACCUMULATED_VALS.front();
-        ACCUMULATED_VALS.pop_front();
+        assert(!accumulated_vals().empty());
+        auto expr = accumulated_vals().front();
+        accumulated_vals().pop_front();
 
         if (expr) {
             instructions_stack_.emplace_front(false, whilenode);
@@ -421,11 +425,11 @@ void yy::Interpreter::interpretate_T_RETURN(bool calculated, AST::INode* node) {
     auto retnode = static_cast<AST::TwoKidsNode*>(node);
 
     if (calculated) {
-        assert(!ACCUMULATED_VALS.empty());
+        assert(!accumulated_vals().empty());
         auto marker = funccall_stack_.empty() ? T_SCOPEEND : T_FUNCEND;
 
-        auto retval = ACCUMULATED_VALS.front();
-        ACCUMULATED_VALS.pop_front();
+        auto retval = accumulated_vals().front();
+        accumulated_vals().pop_front();
 
 
         auto marker_it = std::find_if(instructions_stack_.begin(), instructions_stack_.end(),
@@ -438,7 +442,7 @@ void yy::Interpreter::interpretate_T_RETURN(bool calculated, AST::INode* node) {
                           case T_FUNCEND:
                               delete_frame();
                               delete pop_node;
-                              funccall_stack_.pop_front();
+                              funccall_stack_.pop();
                               break;
 
                           case T_SCOPEEND:
@@ -458,7 +462,7 @@ void yy::Interpreter::interpretate_T_RETURN(bool calculated, AST::INode* node) {
         assert(marker_it != instructions_stack_.end());
         instructions_stack_.erase(instructions_stack_.begin(), std::next(marker_it));
 
-        ACCUMULATED_VALS.push_front(retval);
+        accumulated_vals().push_front(retval);
 
     } else {
         instructions_stack_.emplace_front(true, retnode);
@@ -470,8 +474,8 @@ void yy::Interpreter::interpretate_T_OUTPUT(bool calculated, AST::INode* node) {
     auto outputnode = static_cast<AST::TwoKidsNode *>(node);
 
     if (calculated) {
-        assert(!ACCUMULATED_VALS.empty());
-        std::cout << ACCUMULATED_VALS.front() << std::endl;
+        assert(!accumulated_vals().empty());
+        std::cout << accumulated_vals().front() << std::endl;
     } else {
         instructions_stack_.emplace_front(true, outputnode);
         instructions_stack_.emplace_front(false, outputnode->GetRightKid());
@@ -482,11 +486,11 @@ void yy::Interpreter::interpretate_T_ASSIGN(bool calculated, AST::INode* node) {
     auto assign = static_cast<AST::TwoKidsNode *>(node);
 
     if (calculated) {
-        assert(!ACCUMULATED_VALS.empty());
-        auto lvalue = env_.front().second->find(GET_ID(assign->GetLeftKid()));
+        assert(!accumulated_vals().empty());
+        auto lvalue = env_.front().second->find(AST::GetName(assign->GetLeftKid()));
         assert(lvalue);
 
-        static_cast<VarDec_t *>(lvalue)->value_ = ACCUMULATED_VALS.front();
+        static_cast<VarDec_t *>(lvalue)->value_ = accumulated_vals().front();
     } else {
         instructions_stack_.emplace_front(true, assign);
         instructions_stack_.emplace_front(false, assign->GetRightKid());
