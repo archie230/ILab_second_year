@@ -3,6 +3,7 @@
 ## Install:
 
 make
+// it's ok if you have bunch of warnings from bison
 
 ## Run:
 
