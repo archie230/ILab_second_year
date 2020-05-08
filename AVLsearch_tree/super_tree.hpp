@@ -115,11 +115,12 @@ namespace cxx_containers {
             size_       = other.size_;
             other.size_ = 0;
             comparator_ = other.comparator_;
-
+            
+            return *this;
         }
 
         //clearing tree
-        void Clear() noexcept {
+        void Clear() {
             std::queue<node_t *> remaining;
             node_t *node = nullptr;
 
