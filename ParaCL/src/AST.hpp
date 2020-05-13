@@ -12,7 +12,7 @@
 namespace AST {
 
 #ifdef DEBUG
-const std::vector<std::string> names = {
+static const std::vector<std::string> names = {
 "T_NUM      ",
 "T_ID       ",
 "T_WHILE    ",
